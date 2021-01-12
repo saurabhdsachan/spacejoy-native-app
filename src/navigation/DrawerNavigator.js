@@ -1,0 +1,18 @@
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import WalkThrough from '@screens/WalkThrough';
+import React from 'react';
+import {DrawerContent} from '../components/DrawerContent';
+import TabNavigator from './TabNavigator';
+
+const Drawer = createDrawerNavigator();
+
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+      <Drawer.Screen name="WalkThrough" component={WalkThrough} />
+      <Drawer.Screen name="Home" component={TabNavigator} />
+    </Drawer.Navigator>
+  );
+};
+
+export default DrawerNavigator;
