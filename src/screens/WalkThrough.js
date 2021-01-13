@@ -1,7 +1,7 @@
 import {Block, Button, Text} from '@components/index';
 import {images, theme} from '@constants/index';
 import React from 'react';
-import {Animated, Image, StyleSheet} from 'react-native';
+import {Animated, Image, StatusBar, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const {COLORS, SIZES} = theme;
@@ -77,6 +77,7 @@ const WalkThrough = ({navigation}) => {
 
   return (
     <Block>
+      <StatusBar barStyle="dark-content" />
       <Animated.ScrollView
         horizontal
         pagingEnabled

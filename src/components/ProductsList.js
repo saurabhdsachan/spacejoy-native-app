@@ -44,7 +44,7 @@ const ProductsList = ({data}) => {
   return (
     <Block>
       {data.map((product) => (
-        <Item data={product} key={data._id} />
+        <Item data={product} key={`product-item-${product.asset.id}`} />
       ))}
     </Block>
   );

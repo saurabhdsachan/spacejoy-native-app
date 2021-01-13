@@ -3,7 +3,7 @@ import {Block, Carousel, Divider, Marketing, Text} from '@components/index';
 import ProductsList from '@components/ProductsList';
 import {theme} from '@constants/index';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -30,6 +30,7 @@ const About = ({route, navigation}) => {
 
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
+      <StatusBar barStyle="light-content" backgroundColor="red" />
       <Block>
         <Carousel images={feedItem.cdnRender} />
       </Block>

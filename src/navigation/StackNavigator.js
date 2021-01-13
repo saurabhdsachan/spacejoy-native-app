@@ -72,8 +72,6 @@ const HomeStackNavigator = ({navigation}) => {
             <Icon name="arrow-back" size={20} style={{marginHorizontal: 10}} />
           ),
           // headerTransparent: true,
-          headerTintColor: 'black',
-          headerStyle: {backgroundColor: 'white'},
         }}
       />
     </Stack.Navigator>
