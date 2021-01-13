@@ -89,7 +89,11 @@ const CollectionStackNavigator = () => {
 const NewActionStackNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="NewAction" component={NewAction} />
+      <Stack.Screen
+        name="NewAction"
+        component={NewAction}
+        options={{headerShown: false}}
+      />
       <Stack.Screen name="DesignService" component={DesignService} />
     </Stack.Navigator>
   );

@@ -12,7 +12,7 @@ const {COLORS, SIZES} = theme;
 const NewAction = ({navigation}) => {
   return (
     <ScrollView>
-      <Block padding={SIZES.padding}>
+      <Block padding={SIZES.padding} margin={[70, 0, 0, 0]}>
         <Text h1 mb2>
           Design
         </Text>
