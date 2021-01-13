@@ -12,7 +12,7 @@ const {COLORS, SIZES} = theme;
 const NewAction = ({navigation}) => {
   return (
     <ScrollView>
-      <Block padding={SIZES.padding} margin={[70, 0, 0, 0]}>
+      <Block padding={SIZES.padding}>
         <Text h1 mb2>
           Design
         </Text>
@@ -69,7 +69,9 @@ const NewAction = ({navigation}) => {
             </Block>
           </Block>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('DesignService')}>
           <Block row color="white" style={styles.serviceCard}>
             <Block middle flex={1.25}>
               <Image

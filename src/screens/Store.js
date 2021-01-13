@@ -1,9 +1,11 @@
 import {Block, Button, Text} from '@components/';
 import React from 'react';
+import {StatusBar} from 'react-native';
 
 const Store = ({navigation}) => {
   return (
     <Block center middle>
+      <StatusBar barStyle="dark-content" />
       <Text body center mb2>
         This is the Store screen
       </Text>

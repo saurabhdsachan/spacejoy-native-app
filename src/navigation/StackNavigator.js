@@ -2,6 +2,7 @@ import {Block, Button} from '@components/index';
 import {images, SIZES} from '@constants/index';
 import {createStackNavigator} from '@react-navigation/stack';
 import About from '@screens/About';
+import DesignService from '@screens/DesignService';
 import Home from '@screens/Home';
 import MyDesigns from '@screens/MyDesigns';
 import NewAction from '@screens/NewAction';
@@ -87,8 +88,9 @@ const CollectionStackNavigator = () => {
 };
 const NewActionStackNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator>
       <Stack.Screen name="NewAction" component={NewAction} />
+      <Stack.Screen name="DesignService" component={DesignService} />
     </Stack.Navigator>
   );
 };

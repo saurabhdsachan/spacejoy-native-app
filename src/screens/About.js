@@ -30,7 +30,7 @@ const About = ({route, navigation}) => {
 
   return (
     <ScrollView style={{backgroundColor: 'white'}}>
-      <StatusBar barStyle="light-content" backgroundColor="red" />
+      <StatusBar barStyle="dark-content" backgroundColor="red" />
       <Block>
         <Carousel images={feedItem.cdnRender} />
       </Block>
