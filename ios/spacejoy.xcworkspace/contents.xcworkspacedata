@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../unity/Unity-iPhone.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:spacejoy.xcodeproj">
    </FileRef>
    <FileRef
