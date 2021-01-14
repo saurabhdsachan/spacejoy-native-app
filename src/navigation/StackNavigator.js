@@ -1,4 +1,4 @@
-import {Block, Button} from '@components/index';
+import {Block, Button, HeaderBack} from '@components/index';
 import {images, SIZES} from '@constants/index';
 import {createStackNavigator} from '@react-navigation/stack';
 import DesignService from '@screens/DesignService';
@@ -6,6 +6,7 @@ import Details from '@screens/Details';
 import Home from '@screens/Home';
 import MyDesigns from '@screens/MyDesigns';
 import NewAction from '@screens/NewAction';
+import Quiz1 from '@screens/PreQuiz/Quiz1';
 import Store from '@screens/Store';
 import React from 'react';
 import {Image} from 'react-native';
@@ -30,7 +31,7 @@ const HomeStackNavigator = ({navigation}) => {
         name="Home"
         component={Home}
         options={{
-          title: '',
+          title: null,
           headerLeft: () => (
             <Block center row>
               <Button raw onPress={navigation.toggleDrawer}>
@@ -68,11 +69,8 @@ const HomeStackNavigator = ({navigation}) => {
         name="Details"
         component={Details}
         options={{
-          title: 'Details',
-          headerBackImage: () => (
-            <Icon name="arrow-back" size={20} style={{marginHorizontal: 10}} />
-          ),
-          // headerTransparent: true,
+          title: null,
+          headerBackImage: () => <HeaderBack />,
         }}
       />
     </Stack.Navigator>
@@ -92,9 +90,32 @@ const NewActionStackNavigator = () => {
       <Stack.Screen
         name="NewAction"
         component={NewAction}
-        options={{headerShown: false}}
+        options={{headerShown: false, title: null}}
       />
-      <Stack.Screen name="DesignService" component={DesignService} />
+      <Stack.Screen
+        name="DesignService"
+        component={DesignService}
+        options={{
+          headerTransparent: true,
+          title: null,
+          headerBackImage: () => <HeaderBack />,
+          headerBackTitleStyle: {
+            color: 'black',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Quiz1"
+        component={Quiz1}
+        options={{
+          headerTransparent: true,
+          title: null,
+          headerBackImage: () => <HeaderBack />,
+          headerBackTitleStyle: {
+            color: 'black',
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 };

@@ -29,7 +29,7 @@ const Profile = ({navigation}) => {
       <Text body center mb4 mt1>
         saurabhdsachan@gmail.com
       </Text>
-      <Button color={COLORS.black} onPress={() => navigation.navigate('Home')}>
+      <Button color={COLORS.black} onPress={() => navigation.goBack()}>
         <Text color={COLORS.white}>Back</Text>
       </Button>
     </Block>

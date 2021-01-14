@@ -4,7 +4,7 @@ import Button from './Button';
 import Card from './Card';
 import Carousel from './Carousel';
 import Divider from './Divider';
-import HeaderLeft from './HeaderLeft';
+import HeaderBack from './HeaderBack';
 import HeaderRight from './HeaderRight';
 import Hero from './Hero';
 import Input from './Input';
@@ -20,7 +20,7 @@ export {
   Carousel,
   Card,
   Divider,
-  HeaderLeft,
+  HeaderBack,
   HeaderRight,
   Hero,
   Input,

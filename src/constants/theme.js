@@ -22,6 +22,7 @@ export const COLORS = {
 export const SIZES = {
   // global sizes
   statusBar: 30,
+  safe: 80,
   base: 8,
   font: 14,
   radius: 12,
