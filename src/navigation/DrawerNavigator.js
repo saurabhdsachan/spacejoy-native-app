@@ -10,6 +10,7 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+      {/* <Drawer.Screen name="Demo" component={Demo} /> */}
       <Drawer.Screen
         name="WalkThrough"
         component={WalkThrough}

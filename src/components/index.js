@@ -10,6 +10,7 @@ import Hero from './Hero';
 import Input from './Input';
 import Marketing from './Marketing';
 import ProgressiveImage from './ProgressiveImage';
+import Radio from './Radio';
 import Switch from './Switch';
 import Text from './Text';
 
@@ -27,5 +28,6 @@ export {
   Marketing,
   ProgressiveImage,
   Switch,
+  Radio,
   Text,
 };
