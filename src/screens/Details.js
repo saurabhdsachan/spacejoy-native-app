@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const {SIZES, COLORS} = theme;
 
-const About = ({route, navigation}) => {
+const Details = ({route, navigation}) => {
   const {feedItem} = route.params;
 
   const [isLoading, setLoading] = useState(true);
@@ -88,7 +88,7 @@ const About = ({route, navigation}) => {
   );
 };
 
-export default About;
+export default Details;
 
 const styles = StyleSheet.create({
   designData: {

@@ -63,7 +63,7 @@ const Item = ({data, navigation}) => (
       <Block end flex={1}>
         <Button
           size="xs"
-          onPress={() => navigation.navigate('About', {feedItem: data})}>
+          onPress={() => navigation.navigate('Details', {feedItem: data})}>
           <Text center>
             <Icon name="basket-outline" size={20} color={COLORS.gray} />
           </Text>
@@ -72,7 +72,7 @@ const Item = ({data, navigation}) => (
     </Block>
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={() => navigation.navigate('About', {feedItem: data})}>
+      onPress={() => navigation.navigate('Details', {feedItem: data})}>
       <Block style={styles.designFeedImageHolder}>
         <Image
           source={{

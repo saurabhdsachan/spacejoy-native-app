@@ -1,8 +1,8 @@
 import {Block, Button} from '@components/index';
 import {images, SIZES} from '@constants/index';
 import {createStackNavigator} from '@react-navigation/stack';
-import About from '@screens/About';
 import DesignService from '@screens/DesignService';
+import Details from '@screens/Details';
 import Home from '@screens/Home';
 import MyDesigns from '@screens/MyDesigns';
 import NewAction from '@screens/NewAction';
@@ -65,8 +65,8 @@ const HomeStackNavigator = ({navigation}) => {
         }}
       />
       <Stack.Screen
-        name="About"
-        component={About}
+        name="Details"
+        component={Details}
         options={{
           title: 'Details',
           headerBackImage: () => (
