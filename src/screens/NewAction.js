@@ -1,27 +1,36 @@
-import {Block, Text} from '@components/index';
+import {Block, Divider, Text} from '@components/index';
 import {images, theme} from '@constants/index';
-import {elevationShadowStyle} from '@utils/styleHelper';
 import React from 'react';
 import {Image, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const {service1, service2, service3, poweredBy} = images;
+const {service1, service2, service3, logo, chair} = images;
 
 const {COLORS, SIZES} = theme;
 
 const NewAction = ({navigation}) => {
   return (
-    <ScrollView>
-      <Block padding={SIZES.padding} margin={[70, 0, 0, 0]}>
-        <Text h1 mb2>
-          Design
+    <ScrollView style={{backgroundColor: COLORS.white}}>
+      <Block padding={SIZES.padding} margin={[SIZES.safe, 0, 0, 0]}>
+        <Image
+          source={chair}
+          resizeMode="cover"
+          style={{
+            position: 'absolute',
+            right: '5%',
+            height: 100,
+            width: 90,
+          }}
+        />
+        <Text h1 mb2 mt2>
+          Design my room
         </Text>
-        <Text h1 mb4>
-          My Room
+        <Text small mb4>
+          Design my room
         </Text>
         <TouchableOpacity activeOpacity={0.8}>
-          <Block row color="white" style={styles.serviceCard}>
-            <Block middle flex={1.25}>
+          <Block row color="#BEEBE9" style={styles.serviceCard}>
+            <Block middle flex={1.5}>
               <Image
                 source={service1}
                 resizeMode="contain"
@@ -32,21 +41,21 @@ const NewAction = ({navigation}) => {
               />
             </Block>
             <Block flex={3}>
-              <Text mb1 h2 color="#FD8231">
+              <Text mb1 h3>
                 DIY YOUR OWN ROOM
               </Text>
               <Text small>
                 Design your actual room in 3D Living Room, Entryway…
               </Text>
-              <Text right mt2>
-                <Icon color="#FD8231" name="arrow-forward" size={18} />
+              <Text left mt2>
+                <Icon name="arrow-forward" size={18} />
               </Text>
             </Block>
           </Block>
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.8}>
-          <Block row color="white" style={styles.serviceCard}>
-            <Block middle flex={1.25}>
+          <Block color="#EBE6E4" row style={styles.serviceCard}>
+            <Block middle flex={1.5}>
               <Image
                 source={service2}
                 resizeMode="contain"
@@ -57,23 +66,24 @@ const NewAction = ({navigation}) => {
               />
             </Block>
             <Block flex={3}>
-              <Text mb1 h2 color="#AE8000">
+              <Text mb1 h3>
                 PICK A ROOM & DIY
               </Text>
               <Text small>
                 Choose from 1000+ layouts & start designing yourself
               </Text>
-              <Text right mt2>
-                <Icon color="#AE8000" name="arrow-forward" size={18} />
+              <Text left mt2>
+                <Icon name="arrow-forward" size={18} />
               </Text>
             </Block>
           </Block>
         </TouchableOpacity>
+        <Divider style={{marginBottom: SIZES.padding}} />
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => navigation.navigate('DesignService')}>
-          <Block row color="white" style={styles.serviceCard}>
-            <Block middle flex={1.25}>
+          <Block row color="#F4DADA" style={styles.serviceCard}>
+            <Block middle flex={1.5}>
               <Image
                 source={service3}
                 resizeMode="contain"
@@ -84,23 +94,23 @@ const NewAction = ({navigation}) => {
               />
             </Block>
             <Block flex={3}>
-              <Text mb1 h2 color="#0091FF">
+              <Text mb1 h3>
                 HIRE OUR DESIGNER
               </Text>
               <Text small>Online Interior Design Services By Spacejoy</Text>
-              <Text right mt2>
-                <Icon color="#0091FF" name="arrow-forward" size={18} />
+              <Text left mt2>
+                <Icon name="arrow-forward" size={18} />
               </Text>
             </Block>
           </Block>
         </TouchableOpacity>
         <Block center middle>
           <Image
-            source={poweredBy}
+            source={logo}
             resizeMode="contain"
             style={{
-              height: 80,
-              marginTop: 20,
+              height: 25,
+              width: 120,
             }}
           />
         </Block>
@@ -111,7 +121,6 @@ const NewAction = ({navigation}) => {
 
 const styles = StyleSheet.create({
   serviceCard: {
-    ...elevationShadowStyle(1),
     padding: SIZES.padding,
     marginBottom: SIZES.padding,
     borderRadius: SIZES.radius,
