@@ -11,19 +11,13 @@ const {sofa, lamp, chair, teddy} = images;
 
 const Quiz1 = ({navigation}) => {
   return (
-    <ScrollView style={{backgroundColor: COLORS.white}}>
-      <Block
-        padding={[
-          SIZES.safe + 20,
-          SIZES.padding,
-          SIZES.padding,
-          SIZES.padding,
-        ]}>
-        <StatusBar barStyle="dark-content" />
-        <Text h2 mb2>
-          Which space in your home are you looking to transform?
-        </Text>
-        <Block padding={[SIZES.padding, 0, SIZES.padding, 0]}>
+    <Block
+      color={COLORS.white}
+      padding={[SIZES.safe + 20, SIZES.padding, SIZES.padding, SIZES.padding]}>
+      <StatusBar barStyle="dark-content" />
+      <Text h2>Which space in your home are you looking to transform?</Text>
+      <Block flex={18} padding={[SIZES.padding, 0, SIZES.padding, 0]}>
+        <ScrollView>
           <Block row>
             <TouchableOpacity
               activeOpacity={0.8}
@@ -66,6 +60,7 @@ const Quiz1 = ({navigation}) => {
                     selected: false,
                   }}
                   onClick={() => {}}
+                  inline
                 />
                 <Text small>Get more productive</Text>
                 <Image
@@ -92,6 +87,7 @@ const Quiz1 = ({navigation}) => {
                     selected: false,
                   }}
                   onClick={() => {}}
+                  inline
                 />
                 <Text small>Get more productive</Text>
               </Block>
@@ -110,6 +106,7 @@ const Quiz1 = ({navigation}) => {
                   selected: false,
                 }}
                 onClick={() => {}}
+                inline
               />
               <Text small>Get more productive</Text>
             </Block>
@@ -125,6 +122,7 @@ const Quiz1 = ({navigation}) => {
                   selected: false,
                 }}
                 onClick={() => {}}
+                inline
               />
               <Text small>Get more productive</Text>
             </Block>
@@ -143,6 +141,7 @@ const Quiz1 = ({navigation}) => {
                     selected: false,
                   }}
                   onClick={() => {}}
+                  inline
                 />
                 <Text small>More playful area</Text>
                 <Image
@@ -169,6 +168,7 @@ const Quiz1 = ({navigation}) => {
                     selected: false,
                   }}
                   onClick={() => {}}
+                  inline
                 />
                 <Text small>Get more productive</Text>
               </Block>
@@ -184,6 +184,7 @@ const Quiz1 = ({navigation}) => {
                   selected: false,
                 }}
                 onClick={() => {}}
+                inline
               />
               <Text small>Get more productive</Text>
               <Image
@@ -199,31 +200,28 @@ const Quiz1 = ({navigation}) => {
               />
             </Block>
           </Block>
-          <Block
-            row
-            space="between"
-            margin={[SIZES.padding, 0, SIZES.padding, 0]}>
-            <Button
-              ghost
-              color={COLORS.white}
-              size="sm"
-              onPress={() => navigation.goBack()}>
-              <Text center>
-                <Icon name="ios-arrow-back" size={14} /> Prev
-              </Text>
-            </Button>
-            <Button
-              color={COLORS.black}
-              size="sm"
-              onPress={() => navigation.navigate('Quiz1')}>
-              <Text center color={COLORS.white}>
-                Next <Icon name="ios-arrow-forward" size={14} />
-              </Text>
-            </Button>
-          </Block>
-        </Block>
+        </ScrollView>
       </Block>
-    </ScrollView>
+      <Block flex={2} center row space="between">
+        <Button
+          ghost
+          color={COLORS.white}
+          size="sm"
+          onPress={() => navigation.goBack()}>
+          <Text center>
+            <Icon name="ios-arrow-back" size={14} /> Prev
+          </Text>
+        </Button>
+        <Button
+          color={COLORS.black}
+          size="sm"
+          onPress={() => navigation.navigate('Quiz2')}>
+          <Text center color={COLORS.white}>
+            Next <Icon name="ios-arrow-forward" size={14} />
+          </Text>
+        </Button>
+      </Block>
+    </Block>
   );
 };
 

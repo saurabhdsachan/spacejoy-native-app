@@ -7,6 +7,8 @@ import Home from '@screens/Home';
 import MyDesigns from '@screens/MyDesigns';
 import NewAction from '@screens/NewAction';
 import Quiz1 from '@screens/PreQuiz/Quiz1';
+import Quiz2 from '@screens/PreQuiz/Quiz2';
+import Quiz3 from '@screens/PreQuiz/Quiz3';
 import Store from '@screens/Store';
 import React from 'react';
 import {Image} from 'react-native';
@@ -107,6 +109,30 @@ const NewActionStackNavigator = () => {
       <Stack.Screen
         name="Quiz1"
         component={Quiz1}
+        options={{
+          headerTransparent: true,
+          title: null,
+          headerBackImage: () => <HeaderBack />,
+          headerBackTitleStyle: {
+            color: 'black',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Quiz2"
+        component={Quiz2}
+        options={{
+          headerTransparent: true,
+          title: null,
+          headerBackImage: () => <HeaderBack />,
+          headerBackTitleStyle: {
+            color: 'black',
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Quiz3"
+        component={Quiz3}
         options={{
           headerTransparent: true,
           title: null,

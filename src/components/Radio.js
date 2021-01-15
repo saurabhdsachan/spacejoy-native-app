@@ -4,9 +4,11 @@ import {StyleSheet, Text, View} from 'react-native';
 
 const {SIZES, COLORS} = theme;
 
-const Radio = ({button, onClick}) => {
+const Radio = ({button, onClick, inline}) => {
+  const radioStyles = [styles.radioButton, inline && styles.inline];
+  const labelStyles = [styles.label, inline && styles.labelInline];
   return (
-    <View style={styles.radioButton}>
+    <View style={radioStyles}>
       <View
         style={[
           styles.radioButtonHolder,
@@ -29,7 +31,7 @@ const Radio = ({button, onClick}) => {
           />
         ) : null}
       </View>
-      <Text style={[styles.label]}>{button.label}</Text>
+      <Text style={labelStyles}>{button.label}</Text>
     </View>
   );
 };
@@ -38,8 +40,10 @@ export default Radio;
 
 const styles = StyleSheet.create({
   radioButton: {
-    flexDirection: 'row',
     marginBottom: SIZES.base / 2,
+  },
+  inline: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
   radioButtonHolder: {
@@ -56,6 +60,10 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginTop: SIZES.base,
+  },
+  labelInline: {
+    marginTop: 0,
     marginLeft: SIZES.base,
   },
 });

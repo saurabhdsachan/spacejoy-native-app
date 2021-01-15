@@ -35,7 +35,7 @@ export const SIZES = {
   h4: 14,
   title: 20,
   header: 18,
-  body: 16,
+  body: 15,
   small: 14,
   caption: 12,
 
@@ -44,8 +44,8 @@ export const SIZES = {
   height,
 };
 export const FONTS = {
-  h1: {fontFamily: 'Roboto-Black', fontSize: SIZES.h1, lineHeight: 36},
-  h2: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h2, lineHeight: 30},
+  h1: {fontFamily: 'Roboto-Black', fontSize: SIZES.h1, lineHeight: 40},
+  h2: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h2, lineHeight: 34},
   h3: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h3, lineHeight: 22},
   h4: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h4, lineHeight: 22},
   header: {
@@ -54,7 +54,7 @@ export const FONTS = {
     lineHeight: 36,
   },
   title: {fontFamily: 'Roboto-Regular', fontSize: SIZES.title, lineHeight: 30},
-  body: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body, lineHeight: 22},
+  body: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body, lineHeight: 20},
   small: {fontFamily: 'Roboto-Light', fontSize: SIZES.small, lineHeight: 20},
   caption: {
     fontFamily: 'Roboto-Regular',
