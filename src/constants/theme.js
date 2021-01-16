@@ -1,4 +1,4 @@
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 const {width, height} = Dimensions.get('window');
 
 export const COLORS = {
@@ -22,7 +22,6 @@ export const COLORS = {
 export const SIZES = {
   // global sizes
   statusBar: 30,
-  safe: 80,
   base: 8,
   font: 14,
   radius: 12,
@@ -31,11 +30,11 @@ export const SIZES = {
   // font sizes
   h1: 30,
   h2: 22,
-  h3: 18,
+  h3: 16,
   h4: 14,
   title: 20,
   header: 18,
-  body: 15,
+  body: 16,
   small: 14,
   caption: 12,
 
@@ -44,8 +43,8 @@ export const SIZES = {
   height,
 };
 export const FONTS = {
-  h1: {fontFamily: 'Roboto-Black', fontSize: SIZES.h1, lineHeight: 40},
-  h2: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h2, lineHeight: 34},
+  h1: {fontFamily: 'Roboto-Black', fontSize: SIZES.h1, lineHeight: 36},
+  h2: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h2, lineHeight: 30},
   h3: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h3, lineHeight: 22},
   h4: {fontFamily: 'Roboto-Bold', fontSize: SIZES.h4, lineHeight: 22},
   header: {
@@ -54,7 +53,7 @@ export const FONTS = {
     lineHeight: 36,
   },
   title: {fontFamily: 'Roboto-Regular', fontSize: SIZES.title, lineHeight: 30},
-  body: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body, lineHeight: 20},
+  body: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body, lineHeight: 22},
   small: {fontFamily: 'Roboto-Light', fontSize: SIZES.small, lineHeight: 20},
   caption: {
     fontFamily: 'Roboto-Regular',

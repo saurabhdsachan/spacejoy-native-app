@@ -1,6 +1,6 @@
-import {theme} from '@constants/index';
-import React, {Component} from 'react';
-import {Animated, StyleSheet, View} from 'react-native';
+import { theme } from '@constants/index';
+import React, { Component } from 'react';
+import { Animated, StyleSheet, View } from 'react-native';
 
 export default class Block extends Component {
   handleMargins() {
@@ -113,6 +113,7 @@ export default class Block extends Component {
       color,
       space,
       padding,
+      spaceBetween,
       margin,
       animated,
       wrap,
@@ -139,6 +140,7 @@ export default class Block extends Component {
       padding && {...this.handlePaddings()},
       card && styles.card,
       shadow && styles.shadow,
+      spaceBetween && styles.spaceBetween,
       space && {justifyContent: `space-${space}`},
       wrap && {flexWrap: 'wrap'},
       color && styles[color], // predefined styles colors for backgroundColor
@@ -192,6 +194,9 @@ export const styles = StyleSheet.create({
   },
   right: {
     justifyContent: 'flex-end',
+  },
+  spaceBetween: {
+    justifyContent: 'space-between',
   },
   top: {
     justifyContent: 'flex-start',
