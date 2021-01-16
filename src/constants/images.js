@@ -12,6 +12,7 @@ export const studio = require('../assets/images/studio.png');
 export const sofa = require('../assets/images/sofa.png');
 export const chair = require('../assets/images/chair.png');
 export const teddy = require('../assets/images/teddy.png');
+export const quiz3Banner = require('../assets/images/quiz3.png');
 export const lamp = require('../assets/images/lamp.png');
 
 export default {
@@ -28,6 +29,7 @@ export default {
   studio,
   chair,
   sofa,
+  quiz3Banner,
   lamp,
   teddy,
 };

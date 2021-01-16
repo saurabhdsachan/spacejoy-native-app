@@ -16,7 +16,7 @@ export const COLORS = {
   black: '#000000',
   white: '#FFFFFF',
   border: '#F2F2F2',
-  transparent: 'rgba(255,255,255,0.4)',
+  transparent: 'rgba(255,255,255,0)',
 };
 
 export const SIZES = {
