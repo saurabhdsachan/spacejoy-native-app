@@ -1,6 +1,6 @@
 import {Block, Button, Radio, Text} from '@components/index';
 import {theme} from '@constants/index';
-import QuizData from '@data/Quiz3';
+import QuizData from '@data/Quiz4';
 import React from 'react';
 import {StatusBar, StyleSheet} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -15,7 +15,8 @@ const Quiz3 = ({navigation}) => {
       color={COLORS.white}
       padding={[SIZES.safe + 20, SIZES.padding, 0, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
-      <Text h2>What's the occasion?</Text>
+      <Text h2>When should your space be ready?</Text>
+      <Text small>A timeline will help us work towards your goal</Text>
       <ScrollView>
         {QuizData.map((item, index) => (
           <Block

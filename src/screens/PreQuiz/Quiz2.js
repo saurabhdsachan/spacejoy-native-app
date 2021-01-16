@@ -25,6 +25,8 @@ const Quiz2 = ({navigation}) => {
               color={item.bg}
               style={[styles.radioCard, index % 2 && styles.spaceLeft]}>
               <Radio
+                inline
+                bold
                 button={{
                   label: item.displayName,
                   size: 22,

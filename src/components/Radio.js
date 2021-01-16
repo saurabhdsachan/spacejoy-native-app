@@ -4,7 +4,7 @@ import {StyleSheet, Text, View} from 'react-native';
 
 const {SIZES, COLORS} = theme;
 
-const Radio = ({button, onClick, inline}) => {
+const Radio = ({button, onClick, inline, bold}) => {
   const radioStyles = [styles.radioButton, inline && styles.inline];
   const labelStyles = [styles.label, inline && styles.labelInline];
   return (
@@ -31,7 +31,9 @@ const Radio = ({button, onClick, inline}) => {
           />
         ) : null}
       </View>
-      <Text style={labelStyles}>{button.label}</Text>
+      <Text style={[labelStyles, bold && styles.labelBold]}>
+        {button.label}
+      </Text>
     </View>
   );
 };
@@ -59,11 +61,13 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: 'bold',
     marginTop: SIZES.base,
   },
   labelInline: {
     marginTop: 0,
     marginLeft: SIZES.base,
+  },
+  labelBold: {
+    fontWeight: 'bold',
   },
 });

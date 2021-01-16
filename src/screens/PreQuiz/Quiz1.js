@@ -26,6 +26,7 @@ const Quiz1 = ({navigation}) => {
                 color="#DEE6E1"
                 style={[styles.radioCard, styles.spaceRight, styles.full]}>
                 <Radio
+                  bold
                   button={{
                     label: 'Living-room',
                     size: 18,
@@ -53,6 +54,7 @@ const Quiz1 = ({navigation}) => {
                 color="#E5E5E5"
                 style={[styles.radioCard, styles.spaceLeft, styles.half]}>
                 <Radio
+                  bold
                   button={{
                     label: 'Bedroom',
                     size: 18,
@@ -80,6 +82,7 @@ const Quiz1 = ({navigation}) => {
                 color="#F6EEC7"
                 style={[styles.radioCard, styles.spaceLeft, styles.half]}>
                 <Radio
+                  bold
                   button={{
                     label: 'Study Room',
                     size: 18,
@@ -99,6 +102,7 @@ const Quiz1 = ({navigation}) => {
               color="#D9DCF7"
               style={[styles.radioCard, styles.spaceRight, styles.half]}>
               <Radio
+                bold
                 button={{
                   label: 'Home-Office',
                   size: 18,
@@ -115,6 +119,7 @@ const Quiz1 = ({navigation}) => {
               color="#EBE6E4"
               style={[styles.radioCard, styles.spaceLeft, styles.half]}>
               <Radio
+                bold
                 button={{
                   label: 'Kid`s Room',
                   size: 18,
@@ -134,6 +139,7 @@ const Quiz1 = ({navigation}) => {
                 color="#BEEBE9"
                 style={[styles.radioCard, styles.spaceRight, styles.half]}>
                 <Radio
+                  bold
                   button={{
                     label: 'Nursery',
                     size: 18,
@@ -161,6 +167,7 @@ const Quiz1 = ({navigation}) => {
                 color="#FFF3E6"
                 style={[styles.radioCard, styles.spaceRight, styles.half]}>
                 <Radio
+                  bold
                   button={{
                     label: 'Entryway',
                     size: 18,
@@ -177,6 +184,7 @@ const Quiz1 = ({navigation}) => {
               color="#F4DADA"
               style={[styles.radioCard, styles.spaceLeft, styles.full]}>
               <Radio
+                bold
                 button={{
                   label: 'Open Living',
                   size: 18,
