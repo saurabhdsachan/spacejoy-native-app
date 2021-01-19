@@ -1,7 +1,6 @@
 import Avatar from '@components/Avatar';
 import {Block, Button, Divider, Text} from '@components/index';
 import {theme} from '@constants/index';
-import {elevationShadowStyle} from '@utils/styleHelper';
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, Share, StatusBar, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -167,7 +166,6 @@ const styles = StyleSheet.create({
     paddingVertical: SIZES.padding / 2,
   },
   designFeedImageHolder: {
-    ...elevationShadowStyle(2),
     height: 220,
     width: '100%',
   },

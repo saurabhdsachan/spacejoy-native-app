@@ -46,16 +46,15 @@ const CollectionFAQs = ({id}) => {
 const DesignCard = ({data, navigation}) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('About', {feedItem: data})}>
-      <Block middle style={styles.designCard}>
-        <Block style={styles.designImageHolder}>
-          <Image
-            style={styles.designCardImage}
-            source={{
-              uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,ar_1.55,c_pad/${data?.cdnRender[0]}`,
-            }}
-          />
-        </Block>
+      onPress={() => navigation.navigate('Details', {feedItem: data})}>
+      <Block style={styles.designCard}>
+        <Image
+          resizeMode="cover"
+          style={styles.designCardImage}
+          source={{
+            uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto/${data?.cdnRender[0]}`,
+          }}
+        />
         <Block>
           <Text caption mt2 color={COLORS.red} transform={'capitalize'}>
             {data?.theme?.name}
@@ -134,10 +133,11 @@ const SingleCollection = ({route, navigation}) => {
       <ScrollView scrollEventThrottle={20} onScroll={handleScroll}>
         <Image
           source={{
-            uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,h_400,ar_2,c_pad/${
+            uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,w_600,f_auto,h_400,ar_2,c_pad/${
               collectionItem.cdnThumbnail || collectionData.cdnCover
             }`,
           }}
+          resizeMode="cover"
           style={{width: '100%', height: 190}}
         />
         <Block padding={SIZES.padding}>
@@ -156,26 +156,12 @@ const SingleCollection = ({route, navigation}) => {
 
         <Block color="#f3f3f3">
           <Block padding={SIZES.padding}>
-            <Text h3 bold>
+            <Text h3 bold mb3>
               Hand-Picked Farmhouse Living Room Design Ideas Collection
             </Text>
-          </Block>
-          <Block padding={[0, 0, SIZES.padding, 0]}>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              fadingEdgeLength={200}
-              contentContainerStyle={{
-                paddingLeft: SIZES.padding,
-              }}>
-              {collectionData?.designList?.map((item) => (
-                <DesignCard
-                  key={item?._id}
-                  data={item}
-                  navigation={navigation}
-                />
-              ))}
-            </ScrollView>
+            {collectionData?.designList?.map((item) => (
+              <DesignCard key={item?._id} data={item} navigation={navigation} />
+            ))}
           </Block>
         </Block>
         {collectionData?._id && (
@@ -194,18 +180,11 @@ const styles = StyleSheet.create({
   },
   designCard: {
     borderRadius: SIZES.radius / 2,
-    marginRight: SIZES.padding,
-    width: SIZES.width - 40 - SIZES.padding * 2,
-  },
-  designImageHolder: {
-    height: 160,
-    borderRadius: SIZES.radius / 2,
-    width: '100%',
+    marginBottom: SIZES.padding * 1.5,
   },
   designCardImage: {
     borderRadius: SIZES.radius / 2,
-    width: '100%',
-    height: '100%',
+    height: 200,
   },
 });
 
