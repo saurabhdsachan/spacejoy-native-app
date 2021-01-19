@@ -1,12 +1,12 @@
-import { Block, Button, Divider, Text } from '@components/';
+import {Block, Button, Text} from '@components/';
 import Loader from '@components/Loader';
-import { COLORS, SIZES } from '@constants/';
-import { useHeaderHeight } from '@react-navigation/stack';
+import {COLORS, SIZES} from '@constants/';
+import {useHeaderHeight} from '@react-navigation/stack';
 import onShare from '@utils/onShare';
-import { elevationShadowStyle } from '@utils/styleHelper';
-import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Image, StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {elevationShadowStyle} from '@utils/styleHelper';
+import React, {useEffect, useRef, useState} from 'react';
+import {FlatList, Image, StyleSheet} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -22,12 +22,12 @@ const CollectionCard = ({data, navigation}) => {
   };
 
   return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate('SingleCollection', {collectionItem: data})
-      }>
-      <Block style={styles.collectionFeedCard} middle key={data._id}>
-        <Block style={styles.collectionFeedImageHolder}>
+    <Block style={styles.collectionFeedCard} middle key={data._id}>
+      <Block style={styles.collectionFeedImageHolder}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('SingleCollection', {collectionItem: data})
+          }>
           <Image
             source={{
               uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,ar_1.55,c_pad/${data.cdnThumbnail}`,
@@ -35,33 +35,33 @@ const CollectionCard = ({data, navigation}) => {
             resizeMode="cover"
             style={styles.collectionFeedImage}
           />
+        </TouchableOpacity>
+      </Block>
+      <Block row spaceBetween end padding={[SIZES.padding, 0]}>
+        <Block flex={10}>
+          <Text body>{data.name}</Text>
         </Block>
-        <Block row spaceBetween end padding={[SIZES.padding, 0]}>
-          <Block flex={11}>
-            <Text bold>{data.name}</Text>
-          </Block>
-          <Block flex={1}>
-            <Button
-              raw
-              onPress={() =>
-                onShare({
-                  data: {
-                    message: data.name,
-                    url: data.slug,
-                    title: data.name,
-                  },
-                  onComplete: onShareComplete,
-                  onError: onShareError,
-                })
-              }>
-              <Text small right>
-                <Icon name="share-social-outline" size={SIZES.base * 2} />
-              </Text>
-            </Button>
-          </Block>
+        <Block flex={1}>
+          <Button
+            raw
+            onPress={() =>
+              onShare({
+                data: {
+                  message: data.name,
+                  url: data.slug,
+                  title: data.name,
+                },
+                onComplete: onShareComplete,
+                onError: onShareError,
+              })
+            }>
+            <Text small right>
+              <Icon name="share-social-outline" size={SIZES.base * 2} />
+            </Text>
+          </Button>
         </Block>
       </Block>
-    </TouchableOpacity>
+    </Block>
   );
 };
 
@@ -126,9 +126,6 @@ const Collection = ({route, navigation}) => {
             extrapolate: 'clamp',
           }),
         }}
-        ItemSeparatorComponent={() => (
-          <Divider margin={[0, 0, SIZES.padding, 0]} />
-        )}
         refreshing={isLoading}
         onRefresh={getCollectionFeed}
         data={collectionFeed}
@@ -159,14 +156,13 @@ const styles = StyleSheet.create({
   },
   container: {flexGrow: 1, justifyContent: 'center'},
   collectionFeedImageHolder: {
-    ...elevationShadowStyle(2),
+    ...elevationShadowStyle(0),
     height: 175,
     width: '100%',
   },
   collectionFeedImage: {
     height: '100%',
     width: '100%',
-    borderRadius: SIZES.radius / 2,
   },
 });
 

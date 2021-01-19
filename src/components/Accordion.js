@@ -1,11 +1,11 @@
-import { COLORS, SIZES } from '@constants/';
-import React, { Component } from 'react';
+import {COLORS, SIZES} from '@constants/';
+import React, {Component} from 'react';
 import {
   LayoutAnimation,
   Platform,
   StyleSheet,
   TouchableOpacity,
-  UIManager
+  UIManager,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Block from './Block';
@@ -26,34 +26,41 @@ export default class Accordion extends Component {
 
   render() {
     return (
-      <Block color={COLORS.border}>
+      <>
         <TouchableOpacity onPress={() => this.toggleExpand()}>
           <Block
+            middle
             row
-            padding={[
-              SIZES.padding,
-              SIZES.padding * 2,
-              SIZES.padding,
-              SIZES.padding,
-            ]}>
-            <Text style={[styles.title]}>{this.props.title}</Text>
-            <Icon
-              name={
-                this.state.expanded ? 'caret-up-outline' : 'caret-down-outline'
-              }
-              size={16}
-              color={COLORS.black}
-            />
+            paddingVertical={SIZES.padding / 1.5}
+            style={{
+              borderBottomWidth: StyleSheet.hairlineWidth,
+              borderBottomColor: COLORS.gray2,
+            }}>
+            <Block flex={12}>
+              <Text small>{this.props.title}</Text>
+            </Block>
+            <Block>
+              <Icon
+                name={
+                  this.state.expanded
+                    ? 'chevron-up-outline'
+                    : 'chevron-down-outline'
+                }
+                size={14}
+                color={COLORS.black}
+                style={{textAlign: 'right'}}
+              />
+            </Block>
           </Block>
         </TouchableOpacity>
         {this.state.expanded && (
-          <Block padding={[SIZES.padding / 2]}>
+          <Block paddingVertical={SIZES.padding / 2}>
             <Text small light align="justify" style={styles.descriptionStyle}>
               {`${this.props.description}`}
             </Text>
           </Block>
         )}
-      </Block>
+      </>
     );
   }
 

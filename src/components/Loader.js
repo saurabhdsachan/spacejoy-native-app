@@ -1,6 +1,6 @@
-import { COLORS, SIZES } from '@constants/';
+import {SIZES} from '@constants/';
 import React from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import {ActivityIndicator, StyleSheet} from 'react-native';
 import Block from './Block';
 import Text from './Text';
 
@@ -22,13 +22,7 @@ const Loader = ({style, textStyle, bgColor}) => {
   return (
     <Block style={styles.loaderWrapper} padding={SIZES.padding} color={bgColor}>
       <ActivityIndicator style={style} />
-      <Text
-        small
-        mt2
-        textStyle
-        center
-        color={COLORS.gray}
-        style={loaderTextStyle}>
+      <Text small mt2 textStyle center style={loaderTextStyle}>
         {LovelyQuotes[Math.floor(Math.random() * 10)]}
       </Text>
     </Block>

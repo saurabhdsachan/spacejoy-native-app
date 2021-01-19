@@ -1,10 +1,10 @@
-import { Block, Divider, Text } from '@components/';
+import {Block, Button, Text} from '@components/';
 import Accordion from '@components/Accordion';
 import Loader from '@components/Loader';
-import { COLORS, SIZES } from '@constants/';
-import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import {COLORS, SIZES} from '@constants/index';
+import React, {useEffect, useState} from 'react';
+import {Image, StyleSheet} from 'react-native';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 
 const CollectionFAQs = ({id}) => {
   const [collectionFaq, setCollectionFaq] = useState([]);
@@ -23,10 +23,13 @@ const CollectionFAQs = ({id}) => {
   };
   useEffect(() => {
     getCollectionFaq();
-  }, [id]);
+  }, []);
 
   return (
     <Block>
+      <Text h3 mb3 mt4>
+        FAQ's
+      </Text>
       {collectionFaq.map((item) => {
         return (
           <Accordion
@@ -44,7 +47,7 @@ const DesignCard = ({data, navigation}) => {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('About', {feedItem: data})}>
-      <Block color={COLORS.white} middle style={styles.designCard}>
+      <Block middle style={styles.designCard}>
         <Block style={styles.designImageHolder}>
           <Image
             style={styles.designCardImage}
@@ -54,16 +57,12 @@ const DesignCard = ({data, navigation}) => {
           />
         </Block>
         <Block>
-          <Block>
-            <Text caption mt2 gray transform={'capitalize'}>
-              {data?.theme?.name}
-            </Text>
-          </Block>
-          <Block>
-            <Text numberOfLines={1} bold small>
-              {data?.name}
-            </Text>
-          </Block>
+          <Text caption mt2 color={COLORS.red} transform={'capitalize'}>
+            {data?.theme?.name}
+          </Text>
+          <Text numberOfLines={1} body>
+            {data?.name}
+          </Text>
         </Block>
       </Block>
     </TouchableOpacity>
@@ -133,68 +132,56 @@ const SingleCollection = ({route, navigation}) => {
   ) : (
     <Block color={COLORS.white}>
       <ScrollView scrollEventThrottle={20} onScroll={handleScroll}>
-        <Block>
-          <Image
-            source={{
-              uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,h_400,ar_2,c_pad/${
-                collectionItem.cdnThumbnail || collectionData.cdnCover
-              }`,
-            }}
-            style={{width: '100%', height: 190}}
-          />
-        </Block>
-        <Block padding={[SIZES.padding]}>
-          <Block>
-            <Text h2 mt1>
-              {collectionData?.name || collectionItem?.name}
+        <Image
+          source={{
+            uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,h_400,ar_2,c_pad/${
+              collectionItem.cdnThumbnail || collectionData.cdnCover
+            }`,
+          }}
+          style={{width: '100%', height: 190}}
+        />
+        <Block padding={SIZES.padding}>
+          <Text h2 mb2>
+            {collectionData?.name || collectionItem?.name}
+          </Text>
+          <Text small {...(ellipsis ? {numberOfLines: 3} : {})}>
+            {collectionData?.description}
+          </Text>
+          <Button raw onPress={onChangeSizeClick}>
+            <Text color={COLORS.primary1} mt2>
+              {ellipsis ? 'Expand' : 'Collapse'}
             </Text>
-          </Block>
+          </Button>
         </Block>
-        <Block paddingHorizontal={SIZES.padding}>
-          <Block>
-            <Text light {...(ellipsis ? {numberOfLines: 3} : {})} mt0 small>
-              {collectionData?.description}
-            </Text>
-            <TouchableOpacity onPress={onChangeSizeClick}>
-              <Text secondary>{ellipsis ? 'Expand' : 'Collapse'}</Text>
-            </TouchableOpacity>
-          </Block>
-        </Block>
-        <Block style={styles.dividerBlock}>
-          <Divider />
-        </Block>
-        <Block paddingHorizontal={SIZES.padding}>
-          <Block>
+
+        <Block color="#f3f3f3">
+          <Block padding={SIZES.padding}>
             <Text h3 bold>
               Hand-Picked Farmhouse Living Room Design Ideas Collection
             </Text>
           </Block>
-        </Block>
-
-        <Block padding={[SIZES.padding, 0]}>
-          <ScrollView
-            fadingEdgeLength={200}
-            horizontal
-            contentContainerStyle={{
-              paddingLeft: SIZES.padding,
-            }}>
-            {collectionData?.designList?.map((item) => (
-              <DesignCard key={item?._id} data={item} navigation={navigation} />
-            ))}
-          </ScrollView>
+          <Block padding={[0, 0, SIZES.padding, 0]}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              fadingEdgeLength={200}
+              contentContainerStyle={{
+                paddingLeft: SIZES.padding,
+              }}>
+              {collectionData?.designList?.map((item) => (
+                <DesignCard
+                  key={item?._id}
+                  data={item}
+                  navigation={navigation}
+                />
+              ))}
+            </ScrollView>
+          </Block>
         </Block>
         {collectionData?._id && (
-          <>
-            <Block style={styles.dividerBlock}>
-              <Divider />
-            </Block>
-            <Block paddingHorizontal={SIZES.padding} mb2>
-              <Text h3>FAQ about {collectionData?.name}</Text>
-            </Block>
-            <Block padding={SIZES.padding}>
-              <CollectionFAQs id={collectionData._id} />
-            </Block>
-          </>
+          <Block padding={SIZES.padding}>
+            <CollectionFAQs id={collectionData._id} />
+          </Block>
         )}
       </ScrollView>
     </Block>
@@ -207,7 +194,7 @@ const styles = StyleSheet.create({
   },
   designCard: {
     borderRadius: SIZES.radius / 2,
-    marginRight: SIZES.base,
+    marginRight: SIZES.padding,
     width: SIZES.width - 40 - SIZES.padding * 2,
   },
   designImageHolder: {

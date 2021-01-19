@@ -1,6 +1,6 @@
-import { Block, Button, HeaderBack } from '@components/index';
-import { images, SIZES } from '@constants/index';
-import { createStackNavigator } from '@react-navigation/stack';
+import {Block, Button, HeaderBack} from '@components/index';
+import {images, SIZES} from '@constants/index';
+import {createStackNavigator} from '@react-navigation/stack';
 import Collection from '@screens/Collection';
 import DesignService from '@screens/DesignService';
 import Details from '@screens/Details';
@@ -14,7 +14,7 @@ import Quiz4 from '@screens/PreQuiz/Quiz4';
 import SingleCollection from '@screens/SingleCollection';
 import Store from '@screens/Store';
 import React from 'react';
-import { Image } from 'react-native';
+import {Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Stack = createStackNavigator();
@@ -91,7 +91,7 @@ const CollectionStackNavigator = ({navigation}) => {
           headerStyle: {
             backgroundColor: 'white',
             borderBottomColor: 'white',
-            shadowColor: 'white',
+            shadowColor: 'transparent',
           },
           headerTitleAlign: 'left',
           title: '',
@@ -129,7 +129,6 @@ const CollectionStackNavigator = ({navigation}) => {
             <Icon name="arrow-back" size={20} style={{marginHorizontal: 10}} />
           ),
           headerBackTitleVisible: false,
-          headerStyle: {backgroundColor: 'white'},
         }}
       />
       <Stack.Screen

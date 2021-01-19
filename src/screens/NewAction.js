@@ -10,7 +10,9 @@ const {COLORS, SIZES} = theme;
 
 const NewAction = ({navigation}) => {
   return (
-    <ScrollView style={{backgroundColor: COLORS.white}}>
+    <ScrollView
+      alwaysBounceVertical={false}
+      style={{backgroundColor: COLORS.white}}>
       <Block padding={SIZES.padding} margin={[SIZES.safe, 0, 0, 0]}>
         <Image
           source={chair}

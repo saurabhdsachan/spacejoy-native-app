@@ -38,7 +38,7 @@ export const SIZES = {
   caption: 12,
 
   // app dimensions
-  safe: 40,
+  safe: 80,
   width,
   height,
 };
