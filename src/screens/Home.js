@@ -172,6 +172,6 @@ const styles = StyleSheet.create({
   designFeedImage: {
     height: '100%',
     width: '100%',
-    borderRadius: SIZES.radius,
+    borderRadius: SIZES.base,
   },
 });
