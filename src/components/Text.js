@@ -1,7 +1,7 @@
 // just copy this code from the driving repo :)
-import {theme} from '@constants/index';
-import React, {Component} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import { theme } from '@constants/index';
+import React, { Component } from 'react';
+import { StyleSheet, Text } from 'react-native';
 
 const {COLORS, FONTS, SIZES} = theme;
 
@@ -48,6 +48,7 @@ export default class Typography extends Component {
       white,
       gray,
       gray2,
+      fontStyle,
       style,
       children,
       ...props
@@ -81,6 +82,7 @@ export default class Typography extends Component {
       semibold && styles.semibold,
       medium && styles.medium,
       light && styles.light,
+      fontStyle && {fontStyle: fontStyle},
       center && styles.center,
       right && styles.right,
       color && styles[color],
