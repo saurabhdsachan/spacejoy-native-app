@@ -134,7 +134,7 @@ const CollectionStackNavigator = ({navigation}) => {
       />
       <Stack.Screen
         screenOptions={{headerShown: false}}
-        name="About"
+        name="Details"
         options={{
           headerBackImage: () => (
             <Icon name="arrow-back" size={20} style={{marginHorizontal: 10}} />
@@ -144,7 +144,7 @@ const CollectionStackNavigator = ({navigation}) => {
           headerTintColor: 'black',
           headerStyle: {backgroundColor: 'white'},
         }}
-        component={About}
+        component={Details}
       />
     </Stack.Navigator>
   );

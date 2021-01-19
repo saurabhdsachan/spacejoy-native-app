@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 const {width, height} = Dimensions.get('window');
 
 export const COLORS = {
@@ -26,7 +26,6 @@ export const SIZES = {
   font: 14,
   radius: 12,
   padding: 18,
-
   // font sizes
   h1: 30,
   h2: 22,
@@ -39,6 +38,7 @@ export const SIZES = {
   caption: 12,
 
   // app dimensions
+  safe: 40,
   width,
   height,
 };
