@@ -19,6 +19,17 @@ export const COLORS = {
   transparent: 'rgba(255,255,255,0)',
 };
 
+export const MILD = {
+  primary1: 'rgb(255, 239, 244)',
+  yellow: 'rgb(254, 247, 239)',
+  red: '#fef2ef',
+  green: 'rgb(241, 251, 244)',
+  blue: 'rgb(240, 247, 252)',
+  black: '#e9ecee',
+  light: 'rgba(255,255,255, 0.9)',
+  white: '#FAFAFA',
+};
+
 export const SIZES = {
   // global sizes
   statusBar: 30,
@@ -62,6 +73,6 @@ export const FONTS = {
   },
 };
 
-const appTheme = {COLORS, SIZES, FONTS};
+const appTheme = {COLORS, MILD, SIZES, FONTS};
 
 export default appTheme;

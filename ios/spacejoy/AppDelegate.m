@@ -13,6 +13,7 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 
 
@@ -74,6 +75,8 @@ UIViewController *rootViewController;
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
   
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(rcvNSNOTFOpenUnity:)
@@ -86,6 +89,20 @@ UIViewController *rootViewController;
                                              object:nil];
 
   return YES;
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *) application {
+  [FBSDKAppEvents activateApp];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+  return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                         openURL:url
+                                               sourceApplication:sourceApplication
+                                                      annotation:annotation];
 }
 
 - (bool)unityIsInitialized { return [self ufw] && [[self ufw] appController]; }

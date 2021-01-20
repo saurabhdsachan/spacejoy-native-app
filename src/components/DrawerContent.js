@@ -1,5 +1,8 @@
-import {theme} from '@constants/index';
+import {images, theme} from '@constants/index';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
+import {AuthContext} from '@utils/helpers/withAuthContext';
+import fbLogout from '@utils/LogoutManager/FbLogout';
+import googleLogout from '@utils/LogoutManager/GoogleLogout';
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -10,6 +13,19 @@ import Text from './Text';
 const {SIZES, COLORS} = theme;
 
 export function DrawerContent({navigation, progress}) {
+  const {token, data, signOut} = React.useContext(AuthContext);
+  const {name = '', email = '', picture = '', channel} = data;
+  const handleSignOut = () => {
+    console.log('sign out pressed');
+    if (channel === 'facebook') {
+      fbLogout();
+    } else if (channel === 'google') {
+      googleLogout();
+    }
+    // sings out of local app state
+    signOut();
+    navigation.closeDrawer();
+  };
   const translateX = Animated.interpolate(progress, {
     inputRange: [0.5, 1],
     outputRange: [-50, 10],
@@ -24,10 +40,7 @@ export function DrawerContent({navigation, progress}) {
         <Block style={{margin: SIZES.padding, paddingTop: SIZES.padding}}>
           <Block>
             <Animated.Image
-              source={{
-                uri:
-                  'https://media-exp1.licdn.com/dms/image/C5103AQGesJlA4slIRw/profile-displayphoto-shrink_400_400/0/1574104084714?e=1614816000&v=beta&t=WGahSsFe0iMtzaVYNSqbFROhw8hlga5PCh-45NMYm9k',
-              }}
+              source={{uri: picture || images.defaultAvatar}}
               resizeMode="cover"
               style={{
                 height: 75,
@@ -39,9 +52,9 @@ export function DrawerContent({navigation, progress}) {
             />
           </Block>
           <Block>
-            <Text h2>Saurabh Sachan</Text>
+            <Text h2>{name}</Text>
             <Text caption color="gray">
-              saurabh.sachan@spacejoy.com
+              {email}
             </Text>
           </Block>
         </Block>
@@ -66,6 +79,13 @@ export function DrawerContent({navigation, progress}) {
               <Text body>Design Challenges</Text>
             </Button>
           </Block>
+          {token && (
+            <Block style={styles.navItem}>
+              <Button raw onPress={handleSignOut}>
+                <Text body>Sign Out</Text>
+              </Button>
+            </Block>
+          )}
         </Block>
         <Block bottom flex={2}>
           <Text center color={COLORS.gray}>
