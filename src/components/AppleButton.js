@@ -1,10 +1,10 @@
-import React from 'react';
+import {theme} from '@constants/index';
 import {
   appleAuth,
   AppleButton,
 } from '@invertase/react-native-apple-authentication';
+import React from 'react';
 import {StyleSheet} from 'react-native';
-import {theme} from '@constants/index';
 
 const AppleSignin = ({handleSigninError, handleSignInSuccess, ...props}) => {
   const onAppleButtonPress = async () => {

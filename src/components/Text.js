@@ -1,7 +1,7 @@
 // just copy this code from the driving repo :)
-import { theme } from '@constants/index';
-import React, { Component } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import {theme} from '@constants/index';
+import React, {Component} from 'react';
+import {StyleSheet, Text} from 'react-native';
 
 const {COLORS, FONTS, SIZES} = theme;
 
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   right: {textAlign: 'right'},
   // colors
   accent: {color: COLORS.accent},
-  primary: {color: COLORS.primary},
+  primary: {color: COLORS.primary1},
   secondary: {color: COLORS.secondary},
   tertiary: {color: COLORS.tertiary},
   black: {color: COLORS.black},

@@ -52,13 +52,15 @@ export function DrawerContent({navigation, progress}) {
             />
           </Block>
           <Block>
-            <Text h2>{name}</Text>
+            <Text h2 mt2>
+              {name}
+            </Text>
             <Text caption color="gray">
               {email}
             </Text>
           </Block>
         </Block>
-        <Block flex={1.25} style={{margin: SIZES.padding}}>
+        <Block flex={2} style={{margin: SIZES.padding}}>
           <Block style={styles.navItem}>
             <Button raw onPress={() => navigation.navigate('My Designs')}>
               <Text body>Design Orders</Text>

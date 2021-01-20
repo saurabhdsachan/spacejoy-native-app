@@ -1,12 +1,12 @@
-import React from 'react';
+import Button from '@components/Button';
+import {theme} from '@constants/index';
 import {
   fbLoginWrapper,
   getInfoFromToken,
 } from '@utils/SocialLogins/FbLoginHelpers';
+import React from 'react';
 import {StyleSheet} from 'react-native';
-import Button from '@components/Button';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {theme} from '@constants/index';
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 const FacebookLoginButton = ({
   handleSigninError,
@@ -35,7 +35,7 @@ const FacebookLoginButton = ({
       style={styles.actionBtnStyles}
       onPress={login}
       {...props}>
-      <Icon color="#3b5998" name="logo-facebook" size={18} />
+      <Icon color="#3b5998" name="sc-facebook" size={25} />
     </Button>
   );
 };
