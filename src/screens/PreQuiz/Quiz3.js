@@ -3,7 +3,6 @@ import {images, theme} from '@constants/index';
 import QuizData from '@data/Quiz3';
 import React from 'react';
 import {Animated, StatusBar, StyleSheet} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const {SIZES, COLORS} = theme;
@@ -14,16 +13,16 @@ const Quiz3 = ({navigation}) => {
   const inputRange = [0, 200];
   const scaleImage = scrollY.interpolate({
     inputRange,
-    outputRange: [0.8, 0.25],
+    outputRange: [1, 0.25],
     extrapolate: 'clamp',
   });
   const translateXImage = scrollY.interpolate({
     inputRange,
-    outputRange: [100, 300],
+    outputRange: [150, 500],
   });
   const translateYImage = scrollY.interpolate({
     inputRange,
-    outputRange: [0, -200],
+    outputRange: [0, -100],
   });
   const translateY = scrollY.interpolate({
     inputRange: [-100, 0, 100],
@@ -48,9 +47,10 @@ const Quiz3 = ({navigation}) => {
           },
         ]}
       />
-      <Block animated style={{transform: [{translateY}], marginTop: 150}}>
+      <Block animated style={{transform: [{translateY}], marginTop: 100}}>
         <Text h2>What's the occasion?</Text>
         <Animated.ScrollView
+          bounces={false}
           onScroll={Animated.event(
             [{nativeEvent: {contentOffset: {y: scrollY}}}],
             {
@@ -79,29 +79,30 @@ const Quiz3 = ({navigation}) => {
           ))}
         </Animated.ScrollView>
       </Block>
-      <LinearGradient
-        colors={[COLORS.transparent, COLORS.white]}
-        style={styles.bottomButtons}>
-        <Block center row space="between">
-          <Button
-            ghost
-            size="sm"
-            color={COLORS.transparent}
-            onPress={() => navigation.goBack()}>
-            <Text center>
-              <Icon name="ios-arrow-back" size={14} /> Prev
-            </Text>
-          </Button>
-          <Button
-            color={COLORS.black}
-            size="sm"
-            onPress={() => navigation.navigate('Quiz4')}>
-            <Text center color={COLORS.white}>
-              Next <Icon name="ios-arrow-forward" size={14} />
-            </Text>
-          </Button>
-        </Block>
-      </LinearGradient>
+      <Block
+        color={COLORS.white}
+        style={styles.bottomButtons}
+        center
+        row
+        space="between">
+        <Button
+          ghost
+          size="sm"
+          color={COLORS.transparent}
+          onPress={() => navigation.goBack()}>
+          <Text center>
+            <Icon name="ios-arrow-back" size={14} /> Prev
+          </Text>
+        </Button>
+        <Button
+          color={COLORS.black}
+          size="sm"
+          onPress={() => navigation.navigate('Quiz4')}>
+          <Text center color={COLORS.white}>
+            Next <Icon name="ios-arrow-forward" size={14} />
+          </Text>
+        </Button>
+      </Block>
     </Block>
   );
 };
@@ -111,8 +112,8 @@ export default Quiz3;
 const styles = StyleSheet.create({
   banner: {
     position: 'absolute',
-    width: SIZES.width,
-    height: 250,
+    width: 150,
+    height: 150,
     top: 0,
     left: 0,
   },

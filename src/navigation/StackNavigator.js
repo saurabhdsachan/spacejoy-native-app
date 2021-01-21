@@ -95,6 +95,7 @@ const CollectionStackNavigator = ({navigation}) => {
           },
           headerTitleAlign: 'left',
           title: '',
+          headerBackTitleVisible: false,
           headerLeft: () => (
             <Block center row>
               <Button raw onPress={navigation.toggleDrawer}>
@@ -124,6 +125,7 @@ const CollectionStackNavigator = ({navigation}) => {
         name="SingleCollection"
         component={SingleCollection}
         options={{
+          headerTransparent: false,
           headerBackTitle: 'Back',
           headerBackImage: () => (
             <Icon name="arrow-back" size={20} style={{marginHorizontal: 10}} />

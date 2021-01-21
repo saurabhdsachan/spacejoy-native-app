@@ -117,7 +117,7 @@ const SingleCollection = ({route, navigation}) => {
     } = e;
     if (y > 230) {
       navigation.setOptions({
-        headerTitle: () => <Text>{collectionItem?.name}</Text>,
+        headerTitle: () => <Text h3>{collectionItem?.name}</Text>,
       });
     } else {
       navigation.setOptions({
