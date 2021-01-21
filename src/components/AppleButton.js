@@ -56,7 +56,7 @@ const AppleSignin = ({handleSigninError, handleSignInSuccess, ...props}) => {
 const styles = StyleSheet.create({
   appleButton: {
     width: '100%',
-    ...{height: theme.SIZES.base * 6, marginVertical: theme.SIZES.base},
+    ...{height: theme.SIZES.base * 5},
     marginVertical: 15,
     borderWidth: 1,
     borderColor: theme.COLORS.gray,

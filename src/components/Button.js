@@ -38,23 +38,17 @@ class Button extends Component {
       style,
     ];
 
-    if (gradient) {
-      return (
-        <LinearGradient
-          style={raw ? null : buttonStyles}
-          colors={[COLORS.primary1, COLORS.primary2]}>
-          <TouchableOpacity activeOpacity={opacity || 0.6} {...props}>
-            {children}
-          </TouchableOpacity>
-        </LinearGradient>
-      );
-    }
-
     return (
       <TouchableOpacity
         style={raw ? null : buttonStyles}
         activeOpacity={opacity || 0.6}
         {...props}>
+        {gradient && (
+          <LinearGradient
+            style={styles.rotate}
+            colors={[COLORS.primary2, COLORS.primary1]}
+          />
+        )}
         {children}
       </TouchableOpacity>
     );
@@ -75,7 +69,15 @@ Button.defaultProps = {
 export default Button;
 
 const styles = StyleSheet.create({
+  rotate: {
+    zIndex: -1,
+    position: 'absolute',
+    height: SIZES.width,
+    width: SIZES.width,
+    transform: [{rotate: '135deg'}],
+  },
   button: {
+    overflow: 'hidden',
     backgroundColor: theme.COLORS.teal,
     borderRadius: theme.SIZES.radius * 2,
     justifyContent: 'center',

@@ -1,9 +1,9 @@
+import Button from '@components/Button';
+import {theme} from '@constants/index';
+import GSignIn from '@utils/SocialLogins/GoogleLoginHelpers';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import Button from '@components/Button';
 import Icon from 'react-native-vector-icons/Ionicons';
-import GSignIn from '@utils/SocialLogins/GoogleLoginHelpers';
-import {theme} from '@constants/index';
 
 const GoogleLoginButton = ({
   handleSigninError,
@@ -21,7 +21,7 @@ const GoogleLoginButton = ({
   };
   return (
     <Button
-      size="md"
+      size="sm"
       ghost
       style={styles.actionBtnStyles}
       onPress={signInWithGoogle}

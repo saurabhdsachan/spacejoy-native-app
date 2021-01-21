@@ -87,18 +87,21 @@ const Login = ({navigation}) => {
           <ActivityIndicator size="small" color={COLORS.primary1} />
         </Block>
       )}
-      <Block padding={[SIZES.safe * 2, SIZES.padding, 0, SIZES.padding]}>
-        <Text title mb4>
+      <Block
+        padding={[SIZES.safe * 2, SIZES.padding * 2, 0, SIZES.padding * 2]}>
+        <Text title mb1>
           Login
         </Text>
+        <Text small>Welcome Back</Text>
         {loginError && (
-          <Block flex={1}>
+          <Block flex={0.5} bottom>
             <LoginError errorText={loginError} />
           </Block>
         )}
-        <Block flex={1}>
+        <Block flex={2} bottom>
           <Block flex={false}>
             <TextInput
+              keyboardType="email-address"
               placeholderTextColor={COLORS.gray}
               style={styles.textInput}
               placeholder="Your email"
@@ -114,23 +117,25 @@ const Login = ({navigation}) => {
               onChangeText={(text) => setPassword(text)}
             />
           </Block>
-          <Button
-            size="md"
-            color={COLORS.black}
-            onPress={handleLogin}
-            style={{borderRadius: SIZES.radius / 4}}>
-            {loading ? (
-              <ActivityIndicator size="small" color={COLORS.white} />
-            ) : (
-              <Text center white>
-                Login
-              </Text>
-            )}
-          </Button>
+          <Block flex={false}>
+            <Button
+              gradient
+              onPress={handleLogin}
+              style={{borderRadius: SIZES.radius / 4}}>
+              {loading ? (
+                <ActivityIndicator size="small" color={COLORS.white} />
+              ) : (
+                <Text center white size={16}>
+                  Login
+                </Text>
+              )}
+            </Button>
+          </Block>
         </Block>
-        <Block />
-        <Block flex={0.5}>
-          <Text center>-- or --</Text>
+        <Block middle flex={0.5}>
+          <Text color={COLORS.gray} center>
+            --- or ---
+          </Text>
         </Block>
         <Block flex={0.5} row>
           <Block style={{marginRight: SIZES.padding}}>
@@ -186,8 +191,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: SIZES.padding / 1.25,
     borderRadius: SIZES.radius / 6,
-    marginBottom: SIZES.padding,
-    height: SIZES.base * 6,
+    marginBottom: SIZES.padding / 2,
   },
 });
 export default Login;

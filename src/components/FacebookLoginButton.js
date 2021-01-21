@@ -30,7 +30,7 @@ const FacebookLoginButton = ({
   };
   return (
     <Button
-      size="md"
+      size="sm"
       ghost
       style={styles.actionBtnStyles}
       onPress={login}
