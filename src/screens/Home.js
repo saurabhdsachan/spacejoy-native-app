@@ -93,13 +93,16 @@ const Item = ({data, navigation}) => (
       </Block>
       <Block>
         <Button raw onPress={() => onView3D(data._id, '')}>
-          <Icon name="glasses-outline" size={SIZES.base * 2.5} />
+          <Icon name="cube-outline" size={SIZES.base * 2.5} />
         </Button>
       </Block>
       <Block flex={4}>
-        <Text small right>
-          <Icon name="eye-outline" size={SIZES.base * 2} /> SEE IN MY ROOM
-        </Text>
+        <Button raw onPress={() => onView3D(data._id, '')}>
+          <Text small right>
+            <Icon name="ios-color-wand-outline" size={SIZES.base * 2.5} /> Try
+            in my room
+          </Text>
+        </Button>
       </Block>
     </Block>
     <Text h3 left mt2>
@@ -172,6 +175,5 @@ const styles = StyleSheet.create({
   designFeedImage: {
     height: '100%',
     width: '100%',
-    borderRadius: SIZES.base,
   },
 });
