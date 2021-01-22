@@ -9,8 +9,8 @@ const {SIZES, COLORS} = theme;
 
 const {quiz3Banner} = images;
 
-const HEADER_MIN_HEIGHT = 150;
-const HEADER_MAX_HEIGHT = 250;
+const HEADER_MIN_HEIGHT = 170;
+const HEADER_MAX_HEIGHT = 280;
 
 const Quiz3 = ({navigation}) => {
   const scrollY = React.useRef(new Animated.Value(0)).current;
@@ -81,6 +81,7 @@ const Quiz3 = ({navigation}) => {
           ]}
         />
         <Text h2>What's the occasion?</Text>
+        <Text small>We build our vision around your purpose!</Text>
       </Block>
       <Block
         paddingHorizontal={SIZES.padding}
@@ -135,13 +136,13 @@ const styles = StyleSheet.create({
     top: -20,
     right: 0,
     left: 0,
-    height: 150,
+    height: 200,
     width: SIZES.width,
   },
   bottomButtons: {
     position: 'absolute',
     bottom: 0,
-    height: 80,
+    height: 90,
     left: 0,
     right: 0,
   },
