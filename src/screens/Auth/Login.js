@@ -5,16 +5,19 @@ import GoogleLoginButton from '@components/GoogleLoginButton';
 import {Block} from '@components/index';
 import LoginError from '@components/LoginError';
 import Text from '@components/Text';
-import {COLORS, SIZES} from '@constants/index';
+import {COLORS, images, SIZES} from '@constants/index';
 import {AuthContext} from '@utils/helpers/withAuthContext';
 import {login, oAuthLogin} from '@utils/logins';
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
+  ImageBackground,
   KeyboardAvoidingView,
   StyleSheet,
   TextInput,
 } from 'react-native';
+
+const {bg} = images;
 
 const Login = ({navigation}) => {
   const [email, setEmailAddress] = useState('');
@@ -82,101 +85,103 @@ const Login = ({navigation}) => {
   };
   return (
     <KeyboardAvoidingView style={styles.container}>
-      {loading && (
-        <Block style={StyleSheet.absoluteFill}>
-          <ActivityIndicator size="small" color={COLORS.primary1} />
-        </Block>
-      )}
-      <Block
-        padding={[SIZES.safe * 2, SIZES.padding * 2, 0, SIZES.padding * 2]}>
-        <Text title mb1>
-          Login
-        </Text>
-        <Text small>Welcome Back</Text>
-        {loginError && (
-          <Block flex={0.5} bottom>
-            <LoginError errorText={loginError} />
+      <ImageBackground source={bg} style={styles.imageBg}>
+        {loading && (
+          <Block style={StyleSheet.absoluteFill}>
+            <ActivityIndicator size="small" color={COLORS.primary1} />
           </Block>
         )}
-        <Block flex={2} bottom>
-          <Block flex={false}>
-            <TextInput
-              keyboardType="email-address"
-              placeholderTextColor={COLORS.gray}
-              style={styles.textInput}
-              placeholder="Your email"
-              onChangeText={(text) => setEmailAddress(text)}
+        <Block
+          padding={[SIZES.safe * 2, SIZES.padding * 2, 0, SIZES.padding * 2]}>
+          <Text title mb1>
+            Login
+          </Text>
+          <Text small>Welcome Back</Text>
+          {loginError && (
+            <Block flex={0.5} bottom>
+              <LoginError errorText={loginError} />
+            </Block>
+          )}
+          <Block flex={2} bottom>
+            <Block flex={false}>
+              <TextInput
+                keyboardType="email-address"
+                placeholderTextColor={COLORS.gray}
+                style={styles.textInput}
+                placeholder="Your email"
+                onChangeText={(text) => setEmailAddress(text)}
+              />
+            </Block>
+            <Block flex={false}>
+              <TextInput
+                placeholderTextColor={COLORS.gray}
+                style={styles.textInput}
+                placeholder="Your password"
+                secureTextEntry={true}
+                onChangeText={(text) => setPassword(text)}
+              />
+            </Block>
+            <Block flex={false}>
+              <Button
+                gradient
+                onPress={handleLogin}
+                style={{borderRadius: SIZES.radius / 4}}>
+                {loading ? (
+                  <ActivityIndicator size="small" color={COLORS.white} />
+                ) : (
+                  <Text center white size={16}>
+                    Login
+                  </Text>
+                )}
+              </Button>
+            </Block>
+          </Block>
+          <Block middle flex={0.5}>
+            <Text color={COLORS.gray} center>
+              --- or ---
+            </Text>
+          </Block>
+          <Block flex={0.5} row>
+            <Block style={{marginRight: SIZES.padding}}>
+              <GoogleLoginButton
+                handleSignInSuccess={handleSigninSuccess}
+                handleSigninError={handleSigninError}
+                onTap={() => {
+                  setLoginError(false);
+                  setLoading(true);
+                }}
+              />
+            </Block>
+            <Block>
+              <FacebookLoginButton
+                handleSignInSuccess={handleSigninSuccess}
+                handleSigninError={handleSigninError}
+                onTap={() => {
+                  setLoginError(false);
+                  setLoading(true);
+                }}
+              />
+            </Block>
+          </Block>
+          <Block flex={1}>
+            <AppleButton
+              handleSignInSuccess={handleSigninSuccess}
+              handleSigninError={handleSigninError}
+              onTap={() => {
+                setLoginError(false);
+                setLoading(true);
+              }}
             />
           </Block>
-          <Block flex={false}>
-            <TextInput
-              placeholderTextColor={COLORS.gray}
-              style={styles.textInput}
-              placeholder="Your password"
-              secureTextEntry={true}
-              onChangeText={(text) => setPassword(text)}
-            />
-          </Block>
-          <Block flex={false}>
-            <Button
-              gradient
-              onPress={handleLogin}
-              style={{borderRadius: SIZES.radius / 4}}>
-              {loading ? (
-                <ActivityIndicator size="small" color={COLORS.white} />
-              ) : (
-                <Text center white size={16}>
-                  Login
-                </Text>
-              )}
+          <Block flex={2} top center middle>
+            <Button raw onPress={handleRedirectToSignUp}>
+              <Text>
+                Create New Account <Text primary>Sign Up</Text>{' '}
+              </Text>
             </Button>
           </Block>
         </Block>
-        <Block middle flex={0.5}>
-          <Text color={COLORS.gray} center>
-            --- or ---
-          </Text>
-        </Block>
-        <Block flex={0.5} row>
-          <Block style={{marginRight: SIZES.padding}}>
-            <GoogleLoginButton
-              handleSignInSuccess={handleSigninSuccess}
-              handleSigninError={handleSigninError}
-              onTap={() => {
-                setLoginError(false);
-                setLoading(true);
-              }}
-            />
-          </Block>
-          <Block>
-            <FacebookLoginButton
-              handleSignInSuccess={handleSigninSuccess}
-              handleSigninError={handleSigninError}
-              onTap={() => {
-                setLoginError(false);
-                setLoading(true);
-              }}
-            />
-          </Block>
-        </Block>
-        <Block flex={1}>
-          <AppleButton
-            handleSignInSuccess={handleSigninSuccess}
-            handleSigninError={handleSigninError}
-            onTap={() => {
-              setLoginError(false);
-              setLoading(true);
-            }}
-          />
-        </Block>
-        <Block flex={2} top center middle>
-          <Button raw onPress={handleRedirectToSignUp}>
-            <Text>
-              Create New Account <Text primary>Sign Up</Text>{' '}
-            </Text>
-          </Button>
-        </Block>
-      </Block>
+      </ImageBackground>
     </KeyboardAvoidingView>
   );
 };
@@ -192,6 +197,12 @@ const styles = StyleSheet.create({
     padding: SIZES.padding / 1.25,
     borderRadius: SIZES.radius / 6,
     marginBottom: SIZES.padding / 2,
+  },
+  imageBg: {
+    flex: 1,
+    height: 200,
+    resizeMode: 'cover',
+    justifyContent: 'flex-start',
   },
 });
 export default Login;

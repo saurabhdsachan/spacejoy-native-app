@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const {SIZES, COLORS} = theme;
 
-const {quiz3Banner} = images;
+const {quiz3Banner, bg} = images;
 
 const HEADER_MIN_HEIGHT = 170;
 const HEADER_MAX_HEIGHT = 280;
@@ -26,6 +26,12 @@ const Quiz3 = ({navigation}) => {
   const scale = scrollY.interpolate({
     inputRange,
     outputRange: [1, 0.5],
+    extrapolate: 'clamp',
+  });
+
+  const scaleBg = scrollY.interpolate({
+    inputRange,
+    outputRange: [1, 1.25],
     extrapolate: 'clamp',
   });
 
@@ -71,6 +77,14 @@ const Quiz3 = ({navigation}) => {
         color={COLORS.white}
         style={[styles.banner, {height: headerHeight}]}>
         <Animated.Image
+          source={bg}
+          resizeMode="contain"
+          style={[
+            styles.bannerImageBg,
+            {transform: [{scale: scaleBg}, {translateX: -150}]},
+          ]}
+        />
+        <Animated.Image
           source={quiz3Banner}
           resizeMode="contain"
           style={[
@@ -80,6 +94,7 @@ const Quiz3 = ({navigation}) => {
             },
           ]}
         />
+
         <Text h2>What's the occasion?</Text>
         <Text small>We build our vision around your purpose!</Text>
       </Block>
@@ -138,6 +153,12 @@ const styles = StyleSheet.create({
     left: 0,
     height: 200,
     width: SIZES.width,
+  },
+  bannerImageBg: {
+    height: 150,
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
   bottomButtons: {
     position: 'absolute',

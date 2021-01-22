@@ -13,6 +13,7 @@ export const chair = require('../assets/images/chair.png');
 export const teddy = require('../assets/images/teddy.png');
 export const quiz3Banner = require('../assets/images/quiz3.png');
 export const lamp = require('../assets/images/lamp.png');
+export const bg = require('../assets/images/bg.jpg');
 export const defaultAvatar =
   'https://res.cloudinary.com/spacejoy/image/upload/c_thumb,g_face,fl_lossy,q_auto,f_auto,h_120,w_120/v1581506948/web/Customer%20Stories_Assets/Amber/Amber_profile_n4lpwa.jpg';
 
@@ -33,4 +34,5 @@ export default {
   lamp,
   teddy,
   defaultAvatar,
+  bg,
 };
