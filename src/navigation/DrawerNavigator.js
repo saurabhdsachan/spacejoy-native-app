@@ -1,8 +1,8 @@
+import {DrawerContent} from '@components/DrawerContent';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import WalkThrough from '@screens/WalkThrough';
 import {AuthContext} from '@utils/helpers/withAuthContext';
 import React from 'react';
-import {DrawerContent} from '../components/DrawerContent';
 import AuthStackNavigator from './AuthStackNavigator';
 import TabNavigator from './TabNavigator';
 
@@ -12,11 +12,19 @@ const DrawerNavigator = () => {
   const {token} = React.useContext(AuthContext);
   return (
     <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-      <Drawer.Screen name="WalkThrough" component={WalkThrough} />
+      <Drawer.Screen
+        name="WalkThrough"
+        component={WalkThrough}
+        options={{swipeEnabled: false}}
+      />
       {token ? (
         <Drawer.Screen name="Home" component={TabNavigator} />
       ) : (
-        <Drawer.Screen name="Home" component={AuthStackNavigator} />
+        <Drawer.Screen
+          name="Home"
+          component={AuthStackNavigator}
+          options={{swipeEnabled: false}}
+        />
       )}
     </Drawer.Navigator>
   );
