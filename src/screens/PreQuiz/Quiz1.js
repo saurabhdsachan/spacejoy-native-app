@@ -17,7 +17,7 @@ const Quiz1 = ({navigation}) => {
       <StatusBar barStyle="dark-content" />
       <Text h2>Which space in your home are you looking to transform?</Text>
       <Block flex={18} padding={[SIZES.padding, 0, SIZES.padding, 0]}>
-        <ScrollView>
+        <ScrollView bounces={false}>
           <Block row>
             <TouchableOpacity
               activeOpacity={0.8}

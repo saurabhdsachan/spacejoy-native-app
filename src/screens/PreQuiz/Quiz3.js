@@ -1,85 +1,89 @@
-import {Block, Button, Radio, Text} from '@components/index';
+import {Block, Button, Radio, Text} from '@components/';
 import {images, theme} from '@constants/index';
 import QuizData from '@data/Quiz3';
 import React from 'react';
-import {Animated, StatusBar, StyleSheet} from 'react-native';
+import {Animated, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const {SIZES, COLORS} = theme;
+
 const {quiz3Banner} = images;
+
+const HEADER_MIN_HEIGHT = 150;
+const HEADER_MAX_HEIGHT = 250;
 
 const Quiz3 = ({navigation}) => {
   const scrollY = React.useRef(new Animated.Value(0)).current;
-  const inputRange = [0, 200];
-  const scaleImage = scrollY.interpolate({
+
+  const inputRange = [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT];
+
+  const headerHeight = scrollY.interpolate({
     inputRange,
-    outputRange: [1, 0.25],
+    outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
     extrapolate: 'clamp',
   });
-  const translateXImage = scrollY.interpolate({
+
+  const scale = scrollY.interpolate({
     inputRange,
-    outputRange: [150, 500],
+    outputRange: [1, 0.5],
+    extrapolate: 'clamp',
   });
-  const translateYImage = scrollY.interpolate({
+
+  const translateX = scrollY.interpolate({
     inputRange,
-    outputRange: [0, -100],
+    outputRange: [0, 200],
+    extrapolate: 'clamp',
   });
-  const translateY = scrollY.interpolate({
-    inputRange: [-100, 0, 100],
-    outputRange: [50, 0, -100],
-  });
+
   return (
-    <Block
-      color={COLORS.white}
-      padding={[SIZES.safe + 20, SIZES.padding, 0, SIZES.padding]}>
-      <StatusBar barStyle="dark-content" />
-      <Animated.Image
-        source={quiz3Banner}
-        resizeMode="cover"
-        style={[
-          styles.banner,
-          {
-            transform: [
-              {scale: scaleImage},
-              {translateX: translateXImage},
-              {translateY: translateYImage},
-            ],
-          },
-        ]}
-      />
-      <Block animated style={{transform: [{translateY}], marginTop: 100}}>
-        <Text h2>What's the occasion?</Text>
-        <Animated.ScrollView
-          bounces={false}
-          onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {y: scrollY}}}],
+    <Block middle color={COLORS.white} padding={SIZES.padding}>
+      <Animated.ScrollView
+        contentContainerStyle={{paddingTop: HEADER_MAX_HEIGHT}}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: scrollY}}}],
+          {useNativeDriver: false},
+        )}>
+        {QuizData?.map((item, index) => (
+          <Block
+            middle
+            key={item.title}
+            style={[
+              styles.radioCard,
+              index === QuizData.length - 1 && styles.lastChild,
+            ]}>
+            <Radio
+              inline
+              button={{
+                label: item.title,
+                size: 18,
+                color: item.bg,
+                selected: false,
+              }}
+            />
+          </Block>
+        ))}
+      </Animated.ScrollView>
+      <Block
+        padding={SIZES.padding}
+        animated
+        bottom
+        color={COLORS.white}
+        style={[styles.banner, {height: headerHeight}]}>
+        <Animated.Image
+          source={quiz3Banner}
+          resizeMode="contain"
+          style={[
+            styles.bannerImage,
             {
-              useNativeDriver: true,
+              transform: [{scale}, {translateX}],
             },
-          )}>
-          {QuizData.map((item, index) => (
-            <Block
-              middle
-              key={item.title}
-              style={[
-                styles.radioCard,
-                index === QuizData.length - 1 && styles.lastChild,
-                index === 0 && styles.firstChild,
-              ]}>
-              <Radio
-                inline
-                button={{
-                  label: item.title,
-                  size: 18,
-                  color: item.bg,
-                  selected: false,
-                }}
-              />
-            </Block>
-          ))}
-        </Animated.ScrollView>
+          ]}
+        />
+        <Text h2>What's the occasion?</Text>
       </Block>
       <Block
+        paddingHorizontal={SIZES.padding}
         color={COLORS.white}
         style={styles.bottomButtons}
         center
@@ -110,13 +114,6 @@ const Quiz3 = ({navigation}) => {
 export default Quiz3;
 
 const styles = StyleSheet.create({
-  banner: {
-    position: 'absolute',
-    width: 150,
-    height: 150,
-    top: 0,
-    left: 0,
-  },
   radioCard: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: COLORS.gray2,
@@ -124,15 +121,28 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   lastChild: {
+    paddingBottom: 100,
     borderBottomWidth: 0,
   },
-  firstChild: {
-    marginTop: SIZES.padding,
+  banner: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+  },
+  bannerImage: {
+    position: 'absolute',
+    top: -20,
+    right: 0,
+    left: 0,
+    height: 150,
+    width: SIZES.width,
   },
   bottomButtons: {
     position: 'absolute',
     bottom: 0,
-    width: SIZES.width,
-    padding: SIZES.padding,
+    height: 80,
+    left: 0,
+    right: 0,
   },
 });

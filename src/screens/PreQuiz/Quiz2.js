@@ -35,7 +35,6 @@ const Quiz2 = ({navigation}) => {
                 }}
                 onClick={() => {}}
               />
-              <Text color={item.color}>-</Text>
               <Text bold body mb1 mt2>
                 {item.secondaryText}
               </Text>
