@@ -1,8 +1,14 @@
 import Avatar from '@components/Avatar';
-import {Block, Button, Divider, Text} from '@components/index';
+import {
+  Block,
+  Button,
+  Divider,
+  ProgressiveImage,
+  Text,
+} from '@components/index';
 import {theme} from '@constants/index';
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, Share, StatusBar, StyleSheet} from 'react-native';
+import {FlatList, Share, StatusBar, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import RxUnityBridge from '../utils/rxUnityBridge';
@@ -73,7 +79,7 @@ const Item = ({data, navigation}) => (
       activeOpacity={0.8}
       onPress={() => navigation.navigate('Details', {feedItem: data})}>
       <Block style={styles.designFeedImageHolder}>
-        <Image
+        <ProgressiveImage
           source={{
             uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,w_800/${data.cdnRender[0]}`,
           }}

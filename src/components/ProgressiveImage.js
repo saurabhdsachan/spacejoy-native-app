@@ -8,11 +8,15 @@ const ProgressiveImage = ({thumbnailSource, source, style, ...props}) => {
   const handleThumbnailLoad = () => {
     Animated.timing(thumbnailAnimated, {
       toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
     }).start();
   };
   const onImageLoad = () => {
     Animated.timing(imageAnimated, {
       toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
     }).start();
   };
   return (
@@ -27,7 +31,7 @@ const ProgressiveImage = ({thumbnailSource, source, style, ...props}) => {
       <Animated.Image
         {...props}
         source={source}
-        style={[StyleSheet.absoluteFill, style]}
+        style={[StyleSheet.absoluteFill, {opacity: imageAnimated}, style]}
         onLoad={onImageLoad}
       />
     </Block>
