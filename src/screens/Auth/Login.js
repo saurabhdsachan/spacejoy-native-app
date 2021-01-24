@@ -20,11 +20,12 @@ import {
 const {bg} = images;
 
 const Login = ({navigation}) => {
+  const {signIn} = React.useContext(AuthContext);
+
   const [email, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
-  const {signIn} = React.useContext(AuthContext);
 
   const handleRedirectToSignUp = () => {
     navigation.navigate('SignUp');
@@ -87,8 +88,12 @@ const Login = ({navigation}) => {
     <KeyboardAvoidingView style={styles.container}>
       <ImageBackground source={bg} style={styles.imageBg}>
         {loading && (
-          <Block style={StyleSheet.absoluteFill}>
-            <ActivityIndicator size="small" color={COLORS.primary1} />
+          <Block
+            center
+            middle
+            color={COLORS.semiTransparent}
+            style={{...StyleSheet.absoluteFill, zIndex: 1}}>
+            <ActivityIndicator size="small" />
           </Block>
         )}
         <Block
@@ -176,7 +181,7 @@ const Login = ({navigation}) => {
           <Block flex={2} top center middle>
             <Button raw onPress={handleRedirectToSignUp}>
               <Text>
-                Create New Account <Text primary>Sign Up</Text>{' '}
+                Create New Account <Text primary>Sign Up</Text>
               </Text>
             </Button>
           </Block>

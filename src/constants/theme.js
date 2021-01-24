@@ -17,6 +17,7 @@ export const COLORS = {
   white: '#FFFFFF',
   border: '#F2F2F2',
   transparent: 'rgba(255,255,255,0)',
+  semiTransparent: 'rgba(255,255,255,0.5)',
 };
 
 export const MILD = {

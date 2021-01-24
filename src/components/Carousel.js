@@ -31,7 +31,9 @@ const Carousel = ({images}) => {
               <Block style={{width: SIZES.width, height: 250}} key={imageIndex}>
                 <ImageBackground
                   source={{
-                    uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,w_800/${image}`,
+                    uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,w_${
+                      SIZES.width * 2
+                    }/${image}`,
                   }}
                   style={{width: SIZES.width, height: 250}}
                 />

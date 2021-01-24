@@ -132,7 +132,10 @@ const WalkThrough = ({navigation}) => {
         ))}
       </Animated.ScrollView>
       <Block style={styles.skipHolder}>
-        <Button size="xs" onPress={() => navigation.navigate('Home')}>
+        <Button
+          color={COLORS.semiTransparent}
+          size="xs"
+          onPress={() => navigation.navigate('Home')}>
           <Text>SKIP</Text>
         </Button>
       </Block>

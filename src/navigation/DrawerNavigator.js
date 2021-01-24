@@ -3,7 +3,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import WalkThrough from '@screens/WalkThrough';
 import {AuthContext} from '@utils/helpers/withAuthContext';
 import React from 'react';
-import AuthStackNavigator from './AuthStackNavigator';
+import {AuthStackNavigator} from './StackNavigator';
 import TabNavigator from './TabNavigator';
 
 const Drawer = createDrawerNavigator();

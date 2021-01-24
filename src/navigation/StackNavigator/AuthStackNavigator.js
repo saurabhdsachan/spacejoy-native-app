@@ -8,14 +8,13 @@ const Stack = createStackNavigator();
 const screenOptions = {
   headerShown: false,
   headerTintColor: 'black',
-  headerBackTitle: 'Back',
 };
 
-const AuthStackNavigator = ({navigation}) => {
+const AuthStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
-      <Stack.Screen component={Login} name="SignIn" options={{title: ''}} />
-      <Stack.Screen component={SignUp} name="SignUp" options={{title: ''}} />
+      <Stack.Screen component={Login} name="Login" />
+      <Stack.Screen component={SignUp} name="SignUp" />
     </Stack.Navigator>
   );
 };

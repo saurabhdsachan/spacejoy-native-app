@@ -1,3 +1,4 @@
+import AuthStackNavigator from './AuthStackNavigator';
 import CollectionStackNavigator from './CollectionStackNavigator';
 import HomeStackNavigator from './HomeStackNavigator';
 import MyDesignsStackNavigator from './MyDesignsStackNavigator';
@@ -10,4 +11,5 @@ export {
   NewActionStackNavigator,
   MyDesignsStackNavigator,
   StoreStackNavigator,
+  AuthStackNavigator,
 };

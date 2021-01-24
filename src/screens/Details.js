@@ -29,7 +29,7 @@ const Details = ({route, navigation}) => {
   }, []);
 
   return (
-    <ScrollView style={{backgroundColor: 'white'}}>
+    <ScrollView style={{backgroundColor: COLORS.white}}>
       <StatusBar barStyle="dark-content" backgroundColor="red" />
       <Block>
         <Carousel images={feedItem.cdnRender} />
