@@ -5,6 +5,7 @@ import Card from './Card';
 import Carousel from './Carousel';
 import Divider from './Divider';
 import HeaderBack from './HeaderBack';
+import HeaderLeft from './HeaderLeft';
 import HeaderRight from './HeaderRight';
 import Hero from './Hero';
 import Input from './Input';
@@ -22,6 +23,7 @@ export {
   Card,
   Divider,
   HeaderBack,
+  HeaderLeft,
   HeaderRight,
   Hero,
   Input,

@@ -1,20 +1,18 @@
-import {theme} from '@constants/index';
-import React, {Component} from 'react';
-import Block from './Block';
+import {SIZES} from '@constants/';
+import React from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Button from './Button';
-import Text from './Text';
 
-export class HeaderRight extends Component {
-  render() {
-    const {navigation, onPress} = this.props;
-    return (
-      <Block row start padding={[0, theme.SIZES.base]}>
-        <Button onPress={onPress}>
-          <Text style={{color: '#fff'}}>Light Screen</Text>
-        </Button>
-      </Block>
-    );
-  }
-}
+const HeaderRight = () => {
+  return (
+    <Button raw>
+      <Icon
+        name="cart-outline"
+        size={20}
+        style={{marginHorizontal: SIZES.padding}}
+      />
+    </Button>
+  );
+};
 
 export default HeaderRight;

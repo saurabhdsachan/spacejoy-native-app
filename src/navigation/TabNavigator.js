@@ -14,6 +14,12 @@ const {COLORS, SIZES} = theme;
 
 const Tab = createBottomTabNavigator();
 
+const TabBarLabels = {
+  Home: 'Feeds',
+  Collection: 'Collections',
+  NewAction: 'New Project',
+};
+
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
@@ -44,17 +50,29 @@ const BottomTabNavigator = () => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: COLORS.primary1,
+        activeTintColor: COLORS.red,
         inactiveTintColor: COLORS.black,
         tabStyle: {marginVertical: SIZES.base / 2.25},
       }}>
-      <Tab.Screen name="Home" component={HomeStackNavigator} />
-      <Tab.Screen name="Collection" component={CollectionStackNavigator} />
+      <Tab.Screen
+        name="Home"
+        component={HomeStackNavigator}
+        options={{
+          tabBarLabel: TabBarLabels.Home,
+        }}
+      />
+      <Tab.Screen
+        name="Collection"
+        component={CollectionStackNavigator}
+        options={{
+          tabBarLabel: TabBarLabels.Collection,
+        }}
+      />
       <Tab.Screen
         name="NewAction"
         component={NewActionStackNavigator}
         options={{
-          tabBarLabel: 'New Project',
+          tabBarLabel: TabBarLabels.NewAction,
         }}
       />
       <Tab.Screen name="My Designs" component={MyDesignsStackNavigator} />

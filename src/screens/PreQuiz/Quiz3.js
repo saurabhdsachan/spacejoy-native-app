@@ -95,7 +95,9 @@ const Quiz3 = ({navigation}) => {
           ]}
         />
 
-        <Text h2>What's the occasion?</Text>
+        <Text h2 mb1>
+          What's the occasion?
+        </Text>
         <Text small>We build our vision around your purpose!</Text>
       </Block>
       <Block

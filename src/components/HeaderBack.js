@@ -1,10 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export class HeaderBack extends Component {
-  render() {
-    return <Icon name="arrow-back" size={20} style={{marginHorizontal: 10}} />;
-  }
-}
+const HeaderBack = () => (
+  <Icon name="arrow-back" size={20} style={{marginHorizontal: 10}} />
+);
 
-export default HeaderBack;
+export default React.memo(HeaderBack);
