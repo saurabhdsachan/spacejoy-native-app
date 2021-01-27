@@ -6,30 +6,21 @@ import {
   ProgressiveImage,
   Text,
 } from '@components/index';
-import {theme} from '@constants/index';
+import {images, theme} from '@constants/index';
 import React, {useEffect, useState} from 'react';
 import {FlatList, Share, StatusBar, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import Animated from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Ionicons';
-import RxUnityBridge from '../utils/rxUnityBridge';
-
-// Setup Unity Bridge
-const RxUnityAdapter = RxUnityBridge();
 
 const {SIZES, COLORS} = theme;
 
-const onView3D = async (designId, authToken) => {
-  RxUnityAdapter.OpenUnity(designId);
-  console.log('Opening Unity with design ID: ', designId);
-};
+const {homeBg} = images;
 
-const OnUnityMsgVal = (msg) => {
-  console.log('[React] Silently captured msg from unity : ', msg);
-};
+const HEADER_MIN_HEIGHT = 100;
+const HEADER_MAX_HEIGHT = 400;
 
-const OnUnityReturnVal = (msg) => {
-  console.log('[React] Silently captured returned from unity : ', msg);
-};
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const onShare = async (msg, slug) => {
   try {
@@ -98,12 +89,12 @@ const Item = ({data, navigation}) => (
         </Button>
       </Block>
       <Block>
-        <Button raw onPress={() => onView3D(data._id, '')}>
+        <Button raw>
           <Icon name="cube-outline" size={SIZES.base * 2.5} />
         </Button>
       </Block>
       <Block flex={4}>
-        <Button raw onPress={() => onView3D(data._id, '')}>
+        <Button raw>
           <Text small right>
             <Icon name="ios-color-wand-outline" size={SIZES.base * 2.5} /> Try
             in my room
@@ -122,12 +113,24 @@ const Item = ({data, navigation}) => (
 );
 
 const Home = ({navigation}) => {
+  const scrollY = React.useRef(new Animated.Value(0)).current;
+
   const [isLoading, setLoading] = useState(true);
   const [designFeed, setDesignFeed] = useState([]);
 
-  // Setting up EVent Emitters
-  RxUnityAdapter.AddMsgListener(OnUnityMsgVal);
-  RxUnityAdapter.AddReturnListener(OnUnityReturnVal);
+  const inputRange = [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT];
+
+  const headerHeight = scrollY.interpolate({
+    inputRange,
+    outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
+    extrapolate: 'clamp',
+  });
+
+  const translateY = scrollY.interpolate({
+    inputRange: [HEADER_MIN_HEIGHT, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
+    outputRange: [0, -HEADER_MAX_HEIGHT],
+    extrapolate: 'clamp',
+  });
 
   const getDesignFeed = () =>
     fetch(
@@ -153,15 +156,54 @@ const Home = ({navigation}) => {
   }, []);
 
   return (
-    <Block color="white" padding={[SIZES.base, 0, 0, 0]}>
+    <Block color="white" paddingTop={SIZES.padding}>
       <StatusBar barStyle="dark-content" />
-      <FlatList
+      <AnimatedFlatList
+        contentContainerStyle={{paddingTop: HEADER_MAX_HEIGHT}}
+        scrollEventThrottle={16}
         refreshing={isLoading}
         onRefresh={getDesignFeed}
         data={designFeed.list}
         renderItem={({item}) => <Item data={item} navigation={navigation} />}
         keyExtractor={(item) => item._id}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: scrollY}}}],
+          {useNativeDriver: true},
+        )}
       />
+
+      <Animated.View
+        style={[
+          StyleSheet.absoluteFillObject,
+          {
+            height: headerHeight,
+            backgroundColor: COLORS.white,
+            overflow: 'hidden',
+          },
+        ]}>
+        <Animated.View style={[styles.homeBanner, {transform: [{translateY}]}]}>
+          <Animated.Image
+            resizeMode="cover"
+            source={homeBg}
+            style={[styles.homeBannerImage, {height: headerHeight}]}
+          />
+          <Text light mb2 color={COLORS.gra2}>
+            Get Flat
+          </Text>
+          <Text title>30% Off</Text>
+          <Text body mb3 color={COLORS.gra2}>
+            * on all design packages
+          </Text>
+          <Button
+            color={COLORS.green}
+            size="sm"
+            onPress={() => navigation.navigate('NewAction')}>
+            <Text white>
+              Let's start <Icon name="arrow-forward" size={14} />
+            </Text>
+          </Button>
+        </Animated.View>
+      </Animated.View>
     </Block>
   );
 };
@@ -169,6 +211,17 @@ const Home = ({navigation}) => {
 export default Home;
 
 const styles = StyleSheet.create({
+  homeBanner: {
+    height: '100%',
+    padding: SIZES.padding,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  homeBannerImage: {
+    ...StyleSheet.absoluteFill,
+    width: SIZES.width,
+  },
   designFeedCard: {
     width: SIZES.width,
     paddingHorizontal: SIZES.padding,

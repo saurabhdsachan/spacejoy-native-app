@@ -24,6 +24,7 @@ const HomeStackNavigator = ({navigation}) => {
         name="Home"
         component={Home}
         options={{
+          headerTransparent: true,
           headerLeft: () => <HeaderLeft navigation={navigation} hasLogo />,
           headerRight: () => <HeaderRight />,
         }}
