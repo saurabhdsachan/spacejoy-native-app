@@ -11,6 +11,13 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1531E38225B83E1B0013D03C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1531E38125B83E1B0013D03C /* AddressBook.framework */; };
+		1531E38425B83E2C0013D03C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1531E38325B83E2C0013D03C /* SystemConfiguration.framework */; };
+		1531E38625B83E3D0013D03C /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1531E38525B83E3D0013D03C /* libz.tbd */; };
+		1531E38B25B83E490013D03C /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1531E38A25B83E490013D03C /* SafariServices.framework */; };
+		1531E38D25B83E5A0013D03C /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1531E38C25B83E5A0013D03C /* libRNGoogleSignin.a */; };
+		1531E38F25B83E670013D03C /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1531E38E25B83E670013D03C /* libswiftWebKit.tbd */; };
+		1531E45325B85AAB0013D03C /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1531E45225B85AAB0013D03C /* EvilIcons.ttf */; };
 		155F5DDC25B72649001A53A2 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 155F5DDB25B72649001A53A2 /* BootSplash.storyboard */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -19,9 +26,7 @@
 		5A308EA37BD23C6E5B4E100A /* libPods-spacejoy-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4B51918C6C145A56F5B087C /* libPods-spacejoy-tvOSTests.a */; };
 		6A00B3D8E728EC472D5889DC /* libPods-spacejoy-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B14172E92D40026F35EEFF12 /* libPods-spacejoy-tvOS.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		C14D15F125AC650100958098 /* rxunityBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = C14D15ED25AC650100958098 /* rxunityBridge.m */; };
-		C14D15F225AC650100958098 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = C14D15F025AC650100958098 /* Device.m */; };
-		C1515DC225AEB761006A21D2 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C1515DC025AEB761006A21D2 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C107A6CF25C2B3DF002B2E02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C107A6CE25C2B3DF002B2E02 /* GoogleService-Info.plist */; };
 		C1C4DFB125AC52B3007BFF69 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C9142595135400116038 /* Roboto-LightItalic.ttf */; };
 		C1C4DFB225AC52B3007BFF69 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C90B2595135400116038 /* Roboto-Light.ttf */; };
 		C1C4DFB325AC52B3007BFF69 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C9062595135300116038 /* Roboto-MediumItalic.ttf */; };
@@ -62,20 +67,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		C1515DC325AEB761006A21D2 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C1515DC225AEB761006A21D2 /* UnityFramework.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* spacejoyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = spacejoyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +79,14 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = spacejoy/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = spacejoy/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = spacejoy/main.m; sourceTree = "<group>"; };
+		1531E38125B83E1B0013D03C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		1531E38325B83E2C0013D03C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1531E38525B83E3D0013D03C /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		1531E38A25B83E490013D03C /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		1531E38C25B83E5A0013D03C /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1531E38E25B83E670013D03C /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
+		1531E39B25B854B30013D03C /* spacejoy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = spacejoy.entitlements; path = spacejoy/spacejoy.entitlements; sourceTree = "<group>"; };
+		1531E45225B85AAB0013D03C /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = ../src/assets/fonts/EvilIcons.ttf; sourceTree = "<group>"; };
 		155F5DDB25B72649001A53A2 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = spacejoy/BootSplash.storyboard; sourceTree = "<group>"; };
 		15EFC46A2598C8930073458F /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = ../src/assets/fonts/Ionicons.ttf; sourceTree = "<group>"; };
 		15F4C9052595135300116038 /* RobotoCondensed-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "RobotoCondensed-Regular.ttf"; path = "../src/assets/fonts/RobotoCondensed-Regular.ttf"; sourceTree = "<group>"; };
@@ -120,11 +119,8 @@
 		B14172E92D40026F35EEFF12 /* libPods-spacejoy-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-spacejoy-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B320730CC07D9C2259154A3B /* Pods-spacejoy-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spacejoy-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-spacejoy-tvOSTests/Pods-spacejoy-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		B727E24EA3724DF86291A215 /* Pods-spacejoy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spacejoy.release.xcconfig"; path = "Target Support Files/Pods-spacejoy/Pods-spacejoy.release.xcconfig"; sourceTree = "<group>"; };
+		C107A6CE25C2B3DF002B2E02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C111E38E25A8AA9C003D2D04 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C14D15EC25AC650100958098 /* rxunityBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rxunityBridge.h; sourceTree = "<group>"; };
-		C14D15ED25AC650100958098 /* rxunityBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rxunityBridge.m; sourceTree = "<group>"; };
-		C14D15EF25AC650100958098 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
-		C14D15F025AC650100958098 /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
 		C1515DC025AEB761006A21D2 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1C4DFE225AC54F2007BFF69 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4B51918C6C145A56F5B087C /* libPods-spacejoy-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-spacejoy-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +142,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1531E38F25B83E670013D03C /* libswiftWebKit.tbd in Frameworks */,
+				1531E38D25B83E5A0013D03C /* libRNGoogleSignin.a in Frameworks */,
+				1531E38B25B83E490013D03C /* SafariServices.framework in Frameworks */,
+				1531E38625B83E3D0013D03C /* libz.tbd in Frameworks */,
+				1531E38425B83E2C0013D03C /* SystemConfiguration.framework in Frameworks */,
+				1531E38225B83E1B0013D03C /* AddressBook.framework in Frameworks */,
 				E2F187D070C36FE612EFD9CF /* libPods-spacejoy.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,6 +191,8 @@
 		13B07FAE1A68108700A75B9A /* spacejoy */ = {
 			isa = PBXGroup;
 			children = (
+				C107A6CE25C2B3DF002B2E02 /* GoogleService-Info.plist */,
+				1531E39B25B854B30013D03C /* spacejoy.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				155F5DDB25B72649001A53A2 /* BootSplash.storyboard */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -204,6 +208,7 @@
 		15F4C9312595135F00116038 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				1531E45225B85AAB0013D03C /* EvilIcons.ttf */,
 				15EFC46A2598C8930073458F /* Ionicons.ttf */,
 				15F4C9132595135400116038 /* Roboto-Black.ttf */,
 				15F4C9152595135400116038 /* Roboto-BlackItalic.ttf */,
@@ -230,6 +235,12 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1531E38E25B83E670013D03C /* libswiftWebKit.tbd */,
+				1531E38C25B83E5A0013D03C /* libRNGoogleSignin.a */,
+				1531E38A25B83E490013D03C /* SafariServices.framework */,
+				1531E38525B83E3D0013D03C /* libz.tbd */,
+				1531E38325B83E2C0013D03C /* SystemConfiguration.framework */,
+				1531E38125B83E1B0013D03C /* AddressBook.framework */,
 				C1515DC025AEB761006A21D2 /* UnityFramework.framework */,
 				C1C4DFE225AC54F2007BFF69 /* UnityFramework.framework */,
 				C111E38E25A8AA9C003D2D04 /* UnityFramework.framework */,
@@ -268,7 +279,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				C14D15EA25AC650100958098 /* NativeModules */,
 				15F4C9312595135F00116038 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* spacejoy */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -291,33 +301,6 @@
 				2D02E4901E0B4A5D006451C7 /* spacejoy-tvOSTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		C14D15EA25AC650100958098 /* NativeModules */ = {
-			isa = PBXGroup;
-			children = (
-				C14D15EB25AC650100958098 /* rxunityBridge */,
-				C14D15EE25AC650100958098 /* Device */,
-			);
-			path = NativeModules;
-			sourceTree = "<group>";
-		};
-		C14D15EB25AC650100958098 /* rxunityBridge */ = {
-			isa = PBXGroup;
-			children = (
-				C14D15EC25AC650100958098 /* rxunityBridge.h */,
-				C14D15ED25AC650100958098 /* rxunityBridge.m */,
-			);
-			path = rxunityBridge;
-			sourceTree = "<group>";
-		};
-		C14D15EE25AC650100958098 /* Device */ = {
-			isa = PBXGroup;
-			children = (
-				C14D15EF25AC650100958098 /* Device.h */,
-				C14D15F025AC650100958098 /* Device.m */,
-			);
-			path = Device;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -354,7 +337,6 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				388C91687467B9B701FAD185 /* [CP] Copy Pods Resources */,
-				C1515DC325AEB761006A21D2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -466,6 +448,7 @@
 			files = (
 				C1C4DFB825AC52B3007BFF69 /* Roboto-ThinItalic.ttf in Resources */,
 				155F5DDC25B72649001A53A2 /* BootSplash.storyboard in Resources */,
+				C107A6CF25C2B3DF002B2E02 /* GoogleService-Info.plist in Resources */,
 				C1C4DFB525AC52B3007BFF69 /* RobotoCondensed-BoldItalic.ttf in Resources */,
 				C1C4DFC225AC52B3007BFF69 /* Roboto-Regular.ttf in Resources */,
 				C1C4DFBF25AC52B3007BFF69 /* Roboto-BlackItalic.ttf in Resources */,
@@ -482,6 +465,7 @@
 				C1C4DFB325AC52B3007BFF69 /* Roboto-MediumItalic.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				C1C4DFBC25AC52B3007BFF69 /* Ionicons.ttf in Resources */,
+				1531E45325B85AAB0013D03C /* EvilIcons.ttf in Resources */,
 				C1C4DFB725AC52B3007BFF69 /* RobotoCondensed-Regular.ttf in Resources */,
 				C1C4DFC325AC52B3007BFF69 /* RobotoCondensed-Bold.ttf in Resources */,
 				C1C4DFB225AC52B3007BFF69 /* Roboto-Light.ttf in Resources */,
@@ -564,10 +548,14 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-spacejoy/Pods-spacejoy-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -582,6 +570,8 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-spacejoy-spacejoyTests/Pods-spacejoy-spacejoyTests-resources.sh",
+				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -602,6 +592,8 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
@@ -744,10 +736,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C14D15F125AC650100958098 /* rxunityBridge.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				C14D15F225AC650100958098 /* Device.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -833,11 +823,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 2034;
+				CODE_SIGN_ENTITLEMENTS = spacejoy/spacejoy.entitlements;
+				CURRENT_PROJECT_VERSION = 2036;
 				DEVELOPMENT_TEAM = 7GPM4QP3JL;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = spacejoy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/swift",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -858,10 +853,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 2034;
+				CODE_SIGN_ENTITLEMENTS = spacejoy/spacejoy.entitlements;
+				CURRENT_PROJECT_VERSION = 2036;
 				DEVELOPMENT_TEAM = 7GPM4QP3JL;
 				INFOPLIST_FILE = spacejoy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/swift",
+				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

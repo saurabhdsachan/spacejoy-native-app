@@ -1,107 +1,130 @@
-import {Block, Button, Radio, Text} from '@components/index';
+import {Block, Button, Radio, Text} from '@components/';
 import {images, theme} from '@constants/index';
 import QuizData from '@data/Quiz3';
 import React from 'react';
-import {Animated, StatusBar, StyleSheet} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import {Animated, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const {SIZES, COLORS} = theme;
-const {quiz3Banner} = images;
+
+const {quiz3Banner, bg} = images;
+
+const HEADER_MIN_HEIGHT = 170;
+const HEADER_MAX_HEIGHT = 280;
 
 const Quiz3 = ({navigation}) => {
   const scrollY = React.useRef(new Animated.Value(0)).current;
-  const inputRange = [0, 200];
-  const scaleImage = scrollY.interpolate({
+
+  const inputRange = [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT];
+
+  const headerHeight = scrollY.interpolate({
     inputRange,
-    outputRange: [0.8, 0.25],
+    outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
     extrapolate: 'clamp',
   });
-  const translateXImage = scrollY.interpolate({
+
+  const scale = scrollY.interpolate({
     inputRange,
-    outputRange: [100, 300],
+    outputRange: [1, 0.5],
+    extrapolate: 'clamp',
   });
-  const translateYImage = scrollY.interpolate({
+
+  const scaleBg = scrollY.interpolate({
     inputRange,
-    outputRange: [0, -200],
+    outputRange: [1, 1.25],
+    extrapolate: 'clamp',
   });
-  const translateY = scrollY.interpolate({
-    inputRange: [-100, 0, 100],
-    outputRange: [50, 0, -100],
+
+  const translateX = scrollY.interpolate({
+    inputRange,
+    outputRange: [0, 200],
+    extrapolate: 'clamp',
   });
+
   return (
-    <Block
-      color={COLORS.white}
-      padding={[SIZES.safe + 20, SIZES.padding, 0, SIZES.padding]}>
-      <StatusBar barStyle="dark-content" />
-      <Animated.Image
-        source={quiz3Banner}
-        resizeMode="cover"
-        style={[
-          styles.banner,
-          {
-            transform: [
-              {scale: scaleImage},
-              {translateX: translateXImage},
-              {translateY: translateYImage},
-            ],
-          },
-        ]}
-      />
-      <Block animated style={{transform: [{translateY}], marginTop: 150}}>
-        <Text h2>What's the occasion?</Text>
-        <Animated.ScrollView
-          onScroll={Animated.event(
-            [{nativeEvent: {contentOffset: {y: scrollY}}}],
+    <Block middle color={COLORS.white} padding={SIZES.padding}>
+      <Animated.ScrollView
+        contentContainerStyle={{paddingTop: HEADER_MAX_HEIGHT}}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {y: scrollY}}}],
+          {useNativeDriver: false},
+        )}>
+        {QuizData?.map((item, index) => (
+          <Block
+            middle
+            key={item.title}
+            style={[
+              styles.radioCard,
+              index === QuizData.length - 1 && styles.lastChild,
+            ]}>
+            <Radio
+              inline
+              button={{
+                label: item.title,
+                size: 18,
+                color: item.bg,
+                selected: false,
+              }}
+            />
+          </Block>
+        ))}
+      </Animated.ScrollView>
+      <Block
+        padding={SIZES.padding}
+        animated
+        bottom
+        color={COLORS.white}
+        style={[styles.banner, {height: headerHeight}]}>
+        <Animated.Image
+          source={bg}
+          resizeMode="contain"
+          style={[
+            styles.bannerImageBg,
+            {transform: [{scale: scaleBg}, {translateX: -150}]},
+          ]}
+        />
+        <Animated.Image
+          source={quiz3Banner}
+          resizeMode="contain"
+          style={[
+            styles.bannerImage,
             {
-              useNativeDriver: true,
+              transform: [{scale}, {translateX}],
             },
-          )}>
-          {QuizData.map((item, index) => (
-            <Block
-              middle
-              key={item.title}
-              style={[
-                styles.radioCard,
-                index === QuizData.length - 1 && styles.lastChild,
-                index === 0 && styles.firstChild,
-              ]}>
-              <Radio
-                inline
-                button={{
-                  label: item.title,
-                  size: 18,
-                  color: item.bg,
-                  selected: false,
-                }}
-              />
-            </Block>
-          ))}
-        </Animated.ScrollView>
+          ]}
+        />
+
+        <Text h2 mb1>
+          What's the occasion?
+        </Text>
+        <Text small>We build our vision around your purpose!</Text>
       </Block>
-      <LinearGradient
-        colors={[COLORS.transparent, COLORS.white]}
-        style={styles.bottomButtons}>
-        <Block center row space="between">
-          <Button
-            ghost
-            size="sm"
-            color={COLORS.transparent}
-            onPress={() => navigation.goBack()}>
-            <Text center>
-              <Icon name="ios-arrow-back" size={14} /> Prev
-            </Text>
-          </Button>
-          <Button
-            color={COLORS.black}
-            size="sm"
-            onPress={() => navigation.navigate('Quiz4')}>
-            <Text center color={COLORS.white}>
-              Next <Icon name="ios-arrow-forward" size={14} />
-            </Text>
-          </Button>
-        </Block>
-      </LinearGradient>
+      <Block
+        paddingHorizontal={SIZES.padding}
+        color={COLORS.white}
+        style={styles.bottomButtons}
+        center
+        row
+        space="between">
+        <Button
+          ghost
+          size="sm"
+          color={COLORS.transparent}
+          onPress={() => navigation.goBack()}>
+          <Text center>
+            <Icon name="ios-arrow-back" size={14} /> Prev
+          </Text>
+        </Button>
+        <Button
+          color={COLORS.black}
+          size="sm"
+          onPress={() => navigation.navigate('Quiz4')}>
+          <Text center color={COLORS.white}>
+            Next <Icon name="ios-arrow-forward" size={14} />
+          </Text>
+        </Button>
+      </Block>
     </Block>
   );
 };
@@ -109,13 +132,6 @@ const Quiz3 = ({navigation}) => {
 export default Quiz3;
 
 const styles = StyleSheet.create({
-  banner: {
-    position: 'absolute',
-    width: SIZES.width,
-    height: 250,
-    top: 0,
-    left: 0,
-  },
   radioCard: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: COLORS.gray2,
@@ -123,15 +139,34 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   lastChild: {
+    paddingBottom: 100,
     borderBottomWidth: 0,
   },
-  firstChild: {
-    marginTop: SIZES.padding,
+  banner: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+  },
+  bannerImage: {
+    position: 'absolute',
+    top: -20,
+    right: 0,
+    left: 0,
+    height: 200,
+    width: SIZES.width,
+  },
+  bannerImageBg: {
+    height: 150,
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
   bottomButtons: {
     position: 'absolute',
     bottom: 0,
-    width: SIZES.width,
-    padding: SIZES.padding,
+    height: 90,
+    left: 0,
+    right: 0,
   },
 });

@@ -1,47 +1,41 @@
 import React from 'react';
 import {Animated, StyleSheet} from 'react-native';
 import Block from './Block';
-const styles = StyleSheet.create({
-  imageOverlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    top: 0,
-  },
-});
-class ProgressiveImage extends React.Component {
-  thumbnailAnimated = new Animated.Value(0);
-  imageAnimated = new Animated.Value(0);
-  handleThumbnailLoad = () => {
-    Animated.timing(this.thumbnailAnimated, {
+
+const ProgressiveImage = ({thumbnailSource, source, style, ...props}) => {
+  const thumbnailAnimated = new Animated.Value(0);
+  const imageAnimated = new Animated.Value(0);
+  const handleThumbnailLoad = () => {
+    Animated.timing(thumbnailAnimated, {
       toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
     }).start();
   };
-  onImageLoad = () => {
-    Animated.timing(this.imageAnimated, {
+  const onImageLoad = () => {
+    Animated.timing(imageAnimated, {
       toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
     }).start();
   };
-  render() {
-    const {thumbnailSource, source, style, ...props} = this.props;
-    return (
-      <Block>
-        <Animated.Image
-          {...props}
-          source={thumbnailSource}
-          style={[style, {opacity: this.thumbnailAnimated}]}
-          onLoad={this.handleThumbnailLoad}
-          blurRadius={1}
-        />
-        <Animated.Image
-          {...props}
-          source={source}
-          style={[styles.imageOverlay, style]}
-          onLoad={this.onImageLoad}
-        />
-      </Block>
-    );
-  }
-}
+  return (
+    <Block flex={false}>
+      <Animated.Image
+        {...props}
+        source={thumbnailSource}
+        style={[style, {opacity: thumbnailAnimated}]}
+        onLoad={handleThumbnailLoad}
+        blurRadius={1}
+      />
+      <Animated.Image
+        {...props}
+        source={source}
+        style={[StyleSheet.absoluteFill, {opacity: imageAnimated}, style]}
+        onLoad={onImageLoad}
+      />
+    </Block>
+  );
+};
+
 export default ProgressiveImage;

@@ -25,6 +25,7 @@ export default class Accordion extends Component {
   }
 
   render() {
+    const {expanded} = this.state;
     return (
       <>
         <TouchableOpacity onPress={() => this.toggleExpand()}>
@@ -37,15 +38,13 @@ export default class Accordion extends Component {
               borderBottomColor: COLORS.gray2,
             }}>
             <Block flex={12}>
-              <Text small>{this.props.title}</Text>
+              <Text bold={expanded} h3={expanded}>
+                {this.props.title}
+              </Text>
             </Block>
             <Block>
               <Icon
-                name={
-                  this.state.expanded
-                    ? 'chevron-up-outline'
-                    : 'chevron-down-outline'
-                }
+                name={expanded ? 'chevron-up-outline' : 'chevron-down-outline'}
                 size={14}
                 color={COLORS.black}
                 style={{textAlign: 'right'}}
@@ -53,7 +52,7 @@ export default class Accordion extends Component {
             </Block>
           </Block>
         </TouchableOpacity>
-        {this.state.expanded && (
+        {expanded && (
           <Block paddingVertical={SIZES.padding / 2}>
             <Text small light align="justify" style={styles.descriptionStyle}>
               {`${this.props.description}`}

@@ -117,7 +117,7 @@ const SingleCollection = ({route, navigation}) => {
     } = e;
     if (y > 230) {
       navigation.setOptions({
-        headerTitle: () => <Text>{collectionItem?.name}</Text>,
+        headerTitle: () => <Text h3>{collectionItem?.name}</Text>,
       });
     } else {
       navigation.setOptions({
@@ -126,50 +126,56 @@ const SingleCollection = ({route, navigation}) => {
     }
   };
 
-  return isLoading ? (
-    <Loader />
-  ) : (
+  return (
     <Block color={COLORS.white}>
-      <ScrollView scrollEventThrottle={20} onScroll={handleScroll}>
-        <Image
-          source={{
-            uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,w_600,f_auto,h_400,ar_2,c_pad/${
-              collectionItem.cdnThumbnail || collectionData.cdnCover
-            }`,
-          }}
-          resizeMode="cover"
-          style={{width: '100%', height: 190}}
-        />
-        <Block padding={SIZES.padding}>
-          <Text h2 mb2>
-            {collectionData?.name || collectionItem?.name}
-          </Text>
-          <Text small {...(ellipsis ? {numberOfLines: 3} : {})}>
-            {collectionData?.description}
-          </Text>
-          <Button raw onPress={onChangeSizeClick}>
-            <Text color={COLORS.primary1} mt2>
-              {ellipsis ? 'Expand' : 'Collapse'}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <ScrollView scrollEventThrottle={20} onScroll={handleScroll}>
+          <Image
+            source={{
+              uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,w_600,f_auto,h_400,ar_2,c_pad/${
+                collectionItem.cdnThumbnail || collectionData.cdnCover
+              }`,
+            }}
+            resizeMode="cover"
+            style={{width: '100%', height: 190}}
+          />
+          <Block padding={SIZES.padding}>
+            <Text h2 mb2>
+              {collectionData?.name || collectionItem?.name}
             </Text>
-          </Button>
-        </Block>
+            <Text small {...(ellipsis ? {numberOfLines: 3} : {})}>
+              {collectionData?.description}
+            </Text>
+            <Button raw onPress={onChangeSizeClick}>
+              <Text color={COLORS.primary1} mt2>
+                {ellipsis ? 'Expand' : 'Collapse'}
+              </Text>
+            </Button>
+          </Block>
 
-        <Block color="#f3f3f3">
-          <Block padding={SIZES.padding}>
-            <Text h3 bold mb3>
-              Hand-Picked Farmhouse Living Room Design Ideas Collection
-            </Text>
-            {collectionData?.designList?.map((item) => (
-              <DesignCard key={item?._id} data={item} navigation={navigation} />
-            ))}
+          <Block color="#f3f3f3">
+            <Block padding={SIZES.padding}>
+              <Text h3 bold mb3>
+                Hand-Picked Farmhouse Living Room Design Ideas Collection
+              </Text>
+              {collectionData?.designList?.map((item) => (
+                <DesignCard
+                  key={item?._id}
+                  data={item}
+                  navigation={navigation}
+                />
+              ))}
+            </Block>
           </Block>
-        </Block>
-        {collectionData?._id && (
-          <Block padding={SIZES.padding}>
-            <CollectionFAQs id={collectionData._id} />
-          </Block>
-        )}
-      </ScrollView>
+          {collectionData?._id && (
+            <Block padding={SIZES.padding}>
+              <CollectionFAQs id={collectionData._id} />
+            </Block>
+          )}
+        </ScrollView>
+      )}
     </Block>
   );
 };

@@ -17,6 +17,18 @@ export const COLORS = {
   white: '#FFFFFF',
   border: '#F2F2F2',
   transparent: 'rgba(255,255,255,0)',
+  semiTransparent: 'rgba(255,255,255,0.5)',
+};
+
+export const MILD = {
+  primary1: 'rgb(255, 239, 244)',
+  yellow: 'rgb(254, 247, 239)',
+  red: '#fef2ef',
+  green: 'rgb(241, 251, 244)',
+  blue: 'rgb(240, 247, 252)',
+  black: '#e9ecee',
+  light: 'rgba(255,255,255, 0.9)',
+  white: '#FAFAFA',
 };
 
 export const SIZES = {
@@ -31,7 +43,7 @@ export const SIZES = {
   h2: 22,
   h3: 16,
   h4: 14,
-  title: 20,
+  title: 35,
   header: 18,
   body: 16,
   small: 14,
@@ -52,7 +64,11 @@ export const FONTS = {
     fontSize: SIZES.header,
     lineHeight: 36,
   },
-  title: {fontFamily: 'Roboto-Regular', fontSize: SIZES.title, lineHeight: 30},
+  title: {
+    fontFamily: 'Roboto-Black',
+    fontSize: SIZES.title,
+    lineHeight: 40,
+  },
   body: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body, lineHeight: 22},
   small: {fontFamily: 'Roboto-Light', fontSize: SIZES.small, lineHeight: 20},
   caption: {
@@ -62,6 +78,6 @@ export const FONTS = {
   },
 };
 
-const appTheme = {COLORS, SIZES, FONTS};
+const appTheme = {COLORS, MILD, SIZES, FONTS};
 
 export default appTheme;
