@@ -1,7 +1,7 @@
-import {LoginManager} from 'react-native-fbsdk';
+import { LoginManager } from "react-native-fbsdk";
 
 const fbLogout = () => {
-  LoginManager.logOut();
+	LoginManager.logOut();
 };
 
 export default fbLogout;

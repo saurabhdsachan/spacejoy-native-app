@@ -1,4 +1,4 @@
-const {Share} = require('react-native');
+const { Share } = require("react-native");
 /**
  * @param shareProps Properties passes to share object
  * @param shareProps.data Data object containing inputs for the share application
@@ -10,23 +10,23 @@ const {Share} = require('react-native');
  * @param shareProps.onError Callback to be called on error
  */
 const onShare = async (props) => {
-  const {data, onComplete, onError} = props;
+	const { data, onComplete, onError } = props;
 
-  try {
-    const {message, title, url} = data;
-    const result = await Share.share({
-      message,
-      url,
-      title,
-      ...data,
-    });
-    if (onComplete) {
-      onComplete(result);
-    }
-  } catch (error) {
-    if (onError) {
-      onError(error);
-    }
-  }
+	try {
+		const { message, title, url } = data;
+		const result = await Share.share({
+			message,
+			url,
+			title,
+			...data,
+		});
+		if (onComplete) {
+			onComplete(result);
+		}
+	} catch (error) {
+		if (onError) {
+			onError(error);
+		}
+	}
 };
 export default onShare;
