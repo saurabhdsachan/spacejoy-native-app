@@ -2,12 +2,14 @@ import { Block, Radio, Text } from "@components/";
 import { theme } from "@constants/";
 import QuizData from "@data/Quiz3";
 import React, { Component } from "react";
-import { Animated, ScrollView, StyleSheet } from "react-native";
+import { Animated, FlatList, StyleSheet } from "react-native";
 
 const { SIZES, COLORS } = theme;
 
 const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 300;
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export default class Demo extends Component {
 	constructor() {
@@ -30,12 +32,14 @@ export default class Demo extends Component {
 
 		return (
 			<Block middle color={COLORS.white} padding={SIZES.padding}>
-				<ScrollView
+				<AnimatedFlatList
 					contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
 					scrollEventThrottle={16}
-					onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.scrollYAnimatedValue } } }])}
-				>
-					{QuizData?.map((item, index) => (
+					data={QuizData}
+					onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.scrollYAnimatedValue } } }], {
+						useNativeDriver: false,
+					})}
+					renderItem={({ index, item }) => (
 						<Block
 							middle
 							key={item.title}
@@ -51,14 +55,15 @@ export default class Demo extends Component {
 								}}
 							/>
 						</Block>
-					))}
-				</ScrollView>
+					)}
+					keyExtractor={(item) => item.index}
+				/>
 				<Block
 					animated
 					middle
 					style={[styles.banner, { height: headerHeight, backgroundColor: headerBackgroundColor }]}
 				>
-					<Text center color={COLORS.white} h3>
+					<Text h2 center color={COLORS.white}>
 						Animated Header
 					</Text>
 				</Block>
