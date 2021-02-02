@@ -8,15 +8,15 @@ import Button from "./Button";
 const HeaderLeft = ({ navigation, hasLogo }) => (
 	<Block center row>
 		<Button raw onPress={navigation.toggleDrawer}>
-			<Icon size={25} name="ios-reorder-two-outline" style={{ marginHorizontal: SIZES.padding }} />
+			<Icon size={25} name="ios-reorder-two-outline" style={{ marginHorizontal: SIZES.padding / 2 }} />
 		</Button>
 		{hasLogo && (
 			<Image
 				source={images.logo}
 				resizeMode="cover"
 				style={{
-					height: 25,
-					width: 108,
+					height: 22,
+					width: 95,
 					marginRight: SIZES.base,
 				}}
 			/>
@@ -24,4 +24,4 @@ const HeaderLeft = ({ navigation, hasLogo }) => (
 	</Block>
 );
 
-export default HeaderLeft;
+export default React.memo(HeaderLeft);

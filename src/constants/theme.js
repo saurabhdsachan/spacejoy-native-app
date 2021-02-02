@@ -43,7 +43,7 @@ export const SIZES = {
 	h2: 22,
 	h3: 16,
 	h4: 14,
-	title: 35,
+	title: 45,
 	header: 18,
 	body: 16,
 	small: 14,
@@ -67,7 +67,7 @@ export const FONTS = {
 	title: {
 		fontFamily: "Roboto-Black",
 		fontSize: SIZES.title,
-		lineHeight: 40,
+		lineHeight: 50,
 	},
 	body: { fontFamily: "Roboto-Regular", fontSize: SIZES.body, lineHeight: 22 },
 	small: { fontFamily: "Roboto-Light", fontSize: SIZES.small, lineHeight: 20 },

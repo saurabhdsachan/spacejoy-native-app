@@ -2,6 +2,7 @@ import { HeaderBack, HeaderLeft, HeaderRight } from "@components/index";
 import { createStackNavigator } from "@react-navigation/stack";
 import Details from "@screens/Details";
 import Home from "@screens/Home";
+import Profile from "@screens/Profile";
 import React from "react";
 
 const Stack = createStackNavigator();
@@ -24,7 +25,6 @@ const HomeStackNavigator = ({ navigation }) => {
 				name="Home"
 				component={Home}
 				options={{
-					headerTransparent: true,
 					headerLeft: () => <HeaderLeft navigation={navigation} hasLogo />,
 					headerRight: () => <HeaderRight />,
 				}}
@@ -33,6 +33,14 @@ const HomeStackNavigator = ({ navigation }) => {
 				name="Details"
 				component={Details}
 				options={{
+					headerRight: () => <HeaderRight />,
+				}}
+			/>
+			<Stack.Screen
+				name="Profile"
+				component={Profile}
+				options={{
+					headerTransparent: true,
 					headerRight: () => <HeaderRight />,
 				}}
 			/>

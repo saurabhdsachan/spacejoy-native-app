@@ -1,18 +1,18 @@
 import { Block, Button, Text } from "@components/index";
-import { theme } from "@constants/index";
+import { images, theme } from "@constants/index";
+import { AuthContext } from "@utils/helpers/withAuthContext";
 import React from "react";
 import { Image } from "react-native";
 
 const { SIZES, COLORS } = theme;
 
 const Profile = ({ navigation }) => {
+	const { data } = React.useContext(AuthContext);
+	const { name = "", email = "", picture = "", channel } = data;
 	return (
-		<Block middle center color={COLORS.gray}>
+		<Block middle center color={COLORS.white}>
 			<Image
-				source={{
-					uri:
-						"https://media-exp1.licdn.com/dms/image/C5103AQGesJlA4slIRw/profile-displayphoto-shrink_400_400/0/1574104084714?e=1614816000&v=beta&t=WGahSsFe0iMtzaVYNSqbFROhw8hlga5PCh-45NMYm9k",
-				}}
+				source={{ uri: picture || images.defaultAvatar }}
 				resizeMode="cover"
 				style={{
 					height: 150,
@@ -24,10 +24,10 @@ const Profile = ({ navigation }) => {
 				}}
 			/>
 			<Text h2 center mt2>
-				Saurabh Sachan
+				{name}
 			</Text>
 			<Text body center mb4 mt1>
-				saurabhdsachan@gmail.com
+				{email}
 			</Text>
 			<Button color={COLORS.black} onPress={() => navigation.goBack()}>
 				<Text color={COLORS.white}>Back</Text>

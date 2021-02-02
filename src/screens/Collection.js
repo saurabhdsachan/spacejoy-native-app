@@ -90,17 +90,17 @@ const Collection = ({ route, navigation }) => {
 		position: "absolute",
 		top: scrollY.interpolate({
 			inputRange: [0, 25],
-			outputRange: [110, 60],
+			outputRange: [100, 60],
 			extrapolate: "clamp",
 		}),
 		left: scrollY.interpolate({
 			inputRange: [0, 25],
-			outputRange: [SIZES.padding, 60],
+			outputRange: [SIZES.padding, 50],
 			extrapolate: "clamp",
 		}),
 		fontSize: scrollY.interpolate({
 			inputRange: [0, 25],
-			outputRange: [25, 16],
+			outputRange: [SIZES.h1, SIZES.h3],
 			extrapolate: "clamp",
 		}),
 		fontWeight: "bold",

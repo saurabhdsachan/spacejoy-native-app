@@ -1,8 +1,10 @@
-import { Block, Radio, Text } from "@components/";
+import { Block } from "@components/";
+import DesignCard from "@components/DesignCard";
+import MarketingBanner from "@components/MarketingBanner";
 import { theme } from "@constants/";
 import QuizData from "@data/Quiz3";
-import React, { Component } from "react";
-import { Animated, FlatList, StyleSheet } from "react-native";
+import React from "react";
+import { Animated, FlatList, StatusBar, StyleSheet } from "react-native";
 
 const { SIZES, COLORS } = theme;
 
@@ -11,80 +13,47 @@ const HEADER_MAX_HEIGHT = 300;
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export default class Demo extends Component {
-	constructor() {
-		super();
-		this.scrollYAnimatedValue = new Animated.Value(0);
-	}
+const Demo = () => {
+	const scrollYAnimatedValue = new Animated.Value(0);
 
-	render() {
-		const headerHeight = this.scrollYAnimatedValue.interpolate({
-			inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-			outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-			extrapolate: "clamp",
-		});
+	const headerHeight = scrollYAnimatedValue.interpolate({
+		inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
+		outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
+		extrapolate: "clamp",
+	});
 
-		const headerBackgroundColor = this.scrollYAnimatedValue.interpolate({
-			inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-			outputRange: ["#e91e63", "#1DA1F2"],
-			extrapolate: "clamp",
-		});
+	const headerBackgroundColor = scrollYAnimatedValue.interpolate({
+		inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
+		outputRange: [COLORS.red, COLORS.white],
+		extrapolate: "clamp",
+	});
 
-		return (
-			<Block middle color={COLORS.white} padding={SIZES.padding}>
-				<AnimatedFlatList
-					contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
-					scrollEventThrottle={16}
-					data={QuizData}
-					onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.scrollYAnimatedValue } } }], {
-						useNativeDriver: false,
-					})}
-					renderItem={({ index, item }) => (
-						<Block
-							middle
-							key={item.title}
-							style={[styles.radioCard, index === QuizData.length - 1 && styles.lastChild]}
-						>
-							<Radio
-								inline
-								button={{
-									label: item.title,
-									size: 18,
-									color: item.bg,
-									selected: false,
-								}}
-							/>
-						</Block>
-					)}
-					keyExtractor={(item) => item.index}
-				/>
-				<Block
-					animated
-					middle
-					style={[styles.banner, { height: headerHeight, backgroundColor: headerBackgroundColor }]}
-				>
-					<Text h2 center color={COLORS.white}>
-						Animated Header
-					</Text>
-				</Block>
+	return (
+		<Block middle color={COLORS.white} padding={SIZES.padding}>
+			<StatusBar barStyle="dark-content" />
+			<AnimatedFlatList
+				contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
+				scrollEventThrottle={16}
+				data={QuizData}
+				keyExtractor={(item) => item.title}
+				onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } }], {
+					useNativeDriver: false,
+				})}
+				renderItem={({ index, item }) => <DesignCard index={index} item={item} />}
+			/>
+			<Block animated middle style={[styles.banner, { height: headerHeight, backgroundColor: headerBackgroundColor }]}>
+				<MarketingBanner />
 			</Block>
-		);
-	}
-}
+		</Block>
+	);
+};
+
+export default Demo;
 
 const styles = StyleSheet.create({
-	radioCard: {
-		borderBottomWidth: StyleSheet.hairlineWidth,
-		borderBottomColor: COLORS.gray2,
-		paddingVertical: SIZES.padding,
-		overflow: "hidden",
-	},
-	lastChild: {
-		paddingBottom: 150,
-		borderBottomWidth: 0,
-	},
 	banner: {
 		position: "absolute",
+		overflow: "hidden",
 		height: 150,
 		top: 0,
 		right: 0,
