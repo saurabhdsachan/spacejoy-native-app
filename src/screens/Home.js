@@ -1,18 +1,10 @@
-import Avatar from '@components/Avatar';
-import {
-  Block,
-  Button,
-  Divider,
-  ProgressiveImage,
-  Text,
-} from '@components/index';
+import {Block, Button, Text} from '@components/index';
 import {images, theme} from '@constants/index';
+import DesignCard from '@derivedComponents/DesignCard';
 import React, {useEffect, useState} from 'react';
-import {FlatList, Share, StatusBar, StyleSheet} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {FlatList, StatusBar, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/Ionicons';
-
 const {SIZES, COLORS} = theme;
 
 const {homeBg} = images;
@@ -21,96 +13,6 @@ const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 400;
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
-const onShare = async (msg, slug) => {
-  try {
-    const result = await Share.share({
-      message: msg,
-      title: 'SPacejoy',
-      url: slug,
-    });
-    if (result.action === Share.sharedAction) {
-      if (result.activityType) {
-        // shared with activity type of result.activityType
-      } else {
-        // shared
-      }
-    } else if (result.action === Share.dismissedAction) {
-      // dismissed
-    }
-  } catch (error) {
-    alert(error.message);
-  }
-};
-
-const Item = ({data, navigation}) => (
-  <Block
-    color={COLORS.white}
-    middle
-    style={styles.designFeedCard}
-    key={data._id}>
-    <Block row center padding={[0, 0, SIZES.padding, 0]}>
-      <Block flex={3}>
-        <Avatar
-          uri="https://res.cloudinary.com/spacejoy/image/upload/c_thumb,g_face,fl_lossy,q_auto,f_auto,h_120,w_120/v1581506948/web/Customer%20Stories_Assets/Amber/Amber_profile_n4lpwa.jpg"
-          user={{name: 'Amber Esperaza', city: 'Austin', state: 'Texas'}}
-        />
-      </Block>
-      <Block end flex={1}>
-        <Button
-          size="xs"
-          onPress={() => navigation.navigate('Details', {feedItem: data})}>
-          <Text center>
-            <Icon name="basket-outline" size={20} color={COLORS.gray} />
-          </Text>
-        </Button>
-      </Block>
-    </Block>
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={() => navigation.navigate('Details', {feedItem: data})}>
-      <Block style={styles.designFeedImageHolder}>
-        <ProgressiveImage
-          source={{
-            uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,w_800/${data.cdnRender[0]}`,
-          }}
-          resizeMode="cover"
-          style={styles.designFeedImage}
-        />
-      </Block>
-    </TouchableOpacity>
-    <Block row padding={SIZES.padding / 2}>
-      <Block>
-        <Icon name="md-heart-outline" size={SIZES.base * 2.5} />
-      </Block>
-      <Block>
-        <Button raw onPress={() => onShare(data.name, data.slug)}>
-          <Icon name="share-social-outline" size={SIZES.base * 2.5} />
-        </Button>
-      </Block>
-      <Block>
-        <Button raw>
-          <Icon name="cube-outline" size={SIZES.base * 2.5} />
-        </Button>
-      </Block>
-      <Block flex={4}>
-        <Button raw>
-          <Text small right>
-            <Icon name="ios-color-wand-outline" size={SIZES.base * 2.5} /> Try
-            in my room
-          </Text>
-        </Button>
-      </Block>
-    </Block>
-    <Text h3 left mt2>
-      {data.name}
-    </Text>
-    <Text left mt2 mb4 small>
-      {data.name}
-    </Text>
-    <Divider />
-  </Block>
-);
 
 const Home = ({navigation}) => {
   const scrollY = React.useRef(new Animated.Value(0)).current;
@@ -134,9 +36,7 @@ const Home = ({navigation}) => {
 
   const getDesignFeed = () =>
     fetch(
-      `https://api.spacejoy.com/api/designs/search/public?skip=${
-        Math.random() * 10
-      }&limit=100&sort=-1`,
+      'https://api.spacejoy.com/api/designs/search/public?skip=0&limit=100&sort=-1',
       {
         method: 'POST',
         headers: {
@@ -164,7 +64,9 @@ const Home = ({navigation}) => {
         refreshing={isLoading}
         onRefresh={getDesignFeed}
         data={designFeed.list}
-        renderItem={({item}) => <Item data={item} navigation={navigation} />}
+        renderItem={({item}) => (
+          <DesignCard data={item} navigation={navigation} />
+        )}
         keyExtractor={(item) => item._id}
         onScroll={Animated.event(
           [{nativeEvent: {contentOffset: {y: scrollY}}}],
@@ -221,18 +123,5 @@ const styles = StyleSheet.create({
   homeBannerImage: {
     ...StyleSheet.absoluteFill,
     width: SIZES.width,
-  },
-  designFeedCard: {
-    width: SIZES.width,
-    paddingHorizontal: SIZES.padding,
-    paddingVertical: SIZES.padding / 2,
-  },
-  designFeedImageHolder: {
-    height: 220,
-    width: '100%',
-  },
-  designFeedImage: {
-    height: '100%',
-    width: '100%',
   },
 });

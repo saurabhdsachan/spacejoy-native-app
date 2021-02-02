@@ -23,6 +23,7 @@ class Button extends Component {
       start,
       locations,
       shadow,
+      dashed,
       children,
       ...props
     } = this.props;
@@ -32,6 +33,7 @@ class Button extends Component {
       light && styles.light,
       ghost && styles.ghost,
       shadow && styles.shadow,
+      dashed && styles.dashed,
       size && styles[size],
       color && styles[color], // predefined styles colors for backgroundColor
       color && !styles[color] && {backgroundColor: color}, // custom backgroundColor
@@ -90,6 +92,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.COLORS.gray,
   },
+  dashed: {borderStyle: 'dashed', borderWidth: 1},
   light: {
     borderWidth: 1,
     borderColor: theme.COLORS.white,

@@ -1,9 +1,11 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const baseApiUrl = 'https://api-staging.spacejoy.com/api';
 
 const fetcher = async ({endPoint, method, type = 'text', body}) => {
-  const JWT = false;
+  const JWT = await AsyncStorage.getItem('userToken');
   const headers = {
-    'Content-type':  type === 'file' ? '' : 'application/json',
+    'Content-type': type === 'file' ? '' : 'application/json',
     ...(JWT && {Authorization: JWT}),
     'client-origin': 'com.spacejoy.spacejoyapp-infra',
   };
@@ -19,9 +21,10 @@ const fetcher = async ({endPoint, method, type = 'text', body}) => {
           body: JSON.stringify(body),
         };
   const finalAPIBaseUrl = baseApiUrl;
-  return fetch(`${finalAPIBaseUrl}${endPoint}`, options)
+  const apiEndpoint = `${finalAPIBaseUrl}${endPoint}`;
+
+  return fetch(apiEndpoint, options)
     .then(async (response) => {
-      console.log('response is ----', response, body, headers);
       if (response.status) {
         try {
           if (response.status === 204) {

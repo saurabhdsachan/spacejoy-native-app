@@ -1,40 +1,44 @@
 import {theme} from '@constants/';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import Block from './Block';
+import Button from './Button';
+import Text from './Text';
 
 const {SIZES, COLORS} = theme;
 
 const Radio = ({button, onClick, inline, bold}) => {
   const radioStyles = [styles.radioButton, inline && styles.inline];
   const labelStyles = [styles.label, inline && styles.labelInline];
+  const BorderStyle = [
+    {
+      height: theme.SIZES.radio,
+      width: theme.SIZES.radio,
+      borderColor: button.selected ? COLORS.primary1 : 'black',
+    },
+  ];
   return (
-    <View style={radioStyles}>
-      <View
-        style={[
-          styles.radioButtonHolder,
-          {
-            height: button.size,
-            width: button.size,
-            borderColor: button.color,
-          },
-        ]}>
-        {button.selected ? (
-          <View
-            style={[
-              styles.radioIcon,
-              {
-                height: button.size / 2,
-                width: button.size / 2,
-                backgroundColor: button.color,
-              },
-            ]}
-          />
-        ) : null}
-      </View>
-      <Text style={[labelStyles, bold && styles.labelBold]}>
-        {button.label}
-      </Text>
-    </View>
+    <Button raw onPress={() => onClick(button.value)}>
+      <Block row style={radioStyles} center>
+        <View style={[styles.radioButtonHolder, BorderStyle]}>
+          {button.selected ? (
+            <View
+              style={[
+                styles.radioIcon,
+                {
+                  height: theme.SIZES.radio / 2,
+                  width: theme.SIZES.radio / 2,
+                  backgroundColor: COLORS.primary1,
+                },
+              ]}
+            />
+          ) : null}
+        </View>
+        <Text style={[labelStyles, bold && styles.labelBold]}>
+          {button.label}
+        </Text>
+      </Block>
+    </Button>
   );
 };
 
@@ -42,7 +46,7 @@ export default Radio;
 
 const styles = StyleSheet.create({
   radioButton: {
-    marginBottom: SIZES.base / 2,
+    marginBottom: SIZES.padding / 2,
   },
   inline: {
     flexDirection: 'row',
@@ -53,6 +57,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   radioIcon: {
     borderRadius: 50,

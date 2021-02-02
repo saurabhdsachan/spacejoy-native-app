@@ -15,6 +15,7 @@ module.exports = {
           '@utils': './src/utils/',
           '@screens': './src/screens/',
           '@data': './src/data/',
+          '@derivedComponents': './src/derivedComponents/',
         },
       },
     ],
