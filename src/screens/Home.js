@@ -1,6 +1,6 @@
 import Avatar from "@components/Avatar";
 import { Block, Button, Divider, ProgressiveImage, Text } from "@components/index";
-import { theme } from "@constants/index";
+import { images, theme } from "@constants/index";
 import React, { useEffect, useState } from "react";
 import { FlatList, Share, StatusBar, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -24,7 +24,7 @@ const Item = ({ data, navigation }) => (
 		<Block row center>
 			<Block flex={3}>
 				<Avatar
-					uri="https://res.cloudinary.com/spacejoy/image/upload/c_thumb,g_face,fl_lossy,q_auto,f_auto,h_120,w_120/v1581506948/web/Customer%20Stories_Assets/Amber/Amber_profile_n4lpwa.jpg"
+					uri={data?.owner?.avatar || images.defaultAvatar}
 					user={{ name: "Amber Esperaza", city: "Austin", state: "Texas" }}
 				/>
 			</Block>
@@ -39,8 +39,11 @@ const Item = ({ data, navigation }) => (
 		<TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate("Details", { feedItem: data })}>
 			<Block style={styles.designFeedImageHolder}>
 				<ProgressiveImage
+					thumbnailSource={images.pattern}
 					source={{
-						uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,h_${SIZES.height}/${data.cdnRender[0]}`,
+						uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,h_${SIZES.height * 2}/${
+							data.cdnRender[2]
+						}`,
 					}}
 					resizeMode="cover"
 					style={styles.designFeedImage}
@@ -80,7 +83,7 @@ const Home = ({ navigation }) => {
 	const [designFeed, setDesignFeed] = useState([]);
 
 	const getDesignFeed = () =>
-		fetch(`https://api.spacejoy.com/api/designs/search/public?skip=${Math.random() * 10}&limit=100&sort=-1`, {
+		fetch(`https://api-staging.spacejoy.com/api/designs/search/public?skip=${Math.random() * 10}&limit=100&sort=-1`, {
 			method: "POST",
 			headers: {
 				Accept: "application/json",

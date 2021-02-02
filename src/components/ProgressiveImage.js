@@ -8,14 +8,14 @@ const ProgressiveImage = ({ thumbnailSource, source, style, ...props }) => {
 	const handleThumbnailLoad = () => {
 		Animated.timing(thumbnailAnimated, {
 			toValue: 1,
-			duration: 500,
+			duration: 50,
 			useNativeDriver: true,
 		}).start();
 	};
 	const onImageLoad = () => {
 		Animated.timing(imageAnimated, {
 			toValue: 1,
-			duration: 500,
+			duration: 200,
 			useNativeDriver: true,
 		}).start();
 	};
@@ -23,6 +23,7 @@ const ProgressiveImage = ({ thumbnailSource, source, style, ...props }) => {
 		<Block flex={false}>
 			<Animated.Image
 				{...props}
+				resizeMode="repeat"
 				source={thumbnailSource}
 				style={[style, { opacity: thumbnailAnimated }]}
 				onLoad={handleThumbnailLoad}
@@ -38,4 +39,4 @@ const ProgressiveImage = ({ thumbnailSource, source, style, ...props }) => {
 	);
 };
 
-export default ProgressiveImage;
+export default React.memo(ProgressiveImage);

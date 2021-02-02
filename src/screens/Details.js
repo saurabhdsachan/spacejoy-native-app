@@ -16,7 +16,7 @@ const Details = ({ route, navigation }) => {
 	const [productList, setProductList] = useState([]);
 
 	const getProductList = () =>
-		fetch(`https://api.spacejoy.com/api/web/designs/public/slug/${feedItem.slug}`)
+		fetch(`https://api-staging.spacejoy.com/api/web/designs/public/slug/${feedItem.slug}`)
 			.then((response) => response.json())
 			.then((json) => setProductList(json.data.assets))
 			.catch((error) => console.error(error))
@@ -30,7 +30,7 @@ const Details = ({ route, navigation }) => {
 		<ScrollView style={{ backgroundColor: COLORS.white }}>
 			<StatusBar barStyle="dark-content" backgroundColor="red" />
 			<Block>
-				<Carousel images={feedItem.cdnRender} />
+				<Carousel data={feedItem.cdnRender} />
 			</Block>
 			<Block row center padding={SIZES.padding}>
 				<Block flex={3}>
