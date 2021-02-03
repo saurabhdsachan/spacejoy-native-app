@@ -1,10 +1,11 @@
-import { Block, Button, Text } from "@components/";
-import Accordion from "@components/Accordion";
-import Loader from "@components/Loader";
-import { COLORS, SIZES } from "@constants/index";
-import React, { useEffect, useState } from "react";
-import { Image, StyleSheet } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { Block, Button, Text } from '@components/';
+import Accordion from '@components/Accordion';
+import Loader from '@components/Loader';
+import { COLORS, SIZES } from '@constants/index';
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import DesignCard from 'src/derivedComponents/Cards/DesignCard';
 
 const CollectionFAQs = ({ id }) => {
 	const [collectionFaq, setCollectionFaq] = useState([]);
@@ -37,36 +38,12 @@ const CollectionFAQs = ({ id }) => {
 	);
 };
 
-const DesignCard = ({ data, navigation }) => {
-	return (
-		<TouchableOpacity onPress={() => navigation.navigate("Details", { feedItem: data })}>
-			<Block style={styles.designCard}>
-				<Image
-					resizeMode="cover"
-					style={styles.designCardImage}
-					source={{
-						uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto/${data?.cdnRender[0]}`,
-					}}
-				/>
-				<Block>
-					<Text caption mt2 color={COLORS.red} transform={"capitalize"}>
-						{data?.theme?.name}
-					</Text>
-					<Text numberOfLines={1} body>
-						{data?.name}
-					</Text>
-				</Block>
-			</Block>
-		</TouchableOpacity>
-	);
-};
-
-const SingleCollection = ({ route, navigation }) => {
-	const {
-		params: { collectionItem = {} },
-	} = route;
-	const [collectionData, setCollectionData] = useState({});
-	const [isLoading, setLoading] = useState(false);
+const SingleCollection = ({route, navigation}) => {
+  const {
+    params: {collectionItem = {}},
+  } = route;
+  const [collectionData, setCollectionData] = useState({});
+  const [isLoading, setLoading] = useState(false);
 
 	const getDetailedCollection = () => {
 		setLoading(true);
@@ -145,25 +122,31 @@ const SingleCollection = ({ route, navigation }) => {
 						</Button>
 					</Block>
 
-					<Block color="#f3f3f3">
-						<Block padding={SIZES.padding}>
-							<Text h3 bold mb3>
-								Hand-Picked Farmhouse Living Room Design Ideas Collection
-							</Text>
-							{collectionData?.designList?.map((item) => (
-								<DesignCard key={item?._id} data={item} navigation={navigation} />
-							))}
-						</Block>
-					</Block>
-					{collectionData?._id && (
-						<Block padding={SIZES.padding}>
-							<CollectionFAQs id={collectionData._id} />
-						</Block>
-					)}
-				</ScrollView>
-			)}
-		</Block>
-	);
+          <Block color="#f3f3f3">
+            <Block padding={SIZES.padding}>
+              <Text h3 bold >
+                Hand-Picked {collectionItem?.name}
+              </Text>
+            </Block>
+            <Block padding={[0,SIZES.padding]} color='white'>
+              {collectionData?.designList?.map((item) => (
+                <DesignCard
+                  key={item?._id}
+                  data={item}
+                  navigation={navigation}
+                />
+              ))}
+            </Block>
+          </Block>
+          {collectionData?._id && (
+            <Block padding={SIZES.padding}>
+              <CollectionFAQs id={collectionData._id} />
+            </Block>
+          )}
+        </ScrollView>
+      )}
+    </Block>
+  );
 };
 
 const styles = StyleSheet.create({

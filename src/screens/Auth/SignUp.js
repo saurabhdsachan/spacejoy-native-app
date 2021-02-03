@@ -1,16 +1,15 @@
-import React, { useState } from "react";
 import { Block } from "@components/";
-import { StyleSheet, ScrollView, Text, View, TextInput, KeyboardAvoidingView, ActivityIndicator } from "react-native";
-import { theme } from "@constants/index";
-import Button from "@components/Button";
-import { AuthContext } from "@utils/helpers/withAuthContext";
-import { fetcher, handle } from "@utils/apiFetcher";
-import { authRoutes } from "@constants/";
-import { oAuthLogin } from "@utils/logins";
 import AppleButton from "@components/AppleButton";
+import Button from "@components/Button";
 import FacebookLoginButton from "@components/FacebookLoginButton";
 import GoogleLoginButton from "@components/GoogleLoginButton";
 import SignupError from "@components/LoginError";
+import { theme } from "@constants/index";
+import { fetcher, handle } from "@utils/apiFetcher";
+import { AuthContext } from "@utils/helpers/withAuthContext";
+import { oAuthLogin } from "@utils/logins";
+import React, { useState } from "react";
+import { ActivityIndicator, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 const SignUp = () => {
 	const { signUp } = React.useContext(AuthContext);

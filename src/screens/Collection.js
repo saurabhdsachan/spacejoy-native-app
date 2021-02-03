@@ -1,71 +1,18 @@
-import { Block, Button, Text } from "@components/";
-import Loader from "@components/Loader";
-import { COLORS, SIZES } from "@constants/";
-import { useHeaderHeight } from "@react-navigation/stack";
-import onShare from "@utils/onShare";
-import { elevationShadowStyle } from "@utils/styleHelper";
-import React, { useEffect, useRef, useState } from "react";
-import { FlatList, Image, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import Animated from "react-native-reanimated";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Block } from '@components/';
+import Loader from '@components/Loader';
+import { COLORS, SIZES } from '@constants/';
+import { useHeaderHeight } from '@react-navigation/stack';
+import { elevationShadowStyle } from '@utils/styleHelper';
+import React, { useEffect, useRef, useState } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
+import Animated from 'react-native-reanimated';
+import CollectionCard from 'src/derivedComponents/Cards/CollectionCard';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const CollectionCard = ({ data, navigation }) => {
-	const onShareComplete = (result) => {
-		// Either dissmissed or shared
-	};
-
-	const onShareError = (error) => {
-		// handle error that occurs
-	};
-
-	return (
-		<Block style={styles.collectionFeedCard} middle key={data._id}>
-			<Block style={styles.collectionFeedImageHolder}>
-				<TouchableOpacity onPress={() => navigation.navigate("SingleCollection", { collectionItem: data })}>
-					<Image
-						source={{
-							uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,ar_1.55,c_pad/${data.cdnThumbnail}`,
-						}}
-						resizeMode="cover"
-						style={styles.collectionFeedImage}
-					/>
-				</TouchableOpacity>
-			</Block>
-			<Block row spaceBetween end padding={[SIZES.padding, 0]}>
-				<Block flex={10}>
-					<Text body>{data.name}</Text>
-				</Block>
-				<Block flex={1}>
-					<Button
-						raw
-						onPress={() =>
-							onShare({
-								data: {
-									message: data.name,
-									url: data.slug,
-									title: data.name,
-								},
-								onComplete: onShareComplete,
-								onError: onShareError,
-							})
-						}
-					>
-						<Text small right>
-							<Icon name="share-social-outline" size={SIZES.base * 2} />
-						</Text>
-					</Button>
-				</Block>
-			</Block>
-		</Block>
-	);
-};
-
-const Collection = ({ route, navigation }) => {
-	const [isLoading, setLoading] = useState(true);
-	const [collectionFeed, setCollectionFeed] = useState([]);
+const Collection = ({route, navigation}) => {
+  const [isLoading, setLoading] = useState(true);
+  const [collectionFeed, setCollectionFeed] = useState([]);
 
 	const scrollY = useRef(new Animated.Value(0)).current;
 
@@ -89,18 +36,18 @@ const Collection = ({ route, navigation }) => {
 	const animatedTextStyles = {
 		position: "absolute",
 		top: scrollY.interpolate({
-			inputRange: [0, 25],
-			outputRange: [100, 60],
+			inputRange: [0, 50],
+			outputRange: [100, headerHeight-32],
 			extrapolate: "clamp",
 		}),
 		left: scrollY.interpolate({
-			inputRange: [0, 25],
+			inputRange: [0, 50],
 			outputRange: [SIZES.padding, 50],
 			extrapolate: "clamp",
 		}),
 		fontSize: scrollY.interpolate({
-			inputRange: [0, 25],
-			outputRange: [SIZES.h1, SIZES.h3],
+			inputRange: [0, 50],
+			outputRange: [SIZES.title, SIZES.h3],
 			extrapolate: "clamp",
 		}),
 		fontWeight: "bold",
@@ -113,8 +60,8 @@ const Collection = ({ route, navigation }) => {
 			<AnimatedFlatList
 				style={{
 					paddingTop: scrollY.interpolate({
-						inputRange: [0, 30],
-						outputRange: [SIZES.padding + 50, 0],
+						inputRange: [0, 100],
+						outputRange: [80, 0],
 						extrapolate: "clamp",
 					}),
 				}}

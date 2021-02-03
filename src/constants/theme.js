@@ -32,22 +32,23 @@ export const MILD = {
 };
 
 export const SIZES = {
-	// global sizes
-	statusBar: 30,
-	base: 8,
-	font: 14,
-	radius: 12,
-	padding: 18,
-	// font sizes
-	h1: 30,
-	h2: 22,
-	h3: 16,
-	h4: 14,
-	title: 45,
-	header: 18,
-	body: 16,
-	small: 14,
-	caption: 12,
+  // global sizes
+  radio: 24,
+  statusBar: 30,
+  base: 8,
+  font: 14,
+  radius: 12,
+  padding: 18,
+  // font sizes
+  h1: 30,
+  h2: 22,
+  h3: 16,
+  h4: 14,
+  title: 45,
+  header: 18,
+  body: 16,
+  small: 14,
+  caption: 12,
 
 	// app dimensions
 	safe: 80,
