@@ -1,69 +1,14 @@
-import {Block, Button, Text} from '@components/';
+import {Block} from '@components/';
 import Loader from '@components/Loader';
 import {COLORS, SIZES} from '@constants/';
 import {useHeaderHeight} from '@react-navigation/stack';
-import onShare from '@utils/onShare';
 import {elevationShadowStyle} from '@utils/styleHelper';
 import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, Image, StyleSheet} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {FlatList, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';
-import Icon from 'react-native-vector-icons/Ionicons';
+import CollectionCard from 'src/derivedComponents/Cards/CollectionCard';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
-const CollectionCard = ({data, navigation}) => {
-  const onShareComplete = (result) => {
-    // Either dissmissed or shared
-  };
-
-  const onShareError = (error) => {
-    // handle error that occurs
-  };
-
-  return (
-    <Block style={styles.collectionFeedCard} middle key={data._id}>
-      <Block style={styles.collectionFeedImageHolder}>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('SingleCollection', {collectionItem: data})
-          }>
-          <Image
-            source={{
-              uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,ar_1.55,c_pad/${data.cdnThumbnail}`,
-            }}
-            resizeMode="cover"
-            style={styles.collectionFeedImage}
-          />
-        </TouchableOpacity>
-      </Block>
-      <Block row spaceBetween end padding={[SIZES.padding, 0]}>
-        <Block flex={10}>
-          <Text body>{data.name}</Text>
-        </Block>
-        <Block flex={1}>
-          <Button
-            raw
-            onPress={() =>
-              onShare({
-                data: {
-                  message: data.name,
-                  url: data.slug,
-                  title: data.name,
-                },
-                onComplete: onShareComplete,
-                onError: onShareError,
-              })
-            }>
-            <Text small right>
-              <Icon name="share-social-outline" size={SIZES.base * 2} />
-            </Text>
-          </Button>
-        </Block>
-      </Block>
-    </Block>
-  );
-};
 
 const Collection = ({route, navigation}) => {
   const [isLoading, setLoading] = useState(true);

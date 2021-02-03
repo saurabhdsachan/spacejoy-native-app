@@ -1,7 +1,7 @@
 import {theme} from '@constants/index';
 import {elevationShadowStyle} from '@utils/styleHelper';
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {ActivityIndicator, StyleSheet, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 const {COLORS, SIZES} = theme;
@@ -25,6 +25,8 @@ class Button extends Component {
       shadow,
       dashed,
       children,
+      loading,
+      onPress,
       ...props
     } = this.props;
 
@@ -44,14 +46,15 @@ class Button extends Component {
       <TouchableOpacity
         style={raw ? null : buttonStyles}
         activeOpacity={opacity || 0.4}
-        {...props}>
+        {...props}
+        onPress={!loading ? onPress : null}>
         {gradient && (
           <LinearGradient
             style={styles.rotate}
             colors={[COLORS.primary2, COLORS.primary1]}
           />
         )}
-        {children}
+        {loading ? <ActivityIndicator /> : children}
       </TouchableOpacity>
     );
   }

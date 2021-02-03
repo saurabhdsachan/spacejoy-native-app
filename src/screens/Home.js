@@ -1,6 +1,6 @@
 import {Block, Button, Text} from '@components/index';
 import {images, theme} from '@constants/index';
-import DesignCard from '@derivedComponents/DesignCard';
+import DesignCard from '@derivedComponents/Cards/DesignCard';
 import React, {useEffect, useState} from 'react';
 import {FlatList, StatusBar, StyleSheet} from 'react-native';
 import Animated from 'react-native-reanimated';

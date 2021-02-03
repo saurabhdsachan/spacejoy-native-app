@@ -34,7 +34,9 @@ const Radio = ({button, onClick, inline, bold}) => {
             />
           ) : null}
         </View>
-        <Text style={[labelStyles, bold && styles.labelBold]}>
+        <Text
+          transform="capitalize"
+          style={[labelStyles, bold && styles.labelBold]}>
           {button.label}
         </Text>
       </Block>
@@ -46,7 +48,7 @@ export default Radio;
 
 const styles = StyleSheet.create({
   radioButton: {
-    marginBottom: SIZES.padding / 2,
+    marginVertical: (SIZES.padding * 2) / 3,
   },
   inline: {
     flexDirection: 'row',

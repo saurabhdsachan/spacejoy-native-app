@@ -4,7 +4,8 @@ import Loader from '@components/Loader';
 import {COLORS, SIZES} from '@constants/index';
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
+import DesignCard from 'src/derivedComponents/Cards/DesignCard';
 
 const CollectionFAQs = ({id}) => {
   const [collectionFaq, setCollectionFaq] = useState([]);
@@ -40,31 +41,6 @@ const CollectionFAQs = ({id}) => {
         );
       })}
     </Block>
-  );
-};
-
-const DesignCard = ({data, navigation}) => {
-  return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('Details', {feedItem: data})}>
-      <Block style={styles.designCard}>
-        <Image
-          resizeMode="cover"
-          style={styles.designCardImage}
-          source={{
-            uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto/${data?.cdnRender[0]}`,
-          }}
-        />
-        <Block>
-          <Text caption mt2 color={COLORS.red} transform={'capitalize'}>
-            {data?.theme?.name}
-          </Text>
-          <Text numberOfLines={1} body>
-            {data?.name}
-          </Text>
-        </Block>
-      </Block>
-    </TouchableOpacity>
   );
 };
 
@@ -160,6 +136,8 @@ const SingleCollection = ({route, navigation}) => {
               <Text h3 bold mb3>
                 Hand-Picked Farmhouse Living Room Design Ideas Collection
               </Text>
+            </Block>
+            <Block>
               {collectionData?.designList?.map((item) => (
                 <DesignCard
                   key={item?._id}
