@@ -115,8 +115,10 @@ const BookmarkModal = ({
   }, [selectedIdForBookmark]);
 
   useEffect(() => {
-    const getDesignBookmarkDetails = () => {};
-    getDesignBookmarkDetails();
+    if(selectedIdForBookmark){
+      const getDesignBookmarkDetails = () => {};
+      getDesignBookmarkDetails();
+    }
   }, [selectedIdForBookmark]);
 
   useEffect(() => {
@@ -273,6 +275,7 @@ const BookmarkModal = ({
         renderItem: ({item}) => {
           return (
             <Radio
+              key={item?._id}
               inline
               button={{
                 label: item?.name,

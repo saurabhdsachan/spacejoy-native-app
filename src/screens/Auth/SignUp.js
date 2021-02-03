@@ -4,7 +4,7 @@ import Button from "@components/Button";
 import FacebookLoginButton from "@components/FacebookLoginButton";
 import GoogleLoginButton from "@components/GoogleLoginButton";
 import SignupError from "@components/LoginError";
-import { theme } from "@constants/index";
+import { routes, theme } from "@constants/index";
 import { fetcher, handle } from "@utils/apiFetcher";
 import { AuthContext } from "@utils/helpers/withAuthContext";
 import { oAuthLogin } from "@utils/logins";
@@ -54,7 +54,7 @@ const SignUp = () => {
 		if (firstName && lastName && phone && password && email) {
 			setLoading(true);
 			// submit API call
-			const endPoint = authRoutes.signUpRoute;
+			const endPoint = routes.authRoutes.signUpRoute;
 			const body = {
 				data: {
 					email,
