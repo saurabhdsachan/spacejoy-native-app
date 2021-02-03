@@ -1,4 +1,4 @@
-const {Share} = require('react-native');
+const { Share } = require("react-native");
 /**
  * @param shareProps Properties passes to share object
  * @param shareProps.data Data object containing inputs for the share application

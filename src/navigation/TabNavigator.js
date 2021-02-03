@@ -1,24 +1,24 @@
-import {theme} from '@constants/index';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { theme } from '@constants/index';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {Host} from 'react-native-portalize';
+import { Host } from 'react-native-portalize';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
-  CollectionStackNavigator,
-  HomeStackNavigator,
-  MyDesignsStackNavigator,
-  NewActionStackNavigator,
-  StoreStackNavigator,
-} from './StackNavigator';
+	CollectionStackNavigator,
+	HomeStackNavigator,
+	MyDesignsStackNavigator,
+	NewActionStackNavigator,
+	StoreStackNavigator
+} from "./StackNavigator";
 
-const {COLORS, SIZES} = theme;
+const { COLORS, SIZES } = theme;
 
 const Tab = createBottomTabNavigator();
 
 const TabBarLabels = {
-  Home: 'Feeds',
-  Collection: 'Collections',
-  NewAction: 'New Project',
+	Home: "Feeds",
+	Collection: "Collections",
+	NewAction: "New Project",
 };
 
 const BottomTabNavigator = () => {

@@ -1,33 +1,31 @@
 import Avatar from '@components/Avatar';
-import {Block, Carousel, Divider, Marketing, Text} from '@components/index';
+import { Block, Carousel, Divider, Marketing, Text } from '@components/index';
 import ProductsList from '@components/ProductsList';
-import {theme} from '@constants/index';
-import React, {useEffect, useState} from 'react';
-import {StatusBar, StyleSheet} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import { theme } from '@constants/index';
+import React, { useEffect, useState } from 'react';
+import { StatusBar, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import BookmarkButton from 'src/derivedComponents/BookmarkButton';
 import LikeButton from 'src/derivedComponents/LikeButton';
 import ShareButton from 'src/derivedComponents/ShareButton';
 
-const {SIZES, COLORS} = theme;
+const { SIZES, COLORS } = theme;
 
 const Details = ({route, navigation}) => {
   const [feedItem, setFeedItem] = useState(route.params?.feedItem);
   const [isLoading, setLoading] = useState(true);
   const [productList, setProductList] = useState([]);
 
-  const getProductList = () =>
-    fetch(
-      `https://api.spacejoy.com/api/web/designs/public/slug/${feedItem.slug}`,
-    )
-      .then((response) => response.json())
-      .then((json) => setProductList(json.data.assets))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+	const getProductList = () =>
+		fetch(`https://api-staging.spacejoy.com/api/web/designs/public/slug/${feedItem.slug}`)
+			.then((response) => response.json())
+			.then((json) => setProductList(json.data.assets))
+			.catch((error) => console.error(error))
+			.finally(() => setLoading(false));
 
-  useEffect(() => {
-    getProductList();
-  }, []);
+	useEffect(() => {
+		getProductList();
+	}, []);
 
   const onLike = (value) => {
     setFeedItem({...feedItem, liked: value});
@@ -85,22 +83,21 @@ const Details = ({route, navigation}) => {
         </Block>
       </Block>
 
-      <Block style={{paddingHorizontal: SIZES.padding}}>
-        <Divider />
-      </Block>
+			<Block style={{ paddingHorizontal: SIZES.padding }}>
+				<Divider />
+			</Block>
 
-      <Block center style={styles.designData}>
-        <Text h2 mb2>
-          {feedItem.name}
-        </Text>
-        <Text small>
-          For this glamorous living room with bursts of color, we chose some
-          mid-century furniture pieces and added tons of textures to create that
-          unique space...
-        </Text>
-      </Block>
+			<Block center style={styles.designData}>
+				<Text h2 mb2>
+					{feedItem.name}
+				</Text>
+				<Text small>
+					For this glamorous living room with bursts of color, we chose some mid-century furniture pieces and added tons
+					of textures to create that unique space...
+				</Text>
+			</Block>
 
-      <Marketing />
+			<Marketing />
 
       <Block margin={SIZES.padding}>
         <ProductsList data={productList} isLoading={isLoading} />
@@ -112,8 +109,8 @@ const Details = ({route, navigation}) => {
 export default Details;
 
 const styles = StyleSheet.create({
-  designData: {
-    width: SIZES.width,
-    padding: SIZES.padding,
-  },
+	designData: {
+		width: SIZES.width,
+		padding: SIZES.padding,
+	},
 });

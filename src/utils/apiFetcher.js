@@ -55,9 +55,7 @@ const fetcher = async ({endPoint, method, type = 'text', body}) => {
 };
 // [a,e]
 const handle = (promise) => {
-  return promise
-    .then((data) => [data, undefined])
-    .catch((err) => Promise.resolve([undefined, err]));
+	return promise.then((data) => [data, undefined]).catch((err) => Promise.resolve([undefined, err]));
 };
 
-export {handle, fetcher};
+export { handle, fetcher };

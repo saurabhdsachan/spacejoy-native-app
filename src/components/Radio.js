@@ -1,11 +1,11 @@
-import {theme} from '@constants/';
+import { theme } from '@constants/';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Block from './Block';
 import Button from './Button';
 import Text from './Text';
 
-const {SIZES, COLORS} = theme;
+const { SIZES, COLORS } = theme;
 
 const Radio = ({button, onClick, inline, bold}) => {
   const radioStyles = [styles.radioButton, inline && styles.inline];

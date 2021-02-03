@@ -1,10 +1,10 @@
-import {theme} from '@constants/index';
-import {elevationShadowStyle} from '@utils/styleHelper';
-import React, {Component} from 'react';
-import {ActivityIndicator, StyleSheet, TouchableOpacity} from 'react-native';
+import { theme } from '@constants/index';
+import { elevationShadowStyle } from '@utils/styleHelper';
+import React, { Component } from 'react';
+import { ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const {COLORS, SIZES} = theme;
+const { COLORS, SIZES } = theme;
 
 class Button extends Component {
   render() {
@@ -61,14 +61,14 @@ class Button extends Component {
 }
 
 Button.defaultProps = {
-  startColor: COLORS.primary1,
-  endColor: COLORS.secondary,
-  start: {x: 0, y: 0},
-  end: {x: 1, y: 1},
-  locations: [0.1, 0.9],
-  opacity: 0.4,
-  color: COLORS.transparent,
-  size: 'md',
+	startColor: COLORS.primary1,
+	endColor: COLORS.secondary,
+	start: { x: 0, y: 0 },
+	end: { x: 1, y: 1 },
+	locations: [0.1, 0.9],
+	opacity: 0.4,
+	color: COLORS.transparent,
+	size: "md",
 };
 
 export default Button;
