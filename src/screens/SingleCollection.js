@@ -124,11 +124,11 @@ const SingleCollection = ({route, navigation}) => {
 
           <Block color="#f3f3f3">
             <Block padding={SIZES.padding}>
-              <Text h3 bold mb3>
-                Hand-Picked {collectioItem?.name}
+              <Text h3 bold >
+                Hand-Picked {collectionItem?.name}
               </Text>
             </Block>
-            <Block>
+            <Block padding={[0,SIZES.padding]} color='white'>
               {collectionData?.designList?.map((item) => (
                 <DesignCard
                   key={item?._id}

@@ -19,7 +19,7 @@ const Carousel = ({ data }) => {
 					scrollEventThrottle={1}
 					onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: true })}
 				>
-					{data.map((image, imageIndex) => {
+					{data?.map((image, imageIndex) => {
 						return (
 							<ProgressiveImage
 								resizeMode="cover"
@@ -36,7 +36,7 @@ const Carousel = ({ data }) => {
 					})}
 				</Animated.ScrollView>
 				<View style={styles.indicatorContainer}>
-					{data.map((image, imageIndex) => {
+					{data?.map((image, imageIndex) => {
 						const opacity = scrollX.interpolate({
 							inputRange: [SIZES.width * (imageIndex - 1), SIZES.width * imageIndex, SIZES.width * (imageIndex + 1)],
 							outputRange: [0.5, 1, 0.5],

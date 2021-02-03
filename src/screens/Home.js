@@ -3,6 +3,7 @@ import { theme } from "@constants/index";
 import React, { useEffect, useState } from "react";
 import { FlatList, Share, StatusBar } from "react-native";
 import Animated from "react-native-reanimated";
+import DesignCard from "src/derivedComponents/Cards/DesignCard";
 
 const { SIZES, COLORS } = theme;
 
@@ -49,7 +50,7 @@ const Home = ({ navigation }) => {
 				onRefresh={getDesignFeed}
 				data={designFeed.list}
 				ItemSeparatorComponent={() => <Divider />}
-				renderItem={({ item }) => <Item data={item} navigation={navigation} />}
+				renderItem={({ item }) => <DesignCard data={item} navigation={navigation} />}
 				keyExtractor={(item) => item._id}
 			/>
 		</Block>

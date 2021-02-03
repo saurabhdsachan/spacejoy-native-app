@@ -36,18 +36,18 @@ const Collection = ({route, navigation}) => {
 	const animatedTextStyles = {
 		position: "absolute",
 		top: scrollY.interpolate({
-			inputRange: [0, 25],
-			outputRange: [100, 60],
+			inputRange: [0, 50],
+			outputRange: [100, headerHeight-32],
 			extrapolate: "clamp",
 		}),
 		left: scrollY.interpolate({
-			inputRange: [0, 25],
+			inputRange: [0, 50],
 			outputRange: [SIZES.padding, 50],
 			extrapolate: "clamp",
 		}),
 		fontSize: scrollY.interpolate({
-			inputRange: [0, 25],
-			outputRange: [SIZES.h1, SIZES.h3],
+			inputRange: [0, 50],
+			outputRange: [SIZES.title, SIZES.h3],
 			extrapolate: "clamp",
 		}),
 		fontWeight: "bold",
@@ -60,8 +60,8 @@ const Collection = ({route, navigation}) => {
 			<AnimatedFlatList
 				style={{
 					paddingTop: scrollY.interpolate({
-						inputRange: [0, 30],
-						outputRange: [SIZES.padding + 50, 0],
+						inputRange: [0, 100],
+						outputRange: [80, 0],
 						extrapolate: "clamp",
 					}),
 				}}
