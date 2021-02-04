@@ -12,12 +12,13 @@ const QuizCard = ({data, stylesArray, align, imgStyles, inline}) => {
 
   const {blockColor, radioColor, title, selected, quantity} = data;
   const alignMiddle = {...(align && {middle: true})};
-  const isInline = {...(inline && {inline: true})};
+  const isInline = {...(inline ? {inline: true}: {inline: false})};
   const select = () => {
     if (!data.quantity) {
       addSelection(data);
     }
   };
+
   return (
     // <TouchableOpacity activeOpacity={0.8} onPress={() => select(data.id)}>
     <Block color={blockColor} style={stylesArray} {...alignMiddle}>
@@ -26,6 +27,7 @@ const QuizCard = ({data, stylesArray, align, imgStyles, inline}) => {
         onPress={() => select(data.id)}>
         <Radio
           bold
+          onChange={() => {}}
           {...isInline}
           button={{
             label: title,

@@ -11,7 +11,6 @@ const { SIZES, COLORS } = theme;
 const Radio = ({ button, onChange, inline, bold, children }) => {
   const radioStyles = [styles.radioButton, inline && styles.inline];
   const labelStyles = [styles.label, inline && styles.labelInline, bold && styles.labelBold];
-
   return (
     <Button raw onPress={() => onChange(button.value)} style={radioStyles}>
       <Block row={inline} center={inline}>

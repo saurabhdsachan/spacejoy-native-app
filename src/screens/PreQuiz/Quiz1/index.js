@@ -59,6 +59,7 @@ const Quiz1 = ({navigation}) => {
               data={quizData[0]}
               stylesArray={[styles.radioCard, styles.spaceRight, styles.full]}
               select={setSelection}
+              inline={false}
             />
             <Block flex={1.5}>
               <QuizCard
