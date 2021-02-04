@@ -9,11 +9,11 @@ const { SIZES, COLORS } = theme;
 
 const { sofa, lamp, chair, teddy } = images;
 
-const Quiz1 = ({ navigation }) => {
-  const handleChange = (value) => {
-    alert(value);
-  };
+const handleChange = (value) => {
+  alert(value);
+};
 
+const Quiz1 = ({ navigation }) => {
   return (
     <Block color={COLORS.white} padding={[SIZES.safe + 20, SIZES.padding, SIZES.padding, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />

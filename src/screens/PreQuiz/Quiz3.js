@@ -12,6 +12,10 @@ const { quiz3Banner, bg } = images;
 const HEADER_MIN_HEIGHT = 170;
 const HEADER_MAX_HEIGHT = 280;
 
+const handleChange = (value) => {
+  alert(value);
+};
+
 const Quiz3 = ({ navigation }) => {
   const scrollY = React.useRef(new Animated.Value(0)).current;
 
@@ -54,10 +58,12 @@ const Quiz3 = ({ navigation }) => {
               inline
               button={{
                 label: item.title,
+                value: item.title,
                 size: 18,
                 color: item.bg,
                 selected: false
               }}
+              onChange={handleChange}
             />
           </Block>
         ))}
