@@ -8,16 +8,16 @@ import { Modalize } from 'react-native-modalize';
 import { Portal } from 'react-native-portalize';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const CreateBookmarkSection = ({onCreateBookmark, onCancel, type}) => {
+const CreateBookmarkSection = ({ onCreateBookmark, onCancel, type }) => {
   const [loading, setLoading] = useState(false);
   //ideabook creation
   const [newBookmarkName, setNewBookmarkName] = useState(null);
-  const [error, setError] = useState({error: false, errorMessage: ''});
+  const [error, setError] = useState({ error: false, errorMessage: '' });
 
   const textInputRef = useRef();
 
   const onNewBookmarkNameChange = (text) => {
-    setError({error: false, errorMessage: ''});
+    setError({ error: false, errorMessage: '' });
     setNewBookmarkName(text);
   };
 
@@ -25,7 +25,7 @@ const CreateBookmarkSection = ({onCreateBookmark, onCancel, type}) => {
     if (!newBookmarkName) {
       setError({
         error: true,
-        errorMessage: 'Name needs to be atleast of one character length',
+        errorMessage: 'Name needs to be atleast of one character length'
       });
     }
     setLoading(true);
@@ -37,14 +37,14 @@ const CreateBookmarkSection = ({onCreateBookmark, onCancel, type}) => {
           method: 'POST',
           body: {
             name: newBookmarkName,
-            type,
-          },
-        }),
+            type
+          }
+        })
       );
       if (errorCreatingBookmark) {
         setError({
           error: true,
-          errorMessage: 'Something went wrong. Try again later',
+          errorMessage: 'Something went wrong. Try again later'
         });
       } else {
         onCreateBookmark(createdBookmark.data);
@@ -68,9 +68,7 @@ const CreateBookmarkSection = ({onCreateBookmark, onCancel, type}) => {
         placeholderTextColor={COLORS.gray}
         placeholder="Name your Ideabook"
       />
-      {error.error && (
-        <Text style={styles.errorText}>{error.errorMessage}</Text>
-      )}
+      {error.error && <Text style={styles.errorText}>{error.errorMessage}</Text>}
       <Block row>
         <Block margin={[0, SIZES.base, 0, 0]}>
           <Button ghost onPress={onCancel}>
@@ -78,10 +76,7 @@ const CreateBookmarkSection = ({onCreateBookmark, onCancel, type}) => {
           </Button>
         </Block>
         <Block margin={[0, 0, 0, SIZES.base]}>
-          <Button
-            color="black"
-            onPress={onCreateButtonClick}
-            loading={loading.creatingBookmark}>
+          <Button color="black" onPress={onCreateButtonClick} loading={loading.creatingBookmark}>
             <Text align="center" color="white">
               Create
             </Text>
@@ -92,33 +87,19 @@ const CreateBookmarkSection = ({onCreateBookmark, onCancel, type}) => {
   );
 };
 
-const BookmarkModal = ({
-  selectedIdForBookmark,
-  onClosed,
-  onBookmarkChange,
-  type,
-}) => {
+const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type }) => {
   const [bookmarkList, setBookmarkList] = useState([]);
   const [loading, setLoading] = useState({
     loadingBookmarks: false,
     savingBookmarks: false,
-    creatingBookmark: false,
+    creatingBookmark: false
   });
   const [selectedBookmark, setSelectedBookMark] = useState();
 
   const ref = useRef(null);
 
   useEffect(() => {
-    if (selectedIdForBookmark) {
-      ref?.current?.open();
-    }
-  }, [selectedIdForBookmark]);
-
-  useEffect(() => {
-    if(selectedIdForBookmark){
-      const getDesignBookmarkDetails = () => {};
-      getDesignBookmarkDetails();
-    }
+    if (selectedIdForBookmark) ref?.current?.open();
   }, [selectedIdForBookmark]);
 
   useEffect(() => {
@@ -126,9 +107,7 @@ const BookmarkModal = ({
       const endPoint = routes.designRoutes.getUserBookmarks(type);
 
       try {
-        const [fetchedBookmarkList, error] = await handle(
-          fetcher({endPoint, method: 'GET'}),
-        );
+        const [fetchedBookmarkList, error] = await handle(fetcher({ endPoint, method: 'GET' }));
         if (error) {
           throw new Error();
         } else {
@@ -145,7 +124,7 @@ const BookmarkModal = ({
     setBookmarkCreationMode(false);
     setError({
       error: false,
-      errorMessage: '',
+      errorMessage: ''
     });
     if (selectedBookmark !== id) {
       setSelectedBookMark(id);
@@ -155,35 +134,26 @@ const BookmarkModal = ({
   };
 
   const closedCallback = () => {
-    setSelectedBookMark(null);
-    if (onClosed) {
-      onClosed();
-    }
+    if (onClosed) onClosed();
   };
 
   const onSaveClick = async () => {
     if (!selectedBookmark) {
       setError({
         error: true,
-        errorMessage: 'Please select an Ideabook to add design',
+        errorMessage: 'Please select an Ideabook to add design'
       });
       return;
     }
-    const endPoint = routes.designRoutes.getBookmarkMappingApi(
-      type,
-      selectedBookmark,
-      selectedIdForBookmark,
-    );
+    const endPoint = routes.designRoutes.getBookmarkMappingApi(type, selectedBookmark, selectedIdForBookmark);
     setLoading({
       loadingBookmarks: false,
       savingBookmarks: true,
-      creatingBookmark: false,
+      creatingBookmark: false
     });
     try {
       console.log('endPoint', endPoint);
-      const [data, err] = await handle(
-        fetcher({endPoint, method: 'POST', body: {}}),
-      );
+      const [data, err] = await handle(fetcher({ endPoint, method: 'POST', body: {} }));
       console.log('data, err', data, err);
       if (err) {
         throw new Error(err.message);
@@ -198,13 +168,13 @@ const BookmarkModal = ({
     setLoading({
       loadingBookmarks: false,
       savingBookmarks: false,
-      creatingBookmark: false,
+      creatingBookmark: false
     });
   };
 
   //ideabook creation
   const [bookmarkCreationMode, setBookmarkCreationMode] = useState(false);
-  const [error, setError] = useState({error: false, errorMessage: ''});
+  const [error, setError] = useState({ error: false, errorMessage: '' });
 
   const createBookmarkModeToggle = () => {
     setBookmarkCreationMode(!bookmarkCreationMode);
@@ -222,7 +192,7 @@ const BookmarkModal = ({
         ListHeaderComponent: () => {
           return (
             <Block padding={[SIZES.base, 0, SIZES.padding, 0]} center>
-              <Text h2 align="center">
+              <Text h2 center>
                 Save {type} to Ideabook
               </Text>
               <Divider style={styles.divider} />
@@ -231,7 +201,7 @@ const BookmarkModal = ({
         },
         contentContainerStyle: {
           paddingHorizontal: SIZES.padding,
-          paddingVertical: SIZES.padding,
+          paddingVertical: SIZES.padding
         },
         refreshing: true,
         ListFooterComponent: (
@@ -240,26 +210,19 @@ const BookmarkModal = ({
               <CreateBookmarkSection
                 type={type}
                 onCancel={createBookmarkModeToggle}
-                onCreateBookmark={(bookmark) =>
-                  setBookmarkList([...bookmarkList, bookmark])
-                }
+                onCreateBookmark={(bookmark) => setBookmarkList([...bookmarkList, bookmark])}
               />
             ) : (
               <>
-                {error.error && (
-                  <Text style={styles.errorText}>{error.errorMessage}</Text>
-                )}
+                {error.error && <Text style={styles.errorText}>{error.errorMessage}</Text>}
                 <Block row padding={[SIZES.padding, 0]}>
                   <Block margin={[0, SIZES.base, 0, 0]}>
-                    <Button ghost onPress={createBookmarkModeToggle}>
+                    <Button size="sm" ghost onPress={createBookmarkModeToggle}>
                       <Text align="center">Add New Ideabook</Text>
                     </Button>
                   </Block>
                   <Block margin={[0, 0, 0, SIZES.base]}>
-                    <Button
-                      color="black"
-                      onPress={onSaveClick}
-                      loading={loading.savingBookmarks}>
+                    <Button size="sm" color="black" onPress={onSaveClick} loading={loading.savingBookmarks}>
                       <Text align="center" color="white" capitalize>
                         Save
                       </Text>
@@ -271,30 +234,30 @@ const BookmarkModal = ({
           </>
         ),
         ItemSeparatorComponent: () => <Divider />,
-        keyExtractor: ({item}) => item?._id,
-        renderItem: ({item}) => {
-          return (
+        keyExtractor: (item) => item?._id,
+        renderItem: ({ item }) => (
+          <Block key={item?._id} paddingVertical={SIZES.padding}>
             <Radio
-              key={item?._id}
               inline
               button={{
+                size: 22,
                 label: item?.name,
                 value: item?._id,
-                selected: selectedBookmark === item?._id,
+                selected: selectedBookmark === item?._id
               }}
-              onClick={onCheck}
+              onChange={onCheck}
             />
-          );
-        },
+          </Block>
+        )
       }}
     />
   );
 };
 
-const BookmarkButton = ({id, bookmarked, onBookmarkChange, type}) => {
-  const [selectedIdForBookmark, setSelectedIdForBookmark] = useState(null);
+const BookmarkButton = ({ id, bookmarked, onBookmarkChange, type }) => {
+  const [selectedIdForBookmark, setSelectedIdForBookmark] = useState('');
 
-  const toggleBookmark = (id = null) => {
+  const toggleBookmark = (id) => {
     setSelectedIdForBookmark(id);
   };
 
@@ -302,11 +265,7 @@ const BookmarkButton = ({id, bookmarked, onBookmarkChange, type}) => {
     <>
       <Button raw size="xs" onPress={() => toggleBookmark(id)}>
         <Text center>
-          <Icon
-            name={`bookmark${bookmarked ? '' : '-outline'}`}
-            size={20}
-            color={COLORS.black}
-          />
+          <Icon name={`bookmark${bookmarked ? '' : '-outline'}`} size={20} color={COLORS.black} />
         </Text>
       </Button>
       <Portal>
@@ -327,16 +286,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: SIZES.padding / 1.25,
     borderRadius: SIZES.radius / 6,
-    marginBottom: SIZES.padding / 2,
+    marginBottom: SIZES.padding / 2
   },
   errorText: {
     color: 'red',
-    paddingVertical: SIZES.base,
+    paddingVertical: SIZES.base
   },
   divider: {
     paddingTop: SIZES.padding,
-    width: 50,
-  },
+    width: 50
+  }
 });
 
 export default React.memo(BookmarkButton);

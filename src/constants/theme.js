@@ -33,7 +33,6 @@ export const MILD = {
 
 export const SIZES = {
   // global sizes
-  radio: 24,
   statusBar: 30,
   base: 8,
   font: 14,
