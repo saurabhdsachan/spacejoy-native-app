@@ -7,7 +7,7 @@ target 'spacejoy' do
 
   pod 'GoogleSignIn', '~> 5.0.0'
   pod 'Firebase/Analytics'
-
+  pod 'lottie-ios'
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
