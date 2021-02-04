@@ -22,7 +22,6 @@ const fetcher = async ({endPoint, method, type = 'text', body}) => {
         };
   const finalAPIBaseUrl = baseApiUrl;
   const apiEndpoint = `${finalAPIBaseUrl}${endPoint}`;
-
   return fetch(apiEndpoint, options)
     .then(async (response) => {
       if (response.status) {
