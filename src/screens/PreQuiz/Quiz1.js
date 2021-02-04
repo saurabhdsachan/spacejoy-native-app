@@ -33,7 +33,9 @@ const Quiz1 = ({ navigation }) => {
                   selected: true
                 }}
               />
-              <Text small mt1>Get more productive</Text>
+              <Text small mt1>
+                Get more productive
+              </Text>
               <Image
                 source={sofa}
                 resizeMode="cover"
@@ -59,7 +61,9 @@ const Quiz1 = ({ navigation }) => {
                   onChange={handleChange}
                   inline
                 />
-                <Text small mt1>Get more productive</Text>
+                <Text small mt1>
+                  Get more productive
+                </Text>
                 <Image
                   source={lamp}
                   resizeMode="cover"
@@ -84,7 +88,9 @@ const Quiz1 = ({ navigation }) => {
                   onChange={handleChange}
                   inline
                 />
-                <Text small mt1>Get more productive</Text>
+                <Text small mt1>
+                  Get more productive
+                </Text>
               </Block>
             </Block>
           </Block>
@@ -101,7 +107,9 @@ const Quiz1 = ({ navigation }) => {
                 onChange={handleChange}
                 inline
               />
-              <Text small mt1>Get more productive</Text>
+              <Text small mt1>
+                Get more productive
+              </Text>
             </Block>
             <Block middle color="#EBE6E4" style={[styles.radioCard, styles.spaceLeft, styles.half]}>
               <Radio
@@ -115,7 +123,9 @@ const Quiz1 = ({ navigation }) => {
                 onChange={handleChange}
                 inline
               />
-              <Text small mt1>Get more productive</Text>
+              <Text small mt1>
+                Get more productive
+              </Text>
             </Block>
           </Block>
           <Block row>
@@ -132,7 +142,9 @@ const Quiz1 = ({ navigation }) => {
                   onChange={handleChange}
                   inline
                 />
-                <Text small mt1>More playful area</Text>
+                <Text small mt1>
+                  More playful area
+                </Text>
                 <Image
                   source={teddy}
                   resizeMode="cover"
@@ -157,11 +169,14 @@ const Quiz1 = ({ navigation }) => {
                   onChange={handleChange}
                   inline
                 />
-                <Text small mt1>Get more productive</Text>
+                <Text small mt1>
+                  Get more productive
+                </Text>
               </Block>
             </Block>
             <Block color="#F4DADA" style={[styles.radioCard, styles.spaceLeft, styles.full]}>
               <Radio
+                inline
                 onChange={handleChange}
                 bold
                 button={{
@@ -172,7 +187,9 @@ const Quiz1 = ({ navigation }) => {
                   selected: false
                 }}
               />
-              <Text small mt1>Get more productive</Text>
+              <Text small mt1>
+                Get more productive
+              </Text>
               <Image
                 source={chair}
                 resizeMode="cover"
@@ -222,8 +239,5 @@ const styles = StyleSheet.create({
   half: {
     minHeight: 80,
     height: 'auto'
-  },
-  full: {
-    height: 190
   }
 });

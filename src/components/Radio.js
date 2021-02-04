@@ -1,20 +1,20 @@
 import { theme } from '@constants/';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Block from './Block';
 import Button from './Button';
+import Text from './Text';
 
 const { SIZES, COLORS } = theme;
 
-const Radio = ({ button, onChange, inline, bold }) => {
+const Radio = ({ button, onChange, inline, bold, children }) => {
   const radioStyles = [styles.radioButton, inline && styles.inline];
   const labelStyles = [styles.label, inline && styles.labelInline, bold && styles.labelBold];
 
-  const Children = <></>;
   return (
     <Button raw onPress={() => onChange(button.value)} style={radioStyles}>
-      <Block color="red" row={inline}>
+      <Block row={inline} center={inline}>
         <Block
           flex={false}
           style={[
@@ -40,9 +40,10 @@ const Radio = ({ button, onChange, inline, bold }) => {
             />
           )}
         </Block>
-        <Block color="red">
-          <Text style={labelStyles}>{button.label}</Text>
-        </Block>
+        <Text size={SIZES.h3} style={labelStyles}>
+          {button.label}
+        </Text>
+        <Block>{children}</Block>
       </Block>
     </Button>
   );
@@ -83,8 +84,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   label: {
-    fontSize: 16,
-    marginTop: SIZES.base
+    marginTop: SIZES.base,
+    zIndex: 1
   },
   labelInline: {
     marginTop: 0,
