@@ -3,18 +3,21 @@ import AppleButton from '@components/AppleButton';
 import Button from '@components/Button';
 import FacebookLoginButton from '@components/FacebookLoginButton';
 import GoogleLoginButton from '@components/GoogleLoginButton';
-import SignupError from '@components/LoginError';
-import { routes, theme } from '@constants/index';
+import LoginError from '@components/LoginError';
+import Text from '@components/Text';
+import { authRoutes, COLORS, SIZES } from '@constants/index';
 import { fetcher, handle } from '@utils/apiFetcher';
 import { AuthContext } from '@utils/helpers/withAuthContext';
 import { oAuthLogin } from '@utils/logins';
 import React, { useState } from 'react';
-import { ActivityIndicator, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, TextInput, View } from 'react-native';
+
+
 
 const SignUp = () => {
   const { signUp } = React.useContext(AuthContext);
 
-  const [loginError, setloginError] = useState(false);
+  const [loginError, setLoginError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [firstName, updateFirstName] = useState('');
@@ -38,7 +41,7 @@ const SignUp = () => {
         signUp(localUserObject);
       } catch (e) {
         setLoading(false);
-        setloginError(e.message);
+        setLoginError(e.message);
       }
     }
   };
@@ -46,7 +49,7 @@ const SignUp = () => {
     // hide loader
     setLoading(false);
     // display error
-    setloginError(errorMessage);
+    setLoginError(errorMessage);
   };
 
   const signUpUser = async () => {
@@ -54,7 +57,7 @@ const SignUp = () => {
     if (firstName && lastName && phone && password && email) {
       setLoading(true);
       // submit API call
-      const endPoint = routes.authRoutes.signUpRoute;
+      const endPoint = authRoutes.signUpRoute;
       const body = {
         data: {
           email,
@@ -91,108 +94,137 @@ const SignUp = () => {
         }
       } catch (e) {
         setLoading(false);
-        setloginError('An error occurred while signing up. Please try again');
+        setLoginError('An error occurred while signing up. Please try again');
       }
     }
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <ScrollView>
-        <Block padding={[0, theme.SIZES.base * 3]}>
-          <View style={styles.formSectionView}>
-            <Text style={styles.tickerText}>Sign Up</Text>
-          </View>
-          <View style={styles.formSectionView}>
-            <View style={styles.siblingMargin}>
+    <KeyboardAvoidingView style={styles.container}>
+      <View style={{ flexGrow: 1 }}>
+        {loading && (
+          <Block center middle color={COLORS.semiTransparent} style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}>
+            <ActivityIndicator size="small" />
+          </Block>
+        )}
+
+        <Block padding={[SIZES.safe * 2, SIZES.padding * 2, 0, SIZES.padding * 2]}>
+          <Text title mb1>
+            SIGNUP
+          </Text>
+          {loginError && (
+            <Block flex={0.5} bottom>
+              <LoginError errorText={loginError} />
+            </Block>
+          )}
+          <Block flex={4} bottom>
+            <Block flex={false}>
               <TextInput
+                keyboardType="default"
+                placeholderTextColor={COLORS.gray}
                 style={styles.textInput}
                 placeholder="First Name"
-                onChangeText={updateFirstName}
+                onChangeText={(text) => updateFirstName(text)}
                 value={firstName}
               />
-            </View>
-            <View style={styles.siblingMargin}>
+            </Block>
+            <Block flex={false}>
               <TextInput
+                keyboardType="default"
+                placeholderTextColor={COLORS.gray}
                 style={styles.textInput}
                 placeholder="Last Name"
-                onChangeText={updateLastName}
+                onChangeText={(text) => updateLastName(text)}
                 value={lastName}
               />
-            </View>
-            <View style={styles.siblingMargin}>
+            </Block>
+            <Block flex={false}>
               <TextInput
+                placeholderTextColor={COLORS.gray}
                 style={styles.textInput}
-                placeholder="Password"
+                placeholder="Your password"
                 secureTextEntry={true}
+                onChangeText={(text) => updatePassword(text)}
                 value={password}
-                onChangeText={updatePassword}
               />
-            </View>
-            <View style={styles.siblingMargin}>
-              <TextInput style={styles.textInput} placeholder="Email" onChangeText={updateEmail} value={email} />
-            </View>
-            <View style={styles.siblingMargin}>
-              <TextInput style={styles.textInput} placeholder="Phone" onChangeText={updatePhone} value={phone} />
-            </View>
-          </View>
-          <View style={styles.formSectionView}>
-            <Button gradient style={{ borderRadius: theme.SIZES.base / 2 }} onPress={signUpUser}>
-              <Text style={styles.btnTextStyle}>Sign Up</Text>
-            </Button>
-          </View>
-          <View style={styles.formSectionView}>
-            <View style={styles.separatorText}>
-              <View style={styles.separatorTextFirst} />
-              <View>
-                <Text style={styles.separator}>OR</Text>
-              </View>
-              <View style={styles.separatorTextLast} />
-            </View>
-          </View>
-          <View style={[styles.formSectionView, styles.flexSection]}>
-            <View style={styles.flexedViewStyleLeft}>
+            </Block>
+            <Block flex={false}>
+              <TextInput
+                keyboardType="email-address"
+                placeholderTextColor={COLORS.gray}
+                style={styles.textInput}
+                placeholder="Your email"
+                onChangeText={(text) => updateEmail(text)}
+                value={email}
+              />
+            </Block>
+            <Block flex={false}>
+              <TextInput
+                keyboardType="number-pad"
+                placeholderTextColor={COLORS.gray}
+                style={styles.textInput}
+                placeholder="Your phone"
+                onChangeText={(text) => updatePhone(text)}
+                value={phone}
+              />
+            </Block>
+            <Block flex={false}>
+              <Button gradient onPress={signUpUser} style={{ borderRadius: SIZES.radius / 4 }}>
+                {loading ? (
+                  <ActivityIndicator size="small" color={COLORS.white} />
+                ) : (
+                  <Text center white size={16}>
+                    Signup
+                  </Text>
+                )}
+              </Button>
+            </Block>
+          </Block>
+
+          <Block middle flex={0.5}>
+            <Text color={COLORS.gray} center>
+              --- or ---
+            </Text>
+          </Block>
+          <Block flex={0.5} row>
+            <Block style={{ marginRight: SIZES.padding }}>
               <GoogleLoginButton
                 handleSignInSuccess={handleSigninSuccess}
                 handleSigninError={handleSigninError}
                 onTap={() => {
-                  setloginError(false);
+                  setLoginError(false);
                   setLoading(true);
                 }}
               />
-            </View>
-            <View style={styles.flexedViewStyleRight}>
+            </Block>
+            <Block>
               <FacebookLoginButton
                 handleSignInSuccess={handleSigninSuccess}
                 handleSigninError={handleSigninError}
                 onTap={() => {
-                  setloginError(false);
+                  setLoginError(false);
                   setLoading(true);
                 }}
               />
-            </View>
-          </View>
-          <View>
+            </Block>
+          </Block>
+          <Block flex={0.5}>
             <AppleButton
               handleSignInSuccess={handleSigninSuccess}
               handleSigninError={handleSigninError}
               onTap={() => {
-                setloginError(false);
+                setLoginError(false);
                 setLoading(true);
               }}
             />
-          </View>
-          <View style={styles.footerText}>
-            <Text style={styles.footerTextStyle}>By signing up, you agree to our Terms and service policy</Text>
-          </View>
-          {loginError && <SignupError errorText={loginError} />}
-          {loading && (
-            <View style={styles.loading}>
-              <ActivityIndicator size="small" color={theme.COLORS.primary1} />
-            </View>
-          )}
+          </Block>
+          <Block flex={2} middle>
+            <Text color="#6D7278" middle center>
+              By signing up, you agree to our Terms and privacy policy
+            </Text>
+          </Block>
         </Block>
-      </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -211,83 +243,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
   },
-  flexSection: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  footerText: {
-    marginTop: theme.SIZES.base * 4,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  footerTextStyle: {
-    color: theme.COLORS.gray,
-    textAlign: 'center',
-    width: '70%',
-  },
-  flexedViewStyleLeft: {
-    flex: 1,
-    paddingRight: theme.SIZES.base,
-  },
-  flexedViewStyleRight: {
-    flex: 1,
-    paddingLeft: theme.SIZES.base,
-  },
-  actionBtnStyles: {
-    borderRadius: 0,
-    textAlign: 'center',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  siblingMargin: {
-    marginBottom: theme.SIZES.base * 2,
-  },
-  separator: {
-    color: theme.COLORS.gray2,
-    paddingLeft: 8,
-    paddingRight: 8,
-  },
-  separatorTextLast: {
-    borderWidth: 1,
-    borderColor: theme.COLORS.gray2,
-    width: theme.SIZES.base * 2,
-    // paddingLeft: theme.SIZES.base,
-  },
-  separatorTextFirst: {
-    borderWidth: 1,
-    borderColor: theme.COLORS.gray2,
-    width: theme.SIZES.base * 2,
-    // paddingRight: theme.SIZES.base,
-  },
-  separatorText: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  btnTextStyle: {
-    color: 'white',
-    textTransform: 'uppercase',
-    textAlign: 'center',
-  },
-  formSectionView: {
-    marginTop: theme.SIZES.base * 3,
-  },
   textInput: {
-    borderColor: theme.COLORS.border,
-    borderWidth: 2,
-    height: 40,
-    padding: theme.SIZES.textPadding,
-    borderRadius: theme.SIZES.base / 2,
-  },
-  tickerText: {
-    fontSize: 40,
-    lineHeight: 40,
-    textTransform: 'capitalize',
-    fontWeight: '800',
+    borderColor: COLORS.gray,
+    borderWidth: 1,
+    padding: SIZES.padding / 1.25,
+    borderRadius: SIZES.radius / 6,
+    marginBottom: SIZES.padding / 2,
   },
 });
 export default SignUp;

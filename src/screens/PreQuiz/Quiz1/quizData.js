@@ -1,0 +1,83 @@
+import {images} from '@constants/index';
+
+const {sofa, lamp, chair, teddy} = images;
+const data = [
+  {
+    title: 'Living Room',
+    blockColor: '#DEE6E1',
+    radioColor: '#8DC395',
+    image: sofa,
+    selected: false,
+    slug: 'livingRoom',
+    id: 1,
+    defaultQuantity: 1,
+  },
+  {
+    title: 'Bedroom',
+    blockColor: '#E5E5E5',
+    radioColor: '#979898',
+    selected: false,
+    id: 2,
+    image: lamp,
+    slug: 'bedRoom',
+    defaultQuantity: 1,
+  },
+  {
+    title: 'Study Room',
+    blockColor: '#F6EEC7',
+    radioColor: '#E7D682',
+    selected: false,
+    id: 3,
+    slug: 'studyRoom',
+    defaultQuantity: 1,
+  },
+  {
+    title: 'Home Office',
+    blockColor: '#D9DCF7',
+    radioColor: '#7786B0',
+    selected: false,
+    id: 4,
+    slug: 'homeOffice',
+    defaultQuantity: 1,
+  },
+  {
+    title: 'Kid`s Room',
+    blockColor: '#EBE6E4',
+    radioColor: '#D9A7A6',
+    selected: false,
+    id: 5,
+    slug: 'kidsRoom',
+    defaultQuantity: 1,
+  },
+  {
+    title: 'Nursery',
+    blockColor: '#BEEBE9',
+    radioColor: '#79D1CD',
+    image: teddy,
+    selected: false,
+    id: 6,
+    slug: 'nursery',
+    defaultQuantity: 1,
+  },
+  {
+    title: 'Entryway',
+    blockColor: '#FFF3E6',
+    radioColor: '#D7AB7A',
+    selected: false,
+    id: 7,
+    slug: 'entryWay',
+    defaultQuantity: 1,
+  },
+  {
+    title: 'Open Living',
+    blockColor: '#F4DADA',
+    radioColor: '#D3B3B3',
+    image: chair,
+    selected: false,
+    id: 8,
+    slug: 'openLiving',
+    defaultQuantity: 1,
+  },
+];
+
+module.exports = data;
