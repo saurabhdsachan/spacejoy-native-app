@@ -6,11 +6,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { colorMap } from './fetchers';
 const { SIZES, COLORS } = theme;
 
-const PricingCard = ({ slug, data, cardWidth, lastCard }) => {
+const PricingCard = ({ slug, data, cardWidth, firstCard, lastCard }) => {
   const { includedFeatures, excludedFeatures, description } = data;
   return (
     <Block style={{ width: cardWidth }}>
-      <Block color={colorMap[slug].mild} style={[styles.swipeCard, lastCard && styles.lastCard]} flex={false}>
+      <Block
+        color={colorMap[slug].mild}
+        style={[styles.swipeCard, firstCard && styles.firstCard, lastCard && styles.lastCard]}
+        flex={false}
+      >
         <Text h2 capitalize>
           {slug}
         </Text>
@@ -49,6 +53,9 @@ const styles = StyleSheet.create({
   swipeCard: {
     borderRadius: SIZES.radius,
     padding: SIZES.padding,
+    marginHorizontal: SIZES.padding / 2,
+  },
+  firstCard: {
     marginLeft: SIZES.padding,
   },
   lastCard: {

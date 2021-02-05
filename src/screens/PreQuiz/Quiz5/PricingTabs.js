@@ -6,20 +6,37 @@ import { colorMap } from './fetchers';
 import Indicator from './Indicator';
 
 const { SIZES, COLORS } = theme;
-const { width } = SIZES;
-const ITEM_SIZE = width * 0.8;
-const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
+const { width, height } = SIZES;
+const ITEM_SIZE = width * 0.8; //240
+const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2; // (300-240)/2 = 30
 
-const PricingTabs = ({ data = [], onPress, scrollX }) => {
+const defaultData = [{}, {}, {}];
+
+const PricingTabs = ({ data = [], onPress, currentActive, scrollX }) => {
   const containerRef = React.useRef();
 
-  const inputRange = [-(ITEM_SIZE - SPACER_ITEM_WIDTH), ITEM_SIZE - SPACER_ITEM_WIDTH, ITEM_SIZE - SPACER_ITEM_WIDTH];
+  const dataRender = data.length ? data : defaultData;
 
-  const bgColors = scrollX.interpolate({
-    inputRange,
-    outputRange: [colorMap.delight.mild, colorMap.bliss.mild, colorMap.euphoria.mild],
+  const inputRange = dataRender.map((_, i) => i * (ITEM_SIZE - SPACER_ITEM_WIDTH));
+
+  const bgColors = dataRender.map((_, i) => {
+    if (i === 0) {
+      return scrollX.interpolate({
+        inputRange,
+        outputRange: [colorMap.delight.mild, COLORS.white, COLORS.white],
+      });
+    } else if (i === 1) {
+      return scrollX.interpolate({
+        inputRange,
+        outputRange: [COLORS.white, colorMap.bliss.mild, COLORS.white],
+      });
+    } else {
+      return scrollX.interpolate({
+        inputRange,
+        outputRange: [COLORS.white, COLORS.white, colorMap.euphoria.mild],
+      });
+    }
   });
-
   const [mData, setMData] = useState({});
   const [measureMents, setMeasurements] = useState([]);
   useEffect(() => {

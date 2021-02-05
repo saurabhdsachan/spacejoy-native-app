@@ -89,7 +89,7 @@ const Quiz5 = ({ navigation }) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={pricingItems}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           decelerationRate={0}
           bounces={false}
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
@@ -100,6 +100,7 @@ const Quiz5 = ({ navigation }) => {
                 slug={item.slug}
                 data={item}
                 cardWidth={ITEM_SIZE}
+                firstCard={index === 0}
                 lastCard={index === pricingItems?.length - 1}
               />
             );
