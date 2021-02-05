@@ -4,29 +4,29 @@ import React from 'react';
 import { Host } from 'react-native-portalize';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
-	CollectionStackNavigator,
-	HomeStackNavigator,
-	MyDesignsStackNavigator,
-	NewActionStackNavigator,
-	StoreStackNavigator
-} from "./StackNavigator";
+  CollectionStackNavigator,
+  HomeStackNavigator,
+  MyDesignsStackNavigator,
+  NewActionStackNavigator,
+  StoreStackNavigator,
+} from './StackNavigator';
 
 const { COLORS, SIZES } = theme;
 
 const Tab = createBottomTabNavigator();
 
 const TabBarLabels = {
-	Home: "Feeds",
-	Collection: "Collections",
-	NewAction: "New Project",
+  Home: 'Feeds',
+  Collection: 'Collections',
+  NewAction: 'New Project',
 };
 
 const BottomTabNavigator = () => {
   return (
     <Host>
       <Tab.Navigator
-        screenOptions={({route}) => ({
-          tabBarIcon: ({focused, color, size}) => {
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             if (route.name === 'Home') {
               iconName = focused ? 'home' : 'home-outline';
@@ -41,20 +41,15 @@ const BottomTabNavigator = () => {
             }
 
             // You can return any component that you like here!
-            return (
-              <Icon
-                name={iconName}
-                size={route.name === 'NewAction' ? size * 1.1 : size / 1.15}
-                color={color}
-              />
-            );
+            return <Icon name={iconName} size={route.name === 'NewAction' ? size * 1.1 : size / 1.15} color={color} />;
           },
         })}
         tabBarOptions={{
           activeTintColor: COLORS.red,
           inactiveTintColor: COLORS.black,
-          tabStyle: {marginVertical: SIZES.base / 2.25},
-        }}>
+          tabStyle: { marginVertical: SIZES.base / 2.25 },
+        }}
+      >
         <Tab.Screen
           name="Home"
           component={HomeStackNavigator}

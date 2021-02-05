@@ -10,7 +10,7 @@ export default class Block extends Component {
         marginTop: margin,
         marginRight: margin,
         marginBottom: margin,
-        marginLeft: margin
+        marginLeft: margin,
       };
     }
 
@@ -22,28 +22,28 @@ export default class Block extends Component {
             marginTop: margin[0],
             marginRight: margin[0],
             marginBottom: margin[0],
-            marginLeft: margin[0]
+            marginLeft: margin[0],
           };
         case 2:
           return {
             marginTop: margin[0],
             marginRight: margin[1],
             marginBottom: margin[0],
-            marginLeft: margin[1]
+            marginLeft: margin[1],
           };
         case 3:
           return {
             marginTop: margin[0],
             marginRight: margin[1],
             marginBottom: margin[2],
-            marginLeft: margin[1]
+            marginLeft: margin[1],
           };
         default:
           return {
             marginTop: margin[0],
             marginRight: margin[1],
             marginBottom: margin[2],
-            marginLeft: margin[3]
+            marginLeft: margin[3],
           };
       }
     }
@@ -56,7 +56,7 @@ export default class Block extends Component {
         paddingTop: padding,
         paddingRight: padding,
         paddingBottom: padding,
-        paddingLeft: padding
+        paddingLeft: padding,
       };
     }
 
@@ -68,28 +68,28 @@ export default class Block extends Component {
             paddingTop: padding[0],
             paddingRight: padding[0],
             paddingBottom: padding[0],
-            paddingLeft: padding[0]
+            paddingLeft: padding[0],
           };
         case 2:
           return {
             paddingTop: padding[0],
             paddingRight: padding[1],
             paddingBottom: padding[0],
-            paddingLeft: padding[1]
+            paddingLeft: padding[1],
           };
         case 3:
           return {
             paddingTop: padding[0],
             paddingRight: padding[1],
             paddingBottom: padding[2],
-            paddingLeft: padding[1]
+            paddingLeft: padding[1],
           };
         default:
           return {
             paddingTop: padding[0],
             paddingRight: padding[1],
             paddingBottom: padding[2],
-            paddingLeft: padding[3]
+            paddingLeft: padding[3],
           };
       }
     }
@@ -145,7 +145,7 @@ export default class Block extends Component {
       wrap && { flexWrap: 'wrap' },
       color && styles[color], // predefined styles colors for backgroundColor
       color && !styles[color] && { backgroundColor: color }, // custom backgroundColor
-      style // rewrite predefined styles
+      style, // rewrite predefined styles
     ];
 
     return animated ? (
@@ -162,50 +162,50 @@ export default class Block extends Component {
 
 export const styles = StyleSheet.create({
   block: {
-    flex: 1
+    flex: 1,
   },
   row: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   column: {
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   card: {
-    borderRadius: theme.SIZES.radius
+    borderRadius: theme.SIZES.radius,
   },
   start: {
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
   },
   end: {
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
   center: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   middle: {
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   left: {
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   right: {
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   spaceBetween: {
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   top: {
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   bottom: {
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   shadow: {
     shadowColor: theme.COLORS.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 13,
-    elevation: 2
+    elevation: 2,
   },
   accent: { backgroundColor: theme.COLORS.accent },
   primary: { backgroundColor: theme.COLORS.primary },
@@ -214,5 +214,5 @@ export const styles = StyleSheet.create({
   black: { backgroundColor: theme.COLORS.black },
   white: { backgroundColor: theme.COLORS.white },
   gray: { backgroundColor: theme.COLORS.gray },
-  gray2: { backgroundColor: theme.COLORS.gray2 }
+  gray2: { backgroundColor: theme.COLORS.gray2 },
 });

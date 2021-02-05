@@ -22,8 +22,8 @@ const Radio = ({ button, onChange, inline, bold, children }) => {
             {
               height: button.size || SIZES.base * 3,
               width: button.size || SIZES.base * 3,
-              borderColor: button.color
-            }
+              borderColor: button.color,
+            },
           ]}
         >
           {button.selected && (
@@ -34,8 +34,8 @@ const Radio = ({ button, onChange, inline, bold, children }) => {
                 {
                   height: button.size / 2 || SIZES.base * 2.25,
                   width: button.size / 2 || SIZES.base * 2.25,
-                  backgroundColor: button.color
-                }
+                  backgroundColor: button.color,
+                },
               ]}
             />
           )}
@@ -51,47 +51,47 @@ const Radio = ({ button, onChange, inline, bold, children }) => {
 
 Radio.defaultProps = {
   button: {
-    size: 18
-  }
+    size: 18,
+  },
 };
 
 Radio.propTypes = {
   button: PropTypes.shape({
-    size: PropTypes.number
-  })
+    size: PropTypes.number,
+  }),
 };
 
 export default Radio;
 
 const styles = StyleSheet.create({
   radioButton: {
-    marginBottom: SIZES.base / 2
+    marginBottom: SIZES.base / 2,
   },
   inline: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   radioButtonHolder: {
     borderRadius: 50,
     borderWidth: 2,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   radioIcon: {
     borderRadius: 50,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   label: {
     marginTop: SIZES.base,
-    zIndex: 1
+    zIndex: 1,
   },
   labelInline: {
     marginTop: 0,
-    marginLeft: SIZES.base
+    marginLeft: SIZES.base,
   },
   labelBold: {
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });

@@ -23,7 +23,7 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
   const shareParams = {
     message: designDataProp.name,
     url: `https://www.spacejoy.com/interior-designs/${designDataProp?.room?.slug}/${designDataProp?.slug}`,
-    title: designDataProp.name
+    title: designDataProp.name,
   };
 
   return (
@@ -46,7 +46,7 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
             source={{
               uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,h_${SIZES.height * 2}/${
                 data.cdnRender[2]
-              }`
+              }`,
             }}
             resizeMode="cover"
             style={styles.designFeedImage}
@@ -82,18 +82,18 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
 
 const styles = StyleSheet.create({
   designFeedCard: {
-    paddingVertical: SIZES.padding
+    paddingVertical: SIZES.padding,
   },
   designFeedImageHolder: {
     height: SIZES.height / 1.85,
     width: '100%',
-    paddingVertical: SIZES.padding / 2
+    paddingVertical: SIZES.padding / 2,
   },
   designFeedImage: {
     borderRadius: SIZES.radius / 2,
     height: '100%',
-    width: '100%'
-  }
+    width: '100%',
+  },
 });
 
 export default DesignCard;

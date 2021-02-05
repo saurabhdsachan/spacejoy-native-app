@@ -1,26 +1,23 @@
-import {Block, Text} from '@components/';
-import {SIZES} from '@constants/';
-import {elevationShadowStyle} from '@utils/styleHelper';
-import React, {useState} from 'react';
-import {Image, StyleSheet} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { Block, Text } from '@components/';
+import { SIZES } from '@constants/';
+import { elevationShadowStyle } from '@utils/styleHelper';
+import React, { useState } from 'react';
+import { Image, StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import BookmarkButton from '../BookmarkButton';
 import ShareButton from '../ShareButton';
 
-const CollectionCard = ({data, navigation}) => {
+const CollectionCard = ({ data, navigation }) => {
   const [collectionData, setCollectionData] = useState(data);
 
   const onBookmarkChange = (value) => {
-    setCollectionData({...collectionData, bookmarked: value});
+    setCollectionData({ ...collectionData, bookmarked: value });
   };
 
   return (
     <Block style={styles.collectionFeedCard} middle key={collectionData._id}>
       <Block style={styles.collectionFeedImageHolder}>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('SingleCollection', {collectionItem: data})
-          }>
+        <TouchableOpacity onPress={() => navigation.navigate('SingleCollection', { collectionItem: data })}>
           <Image
             source={{
               uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,ar_1.55,c_pad/${collectionData.cdnThumbnail}`,
@@ -63,7 +60,7 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius / 2,
     marginVertical: SIZES.base,
   },
-  container: {flexGrow: 1, justifyContent: 'center'},
+  container: { flexGrow: 1, justifyContent: 'center' },
   collectionFeedImageHolder: {
     ...elevationShadowStyle(0),
     height: 175,

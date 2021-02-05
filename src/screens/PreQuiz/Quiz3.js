@@ -24,25 +24,25 @@ const Quiz3 = ({ navigation }) => {
   const headerHeight = scrollY.interpolate({
     inputRange,
     outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
-    extrapolate: 'clamp'
+    extrapolate: 'clamp',
   });
 
   const scale = scrollY.interpolate({
     inputRange,
     outputRange: [1, 0.5],
-    extrapolate: 'clamp'
+    extrapolate: 'clamp',
   });
 
   const scaleBg = scrollY.interpolate({
     inputRange,
     outputRange: [1, 1.25],
-    extrapolate: 'clamp'
+    extrapolate: 'clamp',
   });
 
   const translateX = scrollY.interpolate({
     inputRange,
     outputRange: [0, 200],
-    extrapolate: 'clamp'
+    extrapolate: 'clamp',
   });
 
   return (
@@ -61,7 +61,7 @@ const Quiz3 = ({ navigation }) => {
                 value: item.title,
                 size: 18,
                 color: item.bg,
-                selected: false
+                selected: false,
               }}
               onChange={handleChange}
             />
@@ -86,8 +86,8 @@ const Quiz3 = ({ navigation }) => {
           style={[
             styles.bannerImage,
             {
-              transform: [{ scale }, { translateX }]
-            }
+              transform: [{ scale }, { translateX }],
+            },
           ]}
         />
 
@@ -126,17 +126,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: COLORS.gray2,
     paddingVertical: SIZES.padding,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   lastChild: {
     paddingBottom: 100,
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
   },
   banner: {
     position: 'absolute',
     top: 0,
     right: 0,
-    left: 0
+    left: 0,
   },
   bannerImage: {
     position: 'absolute',
@@ -144,19 +144,19 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     height: 200,
-    width: SIZES.width
+    width: SIZES.width,
   },
   bannerImageBg: {
     height: 150,
     position: 'absolute',
     top: 0,
-    left: 0
+    left: 0,
   },
   bottomButtons: {
     position: 'absolute',
     bottom: 0,
     height: 90,
     left: 0,
-    right: 0
-  }
+    right: 0,
+  },
 });

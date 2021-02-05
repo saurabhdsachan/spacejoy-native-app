@@ -30,7 +30,7 @@ const Quiz1 = ({ navigation }) => {
                   value: 'Living-room',
                   size: 18,
                   color: '#8DC395',
-                  selected: true
+                  selected: true,
                 }}
               />
               <Text small mt1>
@@ -44,7 +44,7 @@ const Quiz1 = ({ navigation }) => {
                   bottom: -20,
                   right: -20,
                   height: 130,
-                  width: '100%'
+                  width: '100%',
                 }}
               />
             </Block>
@@ -56,7 +56,7 @@ const Quiz1 = ({ navigation }) => {
                     label: 'Bedroom',
                     size: 18,
                     color: '#979898',
-                    selected: false
+                    selected: false,
                   }}
                   onChange={handleChange}
                   inline
@@ -72,7 +72,7 @@ const Quiz1 = ({ navigation }) => {
                     bottom: -20,
                     right: 0,
                     height: 80,
-                    width: '45%'
+                    width: '45%',
                   }}
                 />
               </Block>
@@ -83,7 +83,7 @@ const Quiz1 = ({ navigation }) => {
                     label: 'Study Room',
                     size: 18,
                     color: '#E7D682',
-                    selected: false
+                    selected: false,
                   }}
                   onChange={handleChange}
                   inline
@@ -102,7 +102,7 @@ const Quiz1 = ({ navigation }) => {
                   label: 'Home-Office',
                   size: 18,
                   color: '#7786B0',
-                  selected: false
+                  selected: false,
                 }}
                 onChange={handleChange}
                 inline
@@ -118,7 +118,7 @@ const Quiz1 = ({ navigation }) => {
                   label: 'Kid`s Room',
                   size: 18,
                   color: '#D9A7A6',
-                  selected: false
+                  selected: false,
                 }}
                 onChange={handleChange}
                 inline
@@ -137,7 +137,7 @@ const Quiz1 = ({ navigation }) => {
                     label: 'Nursery',
                     size: 18,
                     color: '#79D1CD',
-                    selected: false
+                    selected: false,
                   }}
                   onChange={handleChange}
                   inline
@@ -153,7 +153,7 @@ const Quiz1 = ({ navigation }) => {
                     bottom: -5,
                     right: 0,
                     height: 80,
-                    width: '45%'
+                    width: '45%',
                   }}
                 />
               </Block>
@@ -164,7 +164,7 @@ const Quiz1 = ({ navigation }) => {
                     label: 'Entryway',
                     size: 18,
                     color: '#D7AB7A',
-                    selected: false
+                    selected: false,
                   }}
                   onChange={handleChange}
                   inline
@@ -184,7 +184,7 @@ const Quiz1 = ({ navigation }) => {
                   value: 'Open Living',
                   size: 18,
                   color: '#D3B3B3',
-                  selected: false
+                  selected: false,
                 }}
               />
               <Text small mt1>
@@ -198,7 +198,7 @@ const Quiz1 = ({ navigation }) => {
                   bottom: -10,
                   right: 0,
                   height: 120,
-                  width: '80%'
+                  width: '80%',
                 }}
               />
             </Block>
@@ -228,16 +228,16 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius,
     padding: SIZES.padding,
     overflow: 'hidden',
-    marginBottom: SIZES.padding
+    marginBottom: SIZES.padding,
   },
   spaceRight: {
-    marginRight: SIZES.padding / 2
+    marginRight: SIZES.padding / 2,
   },
   spaceLeft: {
-    marginLeft: SIZES.padding / 2
+    marginLeft: SIZES.padding / 2,
   },
   half: {
     minHeight: 80,
-    height: 'auto'
-  }
+    height: 'auto',
+  },
 });
