@@ -1,64 +1,64 @@
-import React, { useMemo, useReducer } from 'react';
+import React, { useEffect, useMemo, useReducer } from 'react';
 
 const DesignSelectionContext = React.createContext();
 
 const reducer = (prevState, action) => {
   const { type } = action;
   switch (type) {
-    case 'REMOVE_ITEM': {
-      const { item: { id: itemId } = {} } = action;
-      const { userDesignSelections } = prevState;
-      const filteredItems = userDesignSelections.filter((item) => item.id === itemId);
-      const currentQuantity = filteredItems[0]?.quantity;
-      if (currentQuantity && currentQuantity > 1) {
-        return {
-          ...prevState,
-          userDesignSelections: prevState.userDesignSelections.map((item) => {
-            if (item.id === itemId) {
-              return { ...item, quantity: item.quantity - 1 };
-            }
-            return { ...item };
-          }),
-        };
-      }
-      let index;
-      for (let i = 0; i < prevState.userDesignSelections.length; i++) {
-        if (prevState.userDesignSelections[i].id === itemId) {
-          index = i;
+    case 'UPDATE_ITEM': {
+      const { item, value } = action;
+      const { selectionItemId } = item;
+      const newArray = [...prevState.userDesignSelections].map((selItem) => {
+        if (selItem.selectionItemId === selectionItemId) {
+          return { ...selItem, selectedPackage: value };
+        } else {
+          return { ...selItem };
         }
-      }
-      console.log('removing at ----', index);
-
+      });
       return {
         ...prevState,
-        userDesignSelections: [
-          ...prevState.userDesignSelections.slice(0, index),
-          ...prevState.userDesignSelections.slice(index + 1),
-        ],
+        userDesignSelections: [...newArray],
+      };
+    }
+    case 'REMOVE_ITEM': {
+      const { item } = action;
+      const { id } = item;
+      let index;
+
+      for (let i = 0; i < prevState.userDesignSelections.length; i++) {
+        if (prevState.userDesignSelections[i].id === id) {
+          index = i;
+          break;
+        }
+      }
+
+      console.log('index is ---', index);
+
+      if (typeof index !== 'undefined') {
+        console.log('in here');
+        return {
+          ...prevState,
+          userDesignSelections: [
+            ...prevState.userDesignSelections.slice(0, index),
+            ...prevState.userDesignSelections.slice(index + 1),
+          ],
+        };
+      }
+      return {
+        ...prevState,
       };
     }
     case 'ADD_ITEM': {
-      const { item: { id: itemId, defaultQuantity } = {} } = action;
+      console.log('fired add');
+      const { item } = action;
+      const { defaultQuantity } = item;
       const { userDesignSelections } = prevState;
-      const filteredItems = userDesignSelections.filter((item) => item.id === itemId);
 
-      if (!filteredItems.length) {
-        const selectionItem = { id: itemId, quantity: defaultQuantity };
-        console.log('prev state is', prevState.userDesignSelections);
-        return {
-          ...prevState,
-          userDesignSelections: [...prevState.userDesignSelections, selectionItem],
-        };
-      }
+      const newCartItem = { ...item, selectionItemId: userDesignSelections.length + defaultQuantity };
 
       return {
         ...prevState,
-        userDesignSelections: prevState.userDesignSelections.map((item) => {
-          if (item.id === itemId) {
-            return { ...item, quantity: item.quantity + 1 };
-          }
-          return { ...item };
-        }),
+        userDesignSelections: [...userDesignSelections, { ...newCartItem }],
       };
     }
     default: {
@@ -68,7 +68,7 @@ const reducer = (prevState, action) => {
 };
 
 const initialState = {
-  userDesignSelections: [],
+  userDesignSelections: []
 };
 
 const useDesignSelectionContext = () => {
@@ -81,12 +81,15 @@ const useDesignSelectionContext = () => {
       removeSelection: (item) => {
         dispatch({ type: 'REMOVE_ITEM', item });
       },
-      userDesignSelections: state.userDesignSelections,
+      updateSelection: (item, value) => {
+        dispatch({ type: 'UPDATE_ITEM', value, item });
+      },
+      userDesignSelections: state.userDesignSelections
     }),
     [state.userDesignSelections]
   );
   return {
-    designSelectionsContext,
+    designSelectionsContext
   };
 };
 

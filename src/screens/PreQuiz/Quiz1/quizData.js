@@ -1,6 +1,7 @@
-import {images} from '@constants/index';
+import { images } from '@constants/index';
 
-const {sofa, lamp, chair, teddy} = images;
+const { sofa, lamp, chair, teddy } = images;
+const defaultSelection = 'bliss';
 const data = [
   {
     title: 'Living Room',
@@ -11,6 +12,7 @@ const data = [
     slug: 'livingRoom',
     id: 1,
     defaultQuantity: 1,
+    defaultSelection
   },
   {
     title: 'Bedroom',
@@ -21,6 +23,7 @@ const data = [
     image: lamp,
     slug: 'bedRoom',
     defaultQuantity: 1,
+    defaultSelection
   },
   {
     title: 'Study Room',
@@ -30,6 +33,7 @@ const data = [
     id: 3,
     slug: 'studyRoom',
     defaultQuantity: 1,
+    defaultSelection
   },
   {
     title: 'Home Office',
@@ -39,6 +43,7 @@ const data = [
     id: 4,
     slug: 'homeOffice',
     defaultQuantity: 1,
+    defaultSelection
   },
   {
     title: 'Kid`s Room',
@@ -48,6 +53,7 @@ const data = [
     id: 5,
     slug: 'kidsRoom',
     defaultQuantity: 1,
+    defaultSelection
   },
   {
     title: 'Nursery',
@@ -58,6 +64,7 @@ const data = [
     id: 6,
     slug: 'nursery',
     defaultQuantity: 1,
+    defaultSelection
   },
   {
     title: 'Entryway',
@@ -67,6 +74,7 @@ const data = [
     id: 7,
     slug: 'entryWay',
     defaultQuantity: 1,
+    defaultSelection
   },
   {
     title: 'Open Living',
@@ -77,7 +85,8 @@ const data = [
     id: 8,
     slug: 'openLiving',
     defaultQuantity: 1,
-  },
+    defaultSelection
+  }
 ];
 
 module.exports = data;

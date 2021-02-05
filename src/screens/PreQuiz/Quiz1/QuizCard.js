@@ -1,19 +1,20 @@
 import React from 'react';
-import {Block, Button, Radio, Text} from '@components/index';
+import { Block, Button, Radio, Text } from '@components/index';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
-import {StyleSheet, Image, View, TouchableOpacity} from 'react-native';
-import {images, theme} from '@constants/index';
+import { StyleSheet, Image, View, TouchableOpacity } from 'react-native';
+import { images, theme } from '@constants/index';
+import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import Quantity from './QuantitySelector';
-import {DesignSelectionContext} from '@utils/helpers/designSelectionContext';
 
-const {SIZES} = theme;
-const QuizCard = ({data, stylesArray, align, imgStyles, inline}) => {
-  const {addSelection} = React.useContext(DesignSelectionContext);
+const { SIZES } = theme;
+const QuizCard = ({ data, stylesArray, align, imgStyles, inline }) => {
+  const { addSelection } = React.useContext(DesignSelectionContext);
 
-  const {blockColor, radioColor, title, selected, quantity} = data;
-  const alignMiddle = {...(align && {middle: true})};
-  const isInline = {...(inline ? {inline: true}: {inline: false})};
+  const { blockColor, radioColor, title, selected, quantity } = data;
+  const alignMiddle = { ...(align && { middle: true }) };
+  const isInline = { ...(inline ? { inline: true } : { inline: false }) };
   const select = () => {
+    console.log('this is fired');
     if (!data.quantity) {
       addSelection(data);
     }
@@ -22,9 +23,7 @@ const QuizCard = ({data, stylesArray, align, imgStyles, inline}) => {
   return (
     // <TouchableOpacity activeOpacity={0.8} onPress={() => select(data.id)}>
     <Block color={blockColor} style={stylesArray} {...alignMiddle}>
-      <TouchableOpacity
-        style={styles.buttonStyles}
-        onPress={() => select(data.id)}>
+      <TouchableOpacity style={styles.buttonStyles} onPress={() => select(data.id)}>
         <Radio
           bold
           onChange={() => {}}
@@ -33,25 +32,19 @@ const QuizCard = ({data, stylesArray, align, imgStyles, inline}) => {
             label: title,
             size: 18,
             color: radioColor,
-            selected: quantity ? true : false,
+            selected: !!quantity
           }}
         />
-        {quantity ? (
+        {quantity > 0 && (
           <Quantity
             borderColor={radioColor}
             quantity={data.quantity || data.defaultQuantity}
             item={data}
+            type="quiz"
+            selections={data.selections}
           />
-        ) : (
-          <View style={{height: 25}} />
         )}
-        {data.image ? (
-          <Image
-            source={data.image}
-            resizeMode="cover"
-            style={styles[data.slug]}
-          />
-        ) : null}
+        {data.image ? <Image source={data.image} resizeMode="cover" style={styles[data.slug]} /> : null}
       </TouchableOpacity>
     </Block>
   );

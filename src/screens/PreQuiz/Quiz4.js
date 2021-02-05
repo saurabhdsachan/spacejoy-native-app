@@ -1,13 +1,14 @@
+/* eslint-disable import/no-unresolved */
 import { Block, Button, Radio, Text } from '@components/index';
 import { images, theme } from '@constants/index';
 import { MILD } from '@constants/theme';
 import QuizData from '@data/Quiz4';
-import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React from 'react';
 import { Image, StatusBar, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 
 const { SIZES, COLORS } = theme;
 

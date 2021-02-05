@@ -13,7 +13,7 @@ const Radio = ({ button, onChange, inline, bold, children }) => {
   const labelStyles = [styles.label, inline && styles.labelInline, bold && styles.labelBold];
   return (
     <Button raw onPress={() => onChange(button.value)} style={radioStyles}>
-      <Block row={inline} center={inline}>
+      <Block row={inline} center={inline} flex={false}>
         <Block
           flex={false}
           style={[
@@ -42,7 +42,9 @@ const Radio = ({ button, onChange, inline, bold, children }) => {
         <Text size={SIZES.h3} style={labelStyles}>
           {button.label}
         </Text>
-        <Block>{children}</Block>
+        <Block style={{ backgroundColor: 'blue' }} flex={50}>
+          {children}
+        </Block>
       </Block>
     </Button>
   );
@@ -85,6 +87,7 @@ const styles = StyleSheet.create({
   label: {
     marginTop: SIZES.base,
     zIndex: 1,
+    height: 20,
   },
   labelInline: {
     marginTop: 0,
