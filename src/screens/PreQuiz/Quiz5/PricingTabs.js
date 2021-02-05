@@ -6,36 +6,20 @@ import { colorMap } from './fetchers';
 import Indicator from './Indicator';
 
 const { SIZES, COLORS } = theme;
-const { width, height } = SIZES;
+const { width } = SIZES;
 const ITEM_SIZE = width * 0.8;
 const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
 
-const PricingTabs = ({ data = [], onPress, currentActive, scrollX }) => {
+const PricingTabs = ({ data = [], onPress, scrollX }) => {
   const containerRef = React.useRef();
 
-  const defaultData = [{}, {}, {}];
-  const dataRender = data.length ? data : defaultData;
+  const inputRange = [-(ITEM_SIZE - SPACER_ITEM_WIDTH), ITEM_SIZE - SPACER_ITEM_WIDTH, ITEM_SIZE - SPACER_ITEM_WIDTH];
 
-  const inputRange = dataRender.map((_, i) => i * (ITEM_SIZE - SPACER_ITEM_WIDTH));
-
-  const bgColors = dataRender.map((_, i) => {
-    if (i === 0) {
-      return scrollX.interpolate({
-        inputRange,
-        outputRange: [colorMap.delight.mild, 'white', 'white'],
-      });
-    } else if (i === 1) {
-      return scrollX.interpolate({
-        inputRange,
-        outputRange: ['white', colorMap.bliss.mild, 'white'],
-      });
-    } else {
-      return scrollX.interpolate({
-        inputRange,
-        outputRange: ['white', 'white', colorMap.euphoria.mild],
-      });
-    }
+  const bgColors = scrollX.interpolate({
+    inputRange,
+    outputRange: [colorMap.delight.mild, colorMap.bliss.mild, colorMap.euphoria.mild],
   });
+
   const [mData, setMData] = useState({});
   const [measureMents, setMeasurements] = useState([]);
   useEffect(() => {
@@ -57,7 +41,7 @@ const PricingTabs = ({ data = [], onPress, currentActive, scrollX }) => {
       {data.map((item, index) => {
         const tabStyles = [styles.tabStyles, index !== data?.length - 1 && styles.spaceRight];
         return (
-          <Block style={tabStyles} flex={false} onLayout={(e) => layoutCb(e, index)}>
+          <Block style={tabStyles} flex={false} key={`pricing-card-${index}`} onLayout={(e) => layoutCb(e, index)}>
             <TouchableOpacity style={styles.btnStyles} onPress={() => onPress(index)}>
               <Block animated center middle style={styles.contentStyles} color={bgColors[index]}>
                 <Text size={20} bold capitalize mb1 color={colorMap[item.slug].dark}>
