@@ -35,7 +35,7 @@ const Quiz2 = ({ navigation }) => {
                     value: item.displayName,
                     size: 18,
                     color: item.color,
-                    selected: true
+                    selected: true,
                   }}
                 />
                 <Text bold body mb1 mt2>
@@ -72,9 +72,9 @@ const styles = StyleSheet.create({
     marginBottom: SIZES.padding,
     flexBasis: 150,
     minHeight: 180,
-    height: 'auto'
+    height: 'auto',
   },
   spaceLeft: {
-    marginLeft: SIZES.padding
-  }
+    marginLeft: SIZES.padding,
+  },
 });

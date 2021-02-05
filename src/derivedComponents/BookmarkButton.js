@@ -1,16 +1,16 @@
 import { Block, Button, Divider, Radio, Text } from '@components/';
-import { COLORS, SIZES } from '@constants/';
+import { COLORS, images, SIZES } from '@constants/';
 import routes from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, TextInput } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { Portal } from 'react-native-portalize';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const CreateBookmarkSection = ({ onCreateBookmark, onCancel, type }) => {
   const [loading, setLoading] = useState(false);
-  //ideabook creation
+  // ideabook creation
   const [newBookmarkName, setNewBookmarkName] = useState(null);
   const [error, setError] = useState({ error: false, errorMessage: '' });
 
@@ -25,7 +25,7 @@ const CreateBookmarkSection = ({ onCreateBookmark, onCancel, type }) => {
     if (!newBookmarkName) {
       setError({
         error: true,
-        errorMessage: 'Name needs to be atleast of one character length'
+        errorMessage: 'Name needs to be atleast of one character length',
       });
     }
     setLoading(true);
@@ -37,14 +37,14 @@ const CreateBookmarkSection = ({ onCreateBookmark, onCancel, type }) => {
           method: 'POST',
           body: {
             name: newBookmarkName,
-            type
-          }
+            type,
+          },
         })
       );
       if (errorCreatingBookmark) {
         setError({
           error: true,
-          errorMessage: 'Something went wrong. Try again later'
+          errorMessage: 'Something went wrong. Try again later',
         });
       } else {
         onCreateBookmark(createdBookmark.data);
@@ -56,7 +56,7 @@ const CreateBookmarkSection = ({ onCreateBookmark, onCancel, type }) => {
     setLoading(false);
   };
 
-  //ideabook creation end
+  // ideabook creation end
 
   return (
     <Block padding={[SIZES.padding, 0]}>
@@ -92,8 +92,10 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
   const [loading, setLoading] = useState({
     loadingBookmarks: false,
     savingBookmarks: false,
-    creatingBookmark: false
+    creatingBookmark: false,
   });
+
+  const [fetchError, setFetchError] = useState(true);
   const [selectedBookmark, setSelectedBookMark] = useState();
 
   const ref = useRef(null);
@@ -104,6 +106,11 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
 
   useEffect(() => {
     const getBookmarks = async () => {
+      setLoading({
+        loadingBookmarks: true,
+        savingBookmarks: false,
+        creatingBookmark: false,
+      });
       const endPoint = routes.designRoutes.getUserBookmarks(type);
 
       try {
@@ -111,20 +118,29 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
         if (error) {
           throw new Error();
         } else {
-          setBookmarkList(fetchedBookmarkList.data);
+          if (fetchedBookmarkList.data.length) setBookmarkList(fetchedBookmarkList.data);
+          else {
+            setBookmarkList([]);
+            setFetchError(true);
+          }
         }
       } catch (e) {
         console.error(e);
       }
+      setLoading({
+        loadingBookmarks: true,
+        savingBookmarks: false,
+        creatingBookmark: false,
+      });
     };
     getBookmarks();
-  }, []);
+  }, [type]);
 
   const onCheck = (id) => {
     setBookmarkCreationMode(false);
     setError({
       error: false,
-      errorMessage: ''
+      errorMessage: '',
     });
     if (selectedBookmark !== id) {
       setSelectedBookMark(id);
@@ -141,7 +157,7 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
     if (!selectedBookmark) {
       setError({
         error: true,
-        errorMessage: 'Please select an Ideabook to add design'
+        errorMessage: 'Please select an Ideabook to add design',
       });
       return;
     }
@@ -149,7 +165,7 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
     setLoading({
       loadingBookmarks: false,
       savingBookmarks: true,
-      creatingBookmark: false
+      creatingBookmark: false,
     });
     try {
       console.log('endPoint', endPoint);
@@ -168,11 +184,11 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
     setLoading({
       loadingBookmarks: false,
       savingBookmarks: false,
-      creatingBookmark: false
+      creatingBookmark: false,
     });
   };
 
-  //ideabook creation
+  // ideabook creation
   const [bookmarkCreationMode, setBookmarkCreationMode] = useState(false);
   const [error, setError] = useState({ error: false, errorMessage: '' });
 
@@ -180,7 +196,7 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
     setBookmarkCreationMode(!bookmarkCreationMode);
   };
 
-  //ideabook creation end
+  // ideabook creation end
   return (
     <Modalize
       ref={ref}
@@ -201,9 +217,41 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
         },
         contentContainerStyle: {
           paddingHorizontal: SIZES.padding,
-          paddingVertical: SIZES.padding
+          paddingVertical: SIZES.padding,
         },
         refreshing: true,
+        ListEmptyComponent: !fetchError ? (
+          <Block center>
+            {loading.loadingBookmarks ? (
+              <ActivityIndicator />
+            ) : (
+              <Image source={images.offer} style={{ width: 100, height: 100, resizeMode: 'contain' }} />
+            )}
+            {loading.loadingBookmarks ? (
+              <Text center small mt2>
+                Fetching your Ideabook&apos;s. Hang tight!
+              </Text>
+            ) : (
+              <>
+                <Text center small mt2>
+                  Looks like you don&apos;t have any Ideabook&apos;s created.{' '}
+                </Text>
+                <Text center small mb3 bold>
+                  Create one now to save your {type}!
+                </Text>
+              </>
+            )}
+          </Block>
+        ) : (
+          <Block center>
+            <Text center h1>
+              Uh-Oh
+            </Text>
+            <Text center mt2 mb3>
+              Failed to fetch your Ideabooks. Please try again later
+            </Text>
+          </Block>
+        ),
         ListFooterComponent: (
           <>
             {bookmarkCreationMode ? (
@@ -243,12 +291,12 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
                 size: 22,
                 label: item?.name,
                 value: item?._id,
-                selected: selectedBookmark === item?._id
+                selected: selectedBookmark === item?._id,
               }}
               onChange={onCheck}
             />
           </Block>
-        )
+        ),
       }}
     />
   );
@@ -257,8 +305,8 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
 const BookmarkButton = ({ id, bookmarked, onBookmarkChange, type }) => {
   const [selectedIdForBookmark, setSelectedIdForBookmark] = useState('');
 
-  const toggleBookmark = (id) => {
-    setSelectedIdForBookmark(id);
+  const toggleBookmark = (bookmarkId) => {
+    setSelectedIdForBookmark(bookmarkId);
   };
 
   return (
@@ -286,16 +334,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: SIZES.padding / 1.25,
     borderRadius: SIZES.radius / 6,
-    marginBottom: SIZES.padding / 2
+    marginBottom: SIZES.padding / 2,
   },
   errorText: {
     color: 'red',
-    paddingVertical: SIZES.base
+    paddingVertical: SIZES.base,
   },
   divider: {
     paddingTop: SIZES.padding,
-    width: 50
-  }
+    width: 50,
+  },
 });
 
 export default React.memo(BookmarkButton);

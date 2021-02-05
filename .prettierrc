@@ -6,5 +6,5 @@
 	"jsxBracketSameLine": false,
 	"proseWrap": "always",
 	"singleQuote": true,
-	"trailingComma": "none"
+	"trailingComma": "es5"
 }

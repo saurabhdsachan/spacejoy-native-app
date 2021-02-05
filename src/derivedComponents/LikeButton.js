@@ -1,11 +1,11 @@
-import {Button} from '@components/';
-import {SIZES} from '@constants/';
+import { Button } from '@components/';
+import { SIZES } from '@constants/';
 import routes from '@constants/routes';
-import {fetcher, handle} from '@utils/apiFetcher';
+import { fetcher, handle } from '@utils/apiFetcher';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const LikeButton = ({id, liked, onLikeChange, type}) => {
+const LikeButton = ({ id, liked, onLikeChange, type }) => {
   const onLikeIconClick = async () => {
     const nextLikeStatus = !liked;
     console.log('nextLikeStatus', nextLikeStatus);
@@ -16,7 +16,7 @@ const LikeButton = ({id, liked, onLikeChange, type}) => {
           endPoint,
           method: nextLikeStatus ? 'POST' : 'DELETE',
           body: {},
-        }),
+        })
       );
       if (likeErr) {
         throw new Error();
@@ -29,11 +29,7 @@ const LikeButton = ({id, liked, onLikeChange, type}) => {
 
   return (
     <Button raw onPress={onLikeIconClick}>
-      <Icon
-        name={`md-heart${liked ? '' : '-outline'}`}
-        color={liked ? 'red' : 'black'}
-        size={SIZES.base * 2.5}
-      />
+      <Icon name={`md-heart${liked ? '' : '-outline'}`} color={liked ? 'red' : 'black'} size={SIZES.base * 2.5} />
     </Button>
   );
 };

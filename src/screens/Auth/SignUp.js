@@ -1,29 +1,21 @@
-import React, {useState} from 'react';
-import {Block} from '@components/';
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  TextInput,
-  KeyboardAvoidingView,
-  ActivityIndicator,
-} from 'react-native';
-import Text from '@components/Text';
-import {theme} from '@constants/index';
-import Button from '@components/Button';
-import {AuthContext} from '@utils/helpers/withAuthContext';
-import {fetcher, handle} from '@utils/apiFetcher';
-import {authRoutes} from '@constants/';
-import {oAuthLogin} from '@utils/logins';
+import { Block } from '@components/';
 import AppleButton from '@components/AppleButton';
+import Button from '@components/Button';
 import FacebookLoginButton from '@components/FacebookLoginButton';
 import GoogleLoginButton from '@components/GoogleLoginButton';
-import SignupError from '@components/LoginError';
-import {COLORS, images, SIZES} from '@constants/index';
 import LoginError from '@components/LoginError';
+import Text from '@components/Text';
+import { authRoutes, COLORS, SIZES } from '@constants/index';
+import { fetcher, handle } from '@utils/apiFetcher';
+import { AuthContext } from '@utils/helpers/withAuthContext';
+import { oAuthLogin } from '@utils/logins';
+import React, { useState } from 'react';
+import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, TextInput, View } from 'react-native';
+
+
 
 const SignUp = () => {
-  const {signUp} = React.useContext(AuthContext);
+  const { signUp } = React.useContext(AuthContext);
 
   const [loginError, setLoginError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -36,16 +28,11 @@ const SignUp = () => {
 
   const handleSigninSuccess = async (userData = {}, token, authCode) => {
     // perform oAuth
-    const {data: userInfo = {}} = userData;
-    const {channel = ''} = userInfo;
+    const { data: userInfo = {} } = userData;
+    const { channel = '' } = userInfo;
     if (channel) {
       try {
-        const {token: userToken} = await oAuthLogin(
-          userInfo,
-          token,
-          channel,
-          authCode,
-        );
+        const { token: userToken } = await oAuthLogin(userInfo, token, channel, authCode);
         const localUserObject = {
           ...userData,
           token: userToken,
@@ -59,14 +46,14 @@ const SignUp = () => {
     }
   };
   const handleSigninError = (errorMessage) => {
-    //hide loader
+    // hide loader
     setLoading(false);
-    //display error
+    // display error
     setLoginError(errorMessage);
   };
 
   const signUpUser = async () => {
-    //validate form fields
+    // validate form fields
     if (firstName && lastName && phone && password && email) {
       setLoading(true);
       // submit API call
@@ -84,20 +71,13 @@ const SignUp = () => {
         },
       };
       try {
-        const [signUpRes, signUpErr] = await handle(
-          fetcher({endPoint, body, method: 'POST'}),
-        );
+        const [signUpRes, signUpErr] = await handle(fetcher({ endPoint, body, method: 'POST' }));
         if (!signUpErr && signUpRes) {
-          const {data: resData, statusCode} = signUpRes;
+          const { data: resData, statusCode } = signUpRes;
 
           if (statusCode <= 300 && resData) {
-            const {token = '', user} = resData;
-            const {
-              name = '',
-              email: userEmail = '',
-              id = '',
-              channel = 'email',
-            } = user;
+            const { token = '', user } = resData;
+            const { name = '', email: userEmail = '', id = '', channel = 'email' } = user;
             const userData = {
               token,
               data: {
@@ -121,19 +101,14 @@ const SignUp = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <View style={{flexGrow: 1}}>
+      <View style={{ flexGrow: 1 }}>
         {loading && (
-          <Block
-            center
-            middle
-            color={COLORS.semiTransparent}
-            style={{...StyleSheet.absoluteFill, zIndex: 1}}>
+          <Block center middle color={COLORS.semiTransparent} style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}>
             <ActivityIndicator size="small" />
           </Block>
         )}
 
-        <Block
-          padding={[SIZES.safe * 2, SIZES.padding * 2, 0, SIZES.padding * 2]}>
+        <Block padding={[SIZES.safe * 2, SIZES.padding * 2, 0, SIZES.padding * 2]}>
           <Text title mb1>
             SIGNUP
           </Text>
@@ -194,10 +169,7 @@ const SignUp = () => {
               />
             </Block>
             <Block flex={false}>
-              <Button
-                gradient
-                onPress={signUpUser}
-                style={{borderRadius: SIZES.radius / 4}}>
+              <Button gradient onPress={signUpUser} style={{ borderRadius: SIZES.radius / 4 }}>
                 {loading ? (
                   <ActivityIndicator size="small" color={COLORS.white} />
                 ) : (
@@ -215,7 +187,7 @@ const SignUp = () => {
             </Text>
           </Block>
           <Block flex={0.5} row>
-            <Block style={{marginRight: SIZES.padding}}>
+            <Block style={{ marginRight: SIZES.padding }}>
               <GoogleLoginButton
                 handleSignInSuccess={handleSigninSuccess}
                 handleSigninError={handleSigninError}
