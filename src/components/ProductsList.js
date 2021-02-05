@@ -77,14 +77,14 @@ const ProductsList = ({ data }) => {
   const ref = useRef(null);
   const onPress = () => ref?.current?.open();
   return (
-    <>
-      <Button dashed style={{ borderRadius: SIZES.radius / 4 }} onPress={onPress}>
-        <Text bold align="center">
+    <Block paddingTop={SIZES.padding}>
+      <Button ghost style={{ borderRadius: SIZES.radius / 4 }} onPress={onPress}>
+        <Text center>
           View Products used in this design
         </Text>
       </Button>
       <ProductModal data={data} ref={ref} />
-    </>
+    </Block>
   );
 };
 

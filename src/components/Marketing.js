@@ -42,6 +42,5 @@ export default Marketing;
 const styles = StyleSheet.create({
   shopThisLook: {
     backgroundColor: '#f8e7ff',
-    marginVertical: SIZES.padding,
   },
 });

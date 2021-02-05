@@ -3,7 +3,7 @@ import { Block, Carousel, Divider, Marketing, Text } from '@components/index';
 import ProductsList from '@components/ProductsList';
 import { theme } from '@constants/index';
 import React, { useEffect, useState } from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
+import { StatusBar } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import BookmarkButton from 'src/derivedComponents/BookmarkButton';
 import LikeButton from 'src/derivedComponents/LikeButton';
@@ -82,7 +82,7 @@ const Details = ({ route, navigation }) => {
         <Divider />
       </Block>
 
-      <Block center style={styles.designData}>
+      <Block padding={SIZES.padding}>
         <Text h2 mb2>
           {feedItem.name}
         </Text>
@@ -90,22 +90,13 @@ const Details = ({ route, navigation }) => {
           For this glamorous living room with bursts of color, we chose some mid-century furniture pieces and added tons
           of textures to create that unique space...
         </Text>
-      </Block>
-
-      <Marketing />
-
-      <Block margin={SIZES.padding}>
         <ProductsList data={productList} isLoading={isLoading} />
-      </Block>
+      </Block> 
+      <Marketing />
     </ScrollView>
   );
 };
 
-export default Details;
+export default React.memo(Details);
 
-const styles = StyleSheet.create({
-  designData: {
-    width: SIZES.width,
-    padding: SIZES.padding,
-  },
-});
+
