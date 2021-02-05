@@ -1,59 +1,36 @@
+import { Block, Text } from '@components/index';
+import { theme } from '@constants/index';
 import React from 'react';
-import {Block, Button, Text} from '@components/index';
-import {StyleSheet, ScrollView} from 'react-native';
-import {theme} from '@constants/index';
-const {SIZES, COLORS} = theme;
+import { ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {colorMap} from './fetchers';
+import { colorMap } from './fetchers';
+const { SIZES, COLORS } = theme;
 
-const SPACING = 15 / 2;
-
-const PricingCard = ({slug, data, cardWidth}) => {
-  const {includedFeatures, excludedFeatures, description} = data;
+const PricingCard = ({ slug, data, cardWidth, lastCard }) => {
+  const { includedFeatures, excludedFeatures, description } = data;
   return (
-    <Block style={{width: cardWidth}}>
-      <Block
-        color={colorMap[slug].mild}
-        style={[styles.swipeCard]}
-        flex={false}>
-        <Text h2 style={{textTransform: 'capitalize'}} mb2>
+    <Block style={{ width: cardWidth }}>
+      <Block color={colorMap[slug].mild} style={[styles.swipeCard, lastCard && styles.lastCard]} flex={false}>
+        <Text h2 capitalize>
           {slug}
         </Text>
-        <Text small color="#6D7278">
+        <Text small mb2>
           {description}
         </Text>
         <Block row space="between" margin={[SIZES.base, 0, 0, 0]} flex={false}>
-          <ScrollView>
+          <ScrollView bounces={false}>
             {includedFeatures.map((item) => {
               return (
-                <Block
-                  center
-                  row
-                  key={item._id}
-                  padding={[SIZES.base / 2, 0, SIZES.base / 2, 0]}>
-                  <Icon
-                    name="checkbox"
-                    size={SIZES.font * 1.5}
-                    color="#6D7278"
-                  />
-                  <Text ml1 regular color="#202325">
-                    {item.label}
-                  </Text>
+                <Block center row key={item._id} paddingVertical={SIZES.base / 2}>
+                  <Icon name="checkbox" size={SIZES.font * 1.5} color={COLORS.gray} />
+                  <Text ml2>{item.label}</Text>
                 </Block>
               );
             })}
             {excludedFeatures.map((item) => {
               return (
-                <Block
-                  center
-                  row
-                  key={item._id}
-                  padding={[SIZES.base / 2, 0, SIZES.base / 2, 0]}>
-                  <Icon
-                    name="close-circle"
-                    size={SIZES.font * 1.5}
-                    color="#6D7278"
-                  />
+                <Block center row key={item._id} paddingVertical={SIZES.base / 2}>
+                  <Icon name="close" size={SIZES.font * 1.5} color={COLORS.gray} />
                   <Text ml1 regular color="#202325">
                     {item.label}
                   </Text>
@@ -66,14 +43,15 @@ const PricingCard = ({slug, data, cardWidth}) => {
     </Block>
   );
 };
-export default PricingCard;
+export default React.memo(PricingCard);
 
 const styles = StyleSheet.create({
-    swipeCard: {
-        borderRadius: SIZES.radius,
-        padding: SIZES.padding,
-        overflow: 'hidden',
-        marginBottom: SIZES.padding,
-        marginHorizontal: SPACING,
-      },
-})
+  swipeCard: {
+    borderRadius: SIZES.radius,
+    padding: SIZES.padding,
+    marginLeft: SIZES.padding,
+  },
+  lastCard: {
+    marginRight: SIZES.padding,
+  },
+});

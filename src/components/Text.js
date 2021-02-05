@@ -27,6 +27,14 @@ export default class Typography extends Component {
       mt2,
       mt3,
       mt4,
+      ml1,
+      ml2,
+      ml3,
+      ml4,
+      mr1,
+      mr2,
+      mr3,
+      mr4,
       // styling
       regular,
       bold,
@@ -36,6 +44,8 @@ export default class Typography extends Component {
       light,
       center,
       right,
+      strike,
+      capitalize,
       spacing, // letter-spacing
       height, // line-height
       // colors
@@ -77,6 +87,14 @@ export default class Typography extends Component {
       mt2 && { marginTop: SIZES.base },
       mt3 && { marginTop: SIZES.base * 2 },
       mt4 && { marginTop: SIZES.base * 4 },
+      ml1 && { marginLeft: SIZES.base / 2 },
+      ml2 && { marginLeft: SIZES.base },
+      ml3 && { marginLeft: SIZES.base * 2 },
+      ml4 && { marginLeft: SIZES.base * 4 },
+      mr1 && { marginRight: SIZES.base / 2 },
+      mr2 && { marginRight: SIZES.base },
+      mr3 && { marginRight: SIZES.base * 2 },
+      mr4 && { marginRight: SIZES.base * 4 },
       regular && styles.regular,
       bold && styles.bold,
       semibold && styles.semibold,
@@ -85,6 +103,8 @@ export default class Typography extends Component {
       fontStyle && { fontStyle },
       center && styles.center,
       right && styles.right,
+      strike && styles.strike,
+      capitalize && styles.capitalize,
       color && styles[color],
       color && !styles[color] && { color },
       // color shortcuts
@@ -130,6 +150,13 @@ const styles = StyleSheet.create({
   },
   light: {
     fontWeight: '300',
+  },
+  strike: {
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid',
+  },
+  capitalize: {
+    textTransform: 'capitalize',
   },
   // position
   center: { textAlign: 'center' },

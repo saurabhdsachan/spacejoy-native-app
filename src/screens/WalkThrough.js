@@ -31,6 +31,7 @@ const WalkThrough = ({ navigation }) => {
   const [slideCount, setSlideCount] = React.useState(1);
 
   const animatedScrollViewRef = React.useRef();
+
   const scrollX = new Animated.Value(0);
 
   const nextSlide = () => {
@@ -47,6 +48,19 @@ const WalkThrough = ({ navigation }) => {
     });
     return () => scrollX.removeListener();
   }, [scrollX, slideCount]);
+
+  const renderDetails = (item) => {
+    return (
+      <Block style={styles.contentHolder}>
+        <Text h2 style={styles.heading} center>
+          {item.title}
+        </Text>
+        <Text small center>
+          {item.description}
+        </Text>
+      </Block>
+    );
+  };
 
   const renderDots = () => {
     const dotPosition = Animated.divide(scrollX, SIZES.width);
@@ -85,14 +99,7 @@ const WalkThrough = ({ navigation }) => {
             <Block style={styles.imageHolder}>
               <Image source={item.img} resizeMode="cover" style={styles.image} />
             </Block>
-            <Block style={styles.contentHolder}>
-              <Text h2 style={styles.heading} center>
-                {item.title}
-              </Text>
-              <Text small center>
-                {item.description}
-              </Text>
-            </Block>
+            {renderDetails(item, index)}
             <Block style={styles.buttonsHolder}>
               {completed ? (
                 <Button size="sm" color="black" onPress={() => navigation.navigate('Home')}>
@@ -132,6 +139,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   imageHolder: {
+    backgroundColor: COLORS.gray2,
     flex: 8,
     width: SIZES.width,
     justifyContent: 'center',
@@ -150,6 +158,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZES.padding,
   },
   heading: {
+    fontSize: SIZES.h2,
     marginBottom: 10,
     fontFamily: 'Roboto-Bold',
   },
