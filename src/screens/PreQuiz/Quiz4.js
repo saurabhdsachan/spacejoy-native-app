@@ -1,14 +1,17 @@
 import { Block, Button, Radio, Text } from '@components/index';
-import { theme } from '@constants/index';
+import { images, theme } from '@constants/index';
+import { MILD } from '@constants/theme';
 import QuizData from '@data/Quiz4';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
+import { Image, StatusBar, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const { SIZES, COLORS } = theme;
+
+const { lamp } = images;
 
 const Quiz3 = ({ navigation }) => {
   const { userDesignSelections } = React.useContext(DesignSelectionContext);
@@ -21,12 +24,13 @@ const Quiz3 = ({ navigation }) => {
     }
   }
   const navigateTo = doesUserHaveMoreThanSingleSelection ? 'Quiz6' : 'Quiz5';
+
   return (
-    <Block color={COLORS.white} padding={[SIZES.safe + 20, SIZES.padding, 0, SIZES.padding]}>
+    <Block color={COLORS.white} padding={[SIZES.safe + 200, SIZES.padding, 0, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
       <Text h2>When should your space be ready?</Text>
       <Text small>A timeline will help us work towards your goal</Text>
-      <ScrollView>
+      <ScrollView bounces={false}>
         {QuizData.map((item, index) => (
           <Block
             middle
@@ -49,6 +53,8 @@ const Quiz3 = ({ navigation }) => {
           </Block>
         ))}
       </ScrollView>
+      <Block color={MILD.yellow} style={styles.abstract} />
+      <Image source={lamp} style={styles.imageBg} />
       <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
         <Block center row space="between">
           <Button ghost color={COLORS.white} size="sm" onPress={() => navigation.goBack()}>
@@ -88,5 +94,23 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: SIZES.width,
     padding: SIZES.padding,
+  },
+  abstract: {
+    position: 'absolute',
+    height: SIZES.base * 20,
+    width: SIZES.base * 20,
+    right: 20,
+    top: 20,
+    overflow: 'hidden',
+    borderRadius: 100,
+  },
+  imageBg: {
+    position: 'absolute',
+    resizeMode: 'cover',
+    flex: 1,
+    height: 170,
+    width: 100,
+    top: 60,
+    right: 50,
   },
 });
