@@ -15,11 +15,5 @@
       "@derivedComponents/*": ["./src/derivedComponents/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "**/node_modules/*",
-    "**/.storybook/*",
-    "**/assets/*",
-    "**/build/*"
-  ]
+  "exclude": ["node_modules", "**/node_modules/*", "**/.storybook/*", "**/assets/*", "**/build/*"]
 }

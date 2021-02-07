@@ -1,25 +1,23 @@
-import React, {useEffect, useMemo, useReducer} from 'react';
+import React, { useMemo, useReducer } from 'react';
 
 const DesignSelectionContext = React.createContext();
 
 const reducer = (prevState, action) => {
-  const {type} = action;
+  const { type } = action;
   switch (type) {
     case 'REMOVE_ITEM': {
-      const {item: {id: itemId} = {}} = action;
-      const {userDesignSelections} = prevState;
-      const filteredItems = userDesignSelections.filter(
-        (item) => item.id === itemId,
-      );
+      const { item: { id: itemId } = {} } = action;
+      const { userDesignSelections } = prevState;
+      const filteredItems = userDesignSelections.filter((item) => item.id === itemId);
       const currentQuantity = filteredItems[0]?.quantity;
       if (currentQuantity && currentQuantity > 1) {
         return {
           ...prevState,
           userDesignSelections: prevState.userDesignSelections.map((item) => {
             if (item.id === itemId) {
-              return {...item, quantity: item.quantity - 1};
+              return { ...item, quantity: item.quantity - 1 };
             }
-            return {...item};
+            return { ...item };
           }),
         };
       }
@@ -40,21 +38,16 @@ const reducer = (prevState, action) => {
       };
     }
     case 'ADD_ITEM': {
-      const {item: {id: itemId, defaultQuantity} = {}} = action;
-      const {userDesignSelections} = prevState;
-      const filteredItems = userDesignSelections.filter(
-        (item) => item.id === itemId,
-      );
+      const { item: { id: itemId, defaultQuantity } = {} } = action;
+      const { userDesignSelections } = prevState;
+      const filteredItems = userDesignSelections.filter((item) => item.id === itemId);
 
       if (!filteredItems.length) {
-        const selectionItem = {id: itemId, quantity: defaultQuantity};
+        const selectionItem = { id: itemId, quantity: defaultQuantity };
         console.log('prev state is', prevState.userDesignSelections);
         return {
           ...prevState,
-          userDesignSelections: [
-            ...prevState.userDesignSelections,
-            selectionItem,
-          ],
+          userDesignSelections: [...prevState.userDesignSelections, selectionItem],
         };
       }
 
@@ -62,14 +55,14 @@ const reducer = (prevState, action) => {
         ...prevState,
         userDesignSelections: prevState.userDesignSelections.map((item) => {
           if (item.id === itemId) {
-            return {...item, quantity: item.quantity + 1};
+            return { ...item, quantity: item.quantity + 1 };
           }
-          return {...item};
+          return { ...item };
         }),
       };
     }
     default: {
-      return {...prevState};
+      return { ...prevState };
     }
   }
 };
@@ -83,18 +76,18 @@ const useDesignSelectionContext = () => {
   const designSelectionsContext = useMemo(
     () => ({
       addSelection: (item) => {
-        dispatch({type: 'ADD_ITEM', item});
+        dispatch({ type: 'ADD_ITEM', item });
       },
       removeSelection: (item) => {
-        dispatch({type: 'REMOVE_ITEM', item});
+        dispatch({ type: 'REMOVE_ITEM', item });
       },
       userDesignSelections: state.userDesignSelections,
     }),
-    [state.userDesignSelections],
+    [state.userDesignSelections]
   );
   return {
     designSelectionsContext,
   };
 };
 
-export {DesignSelectionContext, useDesignSelectionContext};
+export { DesignSelectionContext, useDesignSelectionContext };

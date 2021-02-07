@@ -91,12 +91,10 @@ const Details = ({ route, navigation }) => {
           of textures to create that unique space...
         </Text>
         <ProductsList data={productList} isLoading={isLoading} />
-      </Block> 
+      </Block>
       <Marketing />
     </ScrollView>
   );
 };
 
 export default React.memo(Details);
-
-

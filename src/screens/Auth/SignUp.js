@@ -5,14 +5,13 @@ import FacebookLoginButton from '@components/FacebookLoginButton';
 import GoogleLoginButton from '@components/GoogleLoginButton';
 import LoginError from '@components/LoginError';
 import Text from '@components/Text';
-import { authRoutes, COLORS, SIZES } from '@constants/index';
+import { COLORS, SIZES } from '@constants/index';
+import { authRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
 import { AuthContext } from '@utils/helpers/withAuthContext';
 import { oAuthLogin } from '@utils/logins';
 import React, { useState } from 'react';
 import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, TextInput, View } from 'react-native';
-
-
 
 const SignUp = () => {
   const { signUp } = React.useContext(AuthContext);

@@ -1,4 +1,4 @@
-import { routes } from '@constants/';
+import { authRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
 
 const oAuthLogin = async (user, token, provider, code = '') => {
@@ -6,7 +6,7 @@ const oAuthLogin = async (user, token, provider, code = '') => {
   try {
     const [oAuthRes, oAuthErr] = await handle(
       fetcher({
-        endPoint: routes.authRoutes.endPointSocialSignup,
+        endPoint: authRoutes.endPointSocialSignup,
         method: 'POST',
         body: {
           data: {

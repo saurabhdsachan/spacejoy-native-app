@@ -79,9 +79,7 @@ const ProductsList = ({ data }) => {
   return (
     <Block paddingTop={SIZES.padding}>
       <Button ghost style={{ borderRadius: SIZES.radius / 4 }} onPress={onPress}>
-        <Text center>
-          View Products used in this design
-        </Text>
+        <Text center>View Products used in this design</Text>
       </Button>
       <ProductModal data={data} ref={ref} />
     </Block>

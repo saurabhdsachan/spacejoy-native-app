@@ -1,4 +1,4 @@
-import {fetcher, handle} from '@utils/apiFetcher';
+import { fetcher, handle } from '@utils/apiFetcher';
 
 const fetchPricingItems = async () => {
   try {
@@ -6,12 +6,12 @@ const fetchPricingItems = async () => {
       fetcher({
         endPoint: '/packages?sort=1',
         method: 'GET',
-      }),
+      })
     );
     if (!pricingErr) {
-      const {data, statusCode} = pricingRes;
+      const { data, statusCode } = pricingRes;
       if (statusCode <= 300 && data) {
-        const {list: pricingData = []} = data;
+        const { list: pricingData = [] } = data;
         return pricingData;
       } else {
         throw new Error();
@@ -38,4 +38,4 @@ const colorMap = {
   },
 };
 
-export {colorMap, fetchPricingItems};
+export { colorMap, fetchPricingItems };
