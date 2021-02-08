@@ -1,9 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
-import { Block, Button } from '@components/index';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const QuantitySelector = ({ borderColor, quantity, item }) => {
   const { addSelection, removeSelection } = React.useContext(DesignSelectionContext);
@@ -28,12 +26,12 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     borderWidth: 1,
     borderColor: 'black',
-    height: 25,
+    height: 30,
     marginVertical: 5,
-    // paddingHorizontal: 9,
+    marginTop: 10,
   },
   btnStyles: {
-    height: 23,
+    height: 28,
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',

@@ -1,13 +1,12 @@
 import { Block, Button, Text } from '@components/index';
 import { theme } from '@constants/index';
-import React, { useEffect, useState, useRef } from 'react';
-import { StatusBar, StyleSheet, Dimensions, Animated, ActivityIndicator } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/Ionicons';
+import React, { useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, Animated, Dimensions, StatusBar, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import PricingTabs from './PricingTabs';
-import PricingCard from './PricingCards';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { fetchPricingItems } from './fetchers';
+import PricingCard from './PricingCards';
+import PricingTabs from './PricingTabs';
 
 const { SIZES, COLORS } = theme;
 
@@ -95,8 +94,16 @@ const Quiz5 = ({ navigation }) => {
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
           //   onMomentumScrollEnd={handleScrollEnd}
           snapToInterval={ITEM_SIZE - SPACER_ITEM_WIDTH}
-          renderItem={({ item }) => {
-            return <PricingCard slug={item.slug} data={item} cardWidth={ITEM_SIZE} />;
+          renderItem={({ item, index }) => {
+            return (
+              <PricingCard
+                slug={item.slug}
+                data={item}
+                cardWidth={ITEM_SIZE}
+                firstCard={index === 0}
+                lastCard={index === pricingItems?.length - 1}
+              />
+            );
           }}
         />
       </Block>

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
+import React, { useMemo, useReducer } from 'react';
 
 const DesignSelectionContext = React.createContext();
 
@@ -32,10 +32,7 @@ const reducer = (prevState, action) => {
         }
       }
 
-      console.log('index is ---', index);
-
       if (typeof index !== 'undefined') {
-        console.log('in here');
         return {
           ...prevState,
           userDesignSelections: [
@@ -49,7 +46,6 @@ const reducer = (prevState, action) => {
       };
     }
     case 'ADD_ITEM': {
-      console.log('fired add');
       const { item } = action;
       const { defaultQuantity } = item;
       const { userDesignSelections } = prevState;

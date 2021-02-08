@@ -1,17 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, StatusBar, ActivityIndicator, Animated, Dimensions, View } from 'react-native';
 import { Block, Button, Text } from '@components/index';
 import { theme } from '@constants/index';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Modalize } from 'react-native-modalize';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
+import React, { useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, Animated, Dimensions, StatusBar, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
+import { Modalize } from 'react-native-modalize';
+import { Portal } from 'react-native-portalize';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { fetchPricingItems } from '../Quiz5/fetchers';
-import PricingTabs from '../Quiz5/PricingTabs';
 import PricingCard from '../Quiz5/PricingCards';
+import PricingTabs from '../Quiz5/PricingTabs';
 import Dropdown from './Dropdown';
-import Indicator from '../Quiz5/Indicator';
 
 const { SIZES, COLORS } = theme;
 
@@ -140,23 +141,29 @@ const Quiz6 = () => {
               </Text>
             </Button>
           </Block>
-          <Block row>
-            <Block padding={[0, SIZES.padding, SIZES.padding, SIZES.padding]}>
-              <Block row style={styles.cartHeader}>
-                <Block middle flex={5}>
-                  <Text bold>Room Type</Text>
-                </Block>
-                <Block middle center flex={4}>
-                  <Text bold center>
-                    Package
-                  </Text>
-                </Block>
-                <Block flex={1} />
-              </Block>
+          <Block
+            row
+            padding={[0, SIZES.padding, 0, SIZES.padding]}
+            style={styles.cartHeader}
+            space="between"
+            flex={0.5}
+          >
+            <Block middle>
+              <Text bold>
+                Room Type{' '}
+                <Text light>
+                  {userDesignSelections?.length > 4 ? ` ( ${userDesignSelections?.length} rooms )` : ''}
+                </Text>
+              </Text>
+            </Block>
+            <Block middle center>
+              <Text bold center>
+                Package
+              </Text>
             </Block>
           </Block>
           <Block flex={4} color="white" padding={[0, SIZES.padding]}>
-            <ScrollView>
+            <ScrollView style={styles.lastChild}>
               {sortedArray.map((item, index) => {
                 const { title } = item;
                 let titleForView;
@@ -168,7 +175,13 @@ const Quiz6 = () => {
                   j = 0;
                 }
                 return (
-                  <Block middle key={item.selectionItemId} style={styles.radioCard} row spaceBetween>
+                  <Block
+                    middle
+                    key={item.selectionItemId}
+                    row
+                    spaceBetween
+                    style={[styles.radioCard, index === sortedArray.length - 1 && styles.lastChild]}
+                  >
                     <Block flex={5} middle>
                       <Text>{titleForView}</Text>
                     </Block>
@@ -182,7 +195,7 @@ const Quiz6 = () => {
                     </Block>
                     <Block flex={1} style={{ alignItems: 'flex-end' }}>
                       <Button raw onPress={() => removeSelection(item)}>
-                        <Icon name="ios-close-circle-outline" size={14} />
+                        <Icon name="remove-circle-outline" size={14} color={COLORS.red} />
                       </Button>
                     </Block>
                   </Block>
@@ -190,44 +203,55 @@ const Quiz6 = () => {
               })}
             </ScrollView>
           </Block>
-          <Block flex={1} middle center>
-            <Button color={COLORS.black} size="sm">
-              <Text color="white">{`Pay $${totalAmount}`}</Text>
-            </Button>
-          </Block>
+          <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
+            <Block flex={1} middle center>
+              <Button color={COLORS.black} size="sm">
+                <Text color="white">{`Pay $${totalAmount}`}</Text>
+              </Button>
+            </Block>
+          </LinearGradient>
         </Block>
       )}
-
-      <Modalize
-        ref={modalizeRef}
-        modalTopOffset={0}
-        adjustToContentHeight={true}
-        scrollViewProps={{ showsVerticalScrollIndicator: false }}
-        withOverlay={true}
-      >
-        <Block padding={[0, 0, SIZES.padding, 0]}>
-          <Block color="white" middle>
-            <Button onPress={onClose}>
-              <Icon name="close-outline" size={SIZES.base * 3} style={{ marginLeft: 'auto' }} />
-            </Button>
+      <Portal>
+        <Modalize
+          ref={modalizeRef}
+          modalTopOffset={0}
+          adjustToContentHeight={true}
+          scrollViewProps={{ showsVerticalScrollIndicator: false }}
+          withOverlay={true}
+        >
+          <Block padding={[0, 0, SIZES.padding * 2, 0]}>
+            <Block padding={SIZES.padding}>
+              <Text h2>Compare Prices</Text>
+            </Block>
+            <Animated.FlatList
+              ref={flatList}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={pricingItems}
+              keyExtractor={(item) => item.id}
+              decelerationRate={0}
+              bounces={false}
+              onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
+                useNativeDriver: false,
+              })}
+              //   onMomentumScrollEnd={handleScrollEnd}
+              snapToInterval={ITEM_SIZE - SPACER_ITEM_WIDTH}
+              renderItem={({ item, index }) => {
+                return (
+                  <PricingCard
+                    slug={item.slug}
+                    data={item}
+                    cardWidth={ITEM_SIZE}
+                    firstCard={index === 0}
+                    lastCard={index === pricingItems?.length - 1}
+                  />
+                );
+              }}
+            />
           </Block>
-          <Animated.FlatList
-            ref={flatList}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={pricingItems}
-            keyExtractor={(item) => item.id}
-            decelerationRate={0}
-            bounces={false}
-            onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
-            //   onMomentumScrollEnd={handleScrollEnd}
-            snapToInterval={ITEM_SIZE - SPACER_ITEM_WIDTH}
-            renderItem={({ item }) => {
-              return <PricingCard slug={item.slug} data={item} cardWidth={ITEM_SIZE} />;
-            }}
-          />
-        </Block>
-      </Modalize>
+        </Modalize>
+      </Portal>
     </Block>
   );
 };
@@ -236,15 +260,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  lastChild: {
+    paddingBottom: 100,
+    borderBottomWidth: 0,
+  },
   radioCard: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: COLORS.gray2,
-    paddingVertical: SIZES.padding,
+    paddingVertical: SIZES.padding / 1.5,
     overflow: 'hidden',
   },
   cartHeader: {
     borderBottomWidth: 2,
-    borderBottomColor: COLORS.gray2,
+    borderBottomColor: theme.COLORS.gray2,
+  },
+
+  bottomButtons: {
+    position: 'absolute',
+    bottom: 0,
+    width: SIZES.width,
+    padding: SIZES.padding,
   },
 });
 export default Quiz6;

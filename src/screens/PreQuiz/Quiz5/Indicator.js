@@ -5,7 +5,6 @@ import { colorMap } from './fetchers';
 
 const { SIZES, COLORS } = theme;
 const Indicator = ({ measureMents, scrollX, data, size, spacerWidth }) => {
-  console.log(measureMents);
   const inputRange = data.map((_, i) => i * (size - spacerWidth));
   const indicatorWidth = scrollX?.interpolate({
     inputRange,

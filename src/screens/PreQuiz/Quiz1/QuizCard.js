@@ -1,9 +1,9 @@
-import React from 'react';
-import { Block, Button, Radio, Text } from '@components/index';
-// import {TouchableOpacity} from 'react-native-gesture-handler';
-import { StyleSheet, Image, View, TouchableOpacity } from 'react-native';
-import { images, theme } from '@constants/index';
+import { Block, Radio } from '@components/index';
+import { theme } from '@constants/index';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
+import React from 'react';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Quantity from './QuantitySelector';
 
 const { SIZES } = theme;

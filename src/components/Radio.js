@@ -42,9 +42,7 @@ const Radio = ({ button, onChange, inline, bold, children }) => {
         <Text size={SIZES.h3} style={labelStyles}>
           {button.label}
         </Text>
-        <Block style={{ backgroundColor: 'blue' }} flex={50}>
-          {children}
-        </Block>
+        <Block flex={50}>{children}</Block>
       </Block>
     </Button>
   );

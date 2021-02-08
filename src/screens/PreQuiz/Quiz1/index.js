@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Block, Button, Radio, Text } from '@components/index';
+import { Block, Button, Text } from '@components/index';
 import { images, theme } from '@constants/index';
-import React, { useState, useEffect } from 'react';
-import { Image, StatusBar, StyleSheet, View } from 'react-native';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
-import Quantity from './QuantitySelector';
+import React, { useEffect, useState } from 'react';
+import { StatusBar, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
 import QuizCard from './QuizCard';
 import quiz from './quizData';
 
@@ -57,7 +56,7 @@ const Quiz1 = ({ navigation }) => {
       <StatusBar barStyle="dark-content" />
       <Text h2>Which space in your home are you looking to transform?</Text>
       <Block flex={18} padding={[SIZES.padding, 0, SIZES.padding, 0]}>
-        <ScrollView bounces={false}>
+        <ScrollView>
           <Block row>
             <QuizCard
               data={quizData[0]}
@@ -161,6 +160,6 @@ const styles = StyleSheet.create({
     height: 'auto',
   },
   full: {
-    height: 200,
+    height: 230,
   },
 });
