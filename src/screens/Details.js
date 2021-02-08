@@ -2,6 +2,7 @@ import Avatar from '@components/Avatar';
 import { Block, Carousel, Divider, Marketing, Text } from '@components/index';
 import ProductsList from '@components/ProductsList';
 import { theme } from '@constants/index';
+import { fetcher, handle } from '@utils/apiFetcher';
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -16,13 +17,31 @@ const Details = ({ route, navigation }) => {
   const [isLoading, setLoading] = useState(true);
   const [productList, setProductList] = useState([]);
 
-  const getProductList = () =>
-    fetch(`https://api-staging.spacejoy.com/api/web/designs/public/slug/${feedItem.slug}`)
-      .then((response) => response.json())
-      .then((json) => setProductList(json.data.assets))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
+  const getProductList = async () => {
+    setLoading(true);
+    const [data, err] = await handle(
+      fetcher({
+        endPoint: `/web/designs/public/slug/${feedItem.slug}`,
+        method: 'GET',
+      })
+    );
+    console.log('data,err', data, err);
+    if (err) setProductList([]);
+    else {
+      setProductList(() => {
+        const deduplicateProductList = data?.data?.assets.reduce((acc, currentProduct) => {
+          if (!acc[currentProduct?._id]) {
+            acc[currentProduct?.asset?._id] = currentProduct;
+            return { ...acc };
+          }
+          return acc;
+        }, {});
 
+        return Object.values(deduplicateProductList);
+      });
+    }
+    setLoading(false);
+  };
   useEffect(() => {
     getProductList();
   }, []);
