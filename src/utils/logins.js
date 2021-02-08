@@ -2,7 +2,6 @@ import { authRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
 
 const oAuthLogin = async (user, token, provider, code = '') => {
-  console.log('user pbj', user);
   try {
     const [oAuthRes, oAuthErr] = await handle(
       fetcher({
@@ -33,6 +32,7 @@ const oAuthLogin = async (user, token, provider, code = '') => {
 };
 
 const login = async (email, password) => {
+  console.log(authRoutes);
   try {
     const [authRes, authErr] = await handle(
       fetcher({

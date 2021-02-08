@@ -32,7 +32,7 @@ const QuizCard = ({ data, stylesArray, align, imgStyles, inline }) => {
             label: title,
             size: 18,
             color: radioColor,
-            selected: !!quantity
+            selected: !!quantity,
           }}
         />
         {quantity > 0 && (

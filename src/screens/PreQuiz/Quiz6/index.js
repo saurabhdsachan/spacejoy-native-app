@@ -11,6 +11,7 @@ import { fetchPricingItems } from '../Quiz5/fetchers';
 import PricingTabs from '../Quiz5/PricingTabs';
 import PricingCard from '../Quiz5/PricingCards';
 import Dropdown from './Dropdown';
+import Indicator from '../Quiz5/Indicator';
 
 const { SIZES, COLORS } = theme;
 
@@ -32,6 +33,7 @@ const Quiz6 = () => {
   const [currentActive, setCurrentActive] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [loading, setLoadingStatus] = useState(false);
+  const [showIndicator, setIndicatorStatus] = useState(false);
   const modalizeRef = useRef(null);
   const [pricingMap, setPricingMap] = useState({});
   const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -72,7 +74,7 @@ const Quiz6 = () => {
       setTimeout(() => {
         flatList.current.scrollToOffset({
           animated: true,
-          offset: currentActive * ITEM_SIZE - SPACER_ITEM_WIDTH
+          offset: currentActive * ITEM_SIZE - SPACER_ITEM_WIDTH,
         });
       }, 0);
     }
@@ -92,10 +94,12 @@ const Quiz6 = () => {
   const onOpen = () => {
     modalizeRef.current?.open();
     setModalOpen(true);
+    setIndicatorStatus(true);
   };
   const onClose = () => {
     modalizeRef.current?.close();
     setModalOpen(false);
+    setIndicatorStatus(false);
   };
   const scrollXInterpolation = isModalOpen ? { scrollX } : { scrollX: null };
   return (
@@ -110,7 +114,12 @@ const Quiz6 = () => {
         <Text h2>Package</Text>
       </Block>
       <Block color="white" flex={false} middle style={{ height: 113 }} margin={[SIZES.padding, 0, 0, 0]}>
-        <PricingTabs data={pricingItems} onPress={setCurrentActive} {...scrollXInterpolation} />
+        <PricingTabs
+          data={pricingItems}
+          onPress={setCurrentActive}
+          {...scrollXInterpolation}
+          showIndicator={showIndicator}
+        />
       </Block>
       {!loading && (
         <Block flex={1} color="white">
@@ -196,7 +205,7 @@ const Quiz6 = () => {
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
         withOverlay={true}
       >
-        <Block>
+        <Block padding={[0, 0, SIZES.padding, 0]}>
           <Block color="white" middle>
             <Button onPress={onClose}>
               <Icon name="close-outline" size={SIZES.base * 3} style={{ marginLeft: 'auto' }} />
@@ -225,13 +234,13 @@ const Quiz6 = () => {
 const styles = StyleSheet.create({
   btnContainer: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   radioCard: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: COLORS.gray2,
     paddingVertical: SIZES.padding,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   cartHeader: {
     borderBottomWidth: 2,

@@ -68,7 +68,7 @@ const reducer = (prevState, action) => {
 };
 
 const initialState = {
-  userDesignSelections: []
+  userDesignSelections: [],
 };
 
 const useDesignSelectionContext = () => {
@@ -84,12 +84,12 @@ const useDesignSelectionContext = () => {
       updateSelection: (item, value) => {
         dispatch({ type: 'UPDATE_ITEM', value, item });
       },
-      userDesignSelections: state.userDesignSelections
+      userDesignSelections: state.userDesignSelections,
     }),
     [state.userDesignSelections]
   );
   return {
-    designSelectionsContext
+    designSelectionsContext,
   };
 };
 

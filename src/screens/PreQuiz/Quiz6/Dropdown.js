@@ -32,6 +32,6 @@ const pickerSelectStyles = StyleSheet.create({
     paddingRight: 30, // to ensure the text is never behind the icon
     fontWeight: 'bold',
     textAlign: 'right',
-  }
+  },
 });
 export default Dropdown;

@@ -1,7 +1,6 @@
 import { theme } from '@constants/index';
 import React from 'react';
 import { Animated, StyleSheet } from 'react-native';
-import { theme } from '@constants/index';
 import { colorMap } from './fetchers';
 
 const { SIZES, COLORS } = theme;

@@ -26,6 +26,7 @@ const Login = ({ navigation }) => {
   };
 
   const handleSigninSuccess = async (userData = {}, token, authCode) => {
+    console.log('user data ------', authCode, token, userData);
     // perform oAuth
     const { data: userInfo = {} } = userData;
     const { channel = '' } = userInfo;

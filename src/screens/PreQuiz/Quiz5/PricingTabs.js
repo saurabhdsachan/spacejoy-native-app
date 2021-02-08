@@ -11,7 +11,7 @@ const ITEM_SIZE = width * 0.8;
 const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
 const defaultData = [{}, {}, {}];
 
-const PricingTabs = ({ data = [], onPress, currentActive, scrollX, onPressCb = () => {} }) => {
+const PricingTabs = ({ data = [], onPress, currentActive, scrollX, onPressCb = () => {} }, showIndicator = true) => {
   const containerRef = React.useRef();
 
   const dataRender = data.length ? data : defaultData;
@@ -76,7 +76,7 @@ const PricingTabs = ({ data = [], onPress, currentActive, scrollX, onPressCb = (
           </Block>
         );
       })}
-      {measureMents?.length !== 0 && (
+      {(measureMents?.length && showIndicator === true) !== 0 && (
         <Indicator
           measureMents={measureMents}
           scrollX={scrollX}

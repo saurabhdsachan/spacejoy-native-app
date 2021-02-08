@@ -16,12 +16,9 @@
 	},
 	"settings": {
 		"import/resolver": {
-			"node": {
-				"extensions": [".js", ".jsx", ".ts", ".tsx"],
-				"path": ["./"]
-			  }
+		  "babel-module": {}
 		}
-	},
+	  },
 	"rules": {
 		"no-underscore-dangle": [0, { "allow": [] }],
 		"react/jsx-props-no-spreading": ["off"],

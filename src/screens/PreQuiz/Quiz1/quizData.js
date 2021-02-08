@@ -12,7 +12,7 @@ const data = [
     slug: 'livingRoom',
     id: 1,
     defaultQuantity: 1,
-    defaultSelection
+    defaultSelection,
   },
   {
     title: 'Bedroom',
@@ -23,7 +23,7 @@ const data = [
     image: lamp,
     slug: 'bedRoom',
     defaultQuantity: 1,
-    defaultSelection
+    defaultSelection,
   },
   {
     title: 'Study Room',
@@ -33,7 +33,7 @@ const data = [
     id: 3,
     slug: 'studyRoom',
     defaultQuantity: 1,
-    defaultSelection
+    defaultSelection,
   },
   {
     title: 'Home Office',
@@ -43,7 +43,7 @@ const data = [
     id: 4,
     slug: 'homeOffice',
     defaultQuantity: 1,
-    defaultSelection
+    defaultSelection,
   },
   {
     title: 'Kid`s Room',
@@ -53,7 +53,7 @@ const data = [
     id: 5,
     slug: 'kidsRoom',
     defaultQuantity: 1,
-    defaultSelection
+    defaultSelection,
   },
   {
     title: 'Nursery',
@@ -64,7 +64,7 @@ const data = [
     id: 6,
     slug: 'nursery',
     defaultQuantity: 1,
-    defaultSelection
+    defaultSelection,
   },
   {
     title: 'Entryway',
@@ -74,7 +74,7 @@ const data = [
     id: 7,
     slug: 'entryWay',
     defaultQuantity: 1,
-    defaultSelection
+    defaultSelection,
   },
   {
     title: 'Open Living',
@@ -85,8 +85,8 @@ const data = [
     id: 8,
     slug: 'openLiving',
     defaultQuantity: 1,
-    defaultSelection
-  }
+    defaultSelection,
+  },
 ];
 
 module.exports = data;
