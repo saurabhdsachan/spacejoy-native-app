@@ -9,8 +9,8 @@ import Quiz3 from '@screens/PreQuiz/Quiz3';
 import Quiz4 from '@screens/PreQuiz/Quiz4';
 import Quiz5 from '@screens/PreQuiz/Quiz5';
 import Quiz6 from '@screens/PreQuiz/Quiz6';
-import { DesignSelectionContext, useDesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React from 'react';
+import { DesignSelectionContext, useDesignSelectionContext } from '@utils/helpers/designSelectionContext';
 
 const Stack = createStackNavigator();
 

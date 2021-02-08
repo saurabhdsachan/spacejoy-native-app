@@ -47,7 +47,6 @@ const Quiz5 = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
-    console.log('in use effect');
     if (flatList && flatList.current) {
       setTimeout(() => {
         flatList.current.scrollToOffset({
@@ -80,7 +79,7 @@ const Quiz5 = ({ navigation }) => {
           Select Package
         </Text>
       </Block>
-      <Block flex={1.75} color="white" row center middle>
+      <Block flex={2} color="white" row center middle>
         <PricingTabs data={pricingItems} onPress={setCurrentActive} scrollX={scrollX} />
       </Block>
       <Block flex={6} color="white">
@@ -93,6 +92,7 @@ const Quiz5 = ({ navigation }) => {
           decelerationRate={0}
           bounces={false}
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
+          //   onMomentumScrollEnd={handleScrollEnd}
           snapToInterval={ITEM_SIZE - SPACER_ITEM_WIDTH}
           renderItem={({ item, index }) => {
             return (
@@ -107,30 +107,73 @@ const Quiz5 = ({ navigation }) => {
           }}
         />
       </Block>
-      <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
-        <Block center row space="between">
-          <Button ghost color={COLORS.white} size="sm" onPress={() => navigation.goBack()}>
-            <Text center>
-              <Icon name="ios-arrow-back" size={14} /> Prev
-            </Text>
-          </Button>
-          <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Quiz5')}>
-            <Text center color={COLORS.white}>
-              Next <Icon name="ios-arrow-forward" size={14} />
-            </Text>
-          </Button>
-        </Block>
-      </LinearGradient>
+      <Block flex={2}>
+        <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
+          <Block center row space="between">
+            <Button ghost color={COLORS.white} size="sm" onPress={() => navigation.goBack()}>
+              <Text center>
+                <Icon name="ios-arrow-back" size={14} /> Prev
+              </Text>
+            </Button>
+            <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Quiz5')}>
+              <Text center color={COLORS.white}>
+                Next <Icon name="ios-arrow-forward" size={14} />
+              </Text>
+            </Button>
+          </Block>
+        </LinearGradient>
+      </Block>
     </Block>
   );
 };
 export default Quiz5;
 
 const styles = StyleSheet.create({
+  radioCard: {
+    borderRadius: SIZES.radius,
+    paddingVertical: SIZES.padding / 2,
+    paddingHorizontal: (SIZES.padding * 2) / 3,
+    overflow: 'hidden',
+    marginBottom: SIZES.padding,
+    // marginHorizontal: SPACING,
+    borderWidth: 1,
+    borderColor: '#dedede',
+  },
   bottomButtons: {
     position: 'absolute',
     bottom: 0,
     width: SIZES.width,
     padding: SIZES.padding,
+  },
+  priceTab: {
+    height: 50,
+    width: 150,
+    borderWidth: 2,
+    borderColor: 'red',
+    backgroundColor: 'blue',
+  },
+  swipeCard: {
+    borderRadius: SIZES.radius,
+    padding: SIZES.padding,
+    overflow: 'hidden',
+    marginBottom: SIZES.padding,
+    // marginHorizontal: SPACING,
+  },
+  tabBodyText: {
+    lineHeight: 16,
+  },
+  lastChild: {
+    borderBottomWidth: 0,
+    marginBottom: 80,
+  },
+  firstChild: {
+    marginTop: SIZES.padding,
+  },
+  borderTransparent: {
+    borderColor: 'transparent',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
   },
 });

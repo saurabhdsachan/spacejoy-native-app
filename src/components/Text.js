@@ -59,6 +59,7 @@ export default class Typography extends Component {
       gray,
       gray2,
       fontStyle,
+      linethrough,
       style,
       children,
       ...props
@@ -116,6 +117,7 @@ export default class Typography extends Component {
       white && styles.white,
       gray && styles.gray,
       gray2 && styles.gray2,
+      linethrough && styles.linethrough,
       style, // rewrite predefined styles
     ];
 
@@ -157,6 +159,9 @@ const styles = StyleSheet.create({
   },
   capitalize: {
     textTransform: 'capitalize',
+  },
+  linethrough: {
+    textDecorationLine: 'line-through',
   },
   // position
   center: { textAlign: 'center' },

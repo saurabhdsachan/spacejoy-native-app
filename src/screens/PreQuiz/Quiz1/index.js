@@ -1,27 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {Block, Button, Radio, Text} from '@components/index';
-import {images, theme} from '@constants/index';
-import React, {useState, useEffect} from 'react';
-import {Image, StatusBar, StyleSheet, View} from 'react-native';
-import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
+import { Block, Button, Text } from '@components/index';
+import { images, theme } from '@constants/index';
+import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
+import React, { useEffect, useState } from 'react';
+import { StatusBar, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Quantity from './QuantitySelector';
 import QuizCard from './QuizCard';
 import quiz from './quizData';
-const {SIZES, COLORS} = theme;
-import {DesignSelectionContext} from '@utils/helpers/designSelectionContext';
 
-const {sofa, lamp, chair, teddy} = images;
+const { SIZES, COLORS } = theme;
 
-const Quiz1 = ({navigation}) => {
+const { sofa, lamp, chair, teddy } = images;
+
+const Quiz1 = ({ navigation }) => {
   const [quizData, setQuizRenderData] = useState([...quiz]);
-  const {userDesignSelections} = React.useContext(DesignSelectionContext);
+  const { userDesignSelections } = React.useContext(DesignSelectionContext);
   const setSelection = (id) => {
     const updatedSelections = quizData.map((item) => {
       if (item.id === id) {
-        return {...item, selected: true};
+        return { ...item, selected: true };
       }
-      return {...item};
+      return { ...item };
     });
     setQuizRenderData(updatedSelections);
   };
@@ -29,17 +29,22 @@ const Quiz1 = ({navigation}) => {
   useEffect(() => {
     if (userDesignSelections.length) {
       const designSelectionMap = {};
-      userDesignSelections.forEach((item) => {
-        designSelectionMap[item.id] = item;
-      });
-      const updatedData = quizData.map((quizItem) => {
-        if (designSelectionMap[quizItem.id]) {
-          return {
-            ...quizItem,
-            quantity: designSelectionMap[quizItem.id].quantity,
-          };
+      for (let i = 0; i < userDesignSelections.length; i++) {
+        if (designSelectionMap[userDesignSelections[i].id]) {
+          designSelectionMap[userDesignSelections[i].id].push(userDesignSelections[i]);
+        } else {
+          designSelectionMap[userDesignSelections[i].id] = [];
+          designSelectionMap[userDesignSelections[i].id].push(userDesignSelections[i]);
         }
-        return {...quizItem};
+      }
+
+      const updatedData = [...quizData].map((quizItem) => {
+        if (designSelectionMap[quizItem.id]) {
+          console.log(designSelectionMap[quizItem.id]);
+          return { ...quizItem, quantity: designSelectionMap[quizItem.id].length };
+        } else {
+          return { ...quizItem, quantity: 0 };
+        }
       });
       setQuizRenderData(updatedData);
     } else {
@@ -47,13 +52,11 @@ const Quiz1 = ({navigation}) => {
     }
   }, [userDesignSelections]);
   return (
-    <Block
-      color={COLORS.white}
-      padding={[SIZES.safe + 20, SIZES.padding, SIZES.padding, SIZES.padding]}>
+    <Block color={COLORS.white} padding={[SIZES.safe + 20, SIZES.padding, SIZES.padding, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
       <Text h2>Which space in your home are you looking to transform?</Text>
       <Block flex={18} padding={[SIZES.padding, 0, SIZES.padding, 0]}>
-        <ScrollView bounces={false}>
+        <ScrollView>
           <Block row>
             <QuizCard
               data={quizData[0]}
@@ -116,25 +119,18 @@ const Quiz1 = ({navigation}) => {
               stylesArray={[styles.radioCard, styles.spaceLeft, styles.full]}
               middle
               select={setSelection}
-              inline
+              inline={false}
             />
           </Block>
         </ScrollView>
       </Block>
       <Block flex={2} center row space="between">
-        <Button
-          ghost
-          color={COLORS.white}
-          size="sm"
-          onPress={() => navigation.goBack()}>
+        <Button ghost color={COLORS.white} size="sm" onPress={() => navigation.goBack()}>
           <Text center>
             <Icon name="ios-arrow-back" size={14} /> Prev
           </Text>
         </Button>
-        <Button
-          color={COLORS.black}
-          size="sm"
-          onPress={() => navigation.navigate('Quiz2')}>
+        <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Quiz2')}>
           <Text center color={COLORS.white}>
             Next <Icon name="ios-arrow-forward" size={14} />
           </Text>
@@ -160,10 +156,10 @@ const styles = StyleSheet.create({
     marginLeft: SIZES.padding / 2,
   },
   half: {
-    minHeight: 80,
+    minHeight: 90,
     height: 'auto',
   },
   full: {
-    height: 190,
+    height: 230,
   },
 });

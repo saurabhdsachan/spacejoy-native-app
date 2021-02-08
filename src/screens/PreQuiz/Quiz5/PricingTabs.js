@@ -1,18 +1,17 @@
-import { Block, Text } from '@components/index';
+import React, { useEffect, useState, useRef } from 'react';
+import { Block, Text, Button } from '@components/index';
+import { StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { theme } from '@constants/index';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
 import { colorMap } from './fetchers';
 import Indicator from './Indicator';
 
 const { SIZES, COLORS } = theme;
-const { width, height } = SIZES;
-const ITEM_SIZE = width * 0.8; //240
-const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2; // (300-240)/2 = 30
-
+const { width, height } = Dimensions.get('window');
+const ITEM_SIZE = width * 0.8;
+const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
 const defaultData = [{}, {}, {}];
 
-const PricingTabs = ({ data = [], onPress, currentActive, scrollX }) => {
+const PricingTabs = ({ data = [], onPress, currentActive, scrollX, onPressCb = () => {} }, showIndicator = true) => {
   const containerRef = React.useRef();
 
   const dataRender = data.length ? data : defaultData;
@@ -21,17 +20,17 @@ const PricingTabs = ({ data = [], onPress, currentActive, scrollX }) => {
 
   const bgColors = dataRender.map((_, i) => {
     if (i === 0) {
-      return scrollX.interpolate({
+      return scrollX?.interpolate({
         inputRange,
         outputRange: [colorMap.delight.mild, COLORS.white, COLORS.white],
       });
     } else if (i === 1) {
-      return scrollX.interpolate({
+      return scrollX?.interpolate({
         inputRange,
         outputRange: [COLORS.white, colorMap.bliss.mild, COLORS.white],
       });
     } else {
-      return scrollX.interpolate({
+      return scrollX?.interpolate({
         inputRange,
         outputRange: [COLORS.white, COLORS.white, colorMap.euphoria.mild],
       });
@@ -48,8 +47,9 @@ const PricingTabs = ({ data = [], onPress, currentActive, scrollX }) => {
     }
   }, [mData]);
   const layoutCb = (event, index) => {
-    const obj = {};
+    console.log('method called');
     const { x, y, width: tabWidth, height: tabHeight } = event.nativeEvent.layout;
+    const obj = {};
     obj[index] = { x, y, width: tabWidth, height: tabHeight };
     setMData((state) => ({ ...state, ...obj }));
   };
@@ -76,7 +76,7 @@ const PricingTabs = ({ data = [], onPress, currentActive, scrollX }) => {
           </Block>
         );
       })}
-      {measureMents?.length !== 0 && (
+      {(measureMents?.length && showIndicator === true) !== 0 && (
         <Indicator
           measureMents={measureMents}
           scrollX={scrollX}
