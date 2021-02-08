@@ -1,6 +1,7 @@
 import { Block, Button, ProgressiveImage, Text } from '@components/';
 import Avatar from '@components/Avatar';
 import { COLORS, images, SIZES } from '@constants/';
+import onShare from '@utils/onShare';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -55,7 +56,7 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
       </TouchableOpacity>
       <Block row paddingHorizontal={SIZES.padding / 2}>
         <Block>
-          <LikeButton id={data?._id} liked={data?.liked} onLikeChange={handleLike} type="design" />
+          <LikeButton id={data?._id} liked={data?.liked} onLikeChange={handleLike} type="designs" />
         </Block>
         <Block>
           <Button raw onPress={() => onShare(data.name, data.slug)}>

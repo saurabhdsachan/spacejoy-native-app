@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const LikeButton = ({ id, liked, onLikeChange, type }) => {
   const onLikeIconClick = async () => {
     const nextLikeStatus = !liked;
-    console.log('nextLikeStatus', nextLikeStatus);
     const endPoint = designRoutes.getLikeApi(type, id);
     try {
       const [, likeErr] = await handle(
