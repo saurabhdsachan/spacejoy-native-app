@@ -159,8 +159,9 @@ const styles = StyleSheet.create({
   },
   capitalize: {
     textTransform: 'capitalize',
+  },
   linethrough: {
-    textDecorationLine: 'line-through'
+    textDecorationLine: 'line-through',
   },
   // position
   center: { textAlign: 'center' },

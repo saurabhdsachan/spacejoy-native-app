@@ -9,6 +9,7 @@ const { SIZES, COLORS } = theme;
 const { width, height } = Dimensions.get('window');
 const ITEM_SIZE = width * 0.8;
 const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
+const defaultData = [{}, {}, {}];
 
 const PricingTabs = ({ data = [], onPress, currentActive, scrollX, onPressCb = () => {} }) => {
   const containerRef = React.useRef();
