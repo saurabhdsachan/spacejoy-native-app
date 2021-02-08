@@ -12,7 +12,7 @@ import Text from './Text';
 
 const { SIZES, COLORS } = theme;
 
-export function DrawerContent({ navigation, progress }) {
+function DrawerContent({ navigation, progress }) {
   const { token, data, signOut } = React.useContext(AuthContext);
   const { name = '', email = '', picture = '', channel } = data;
   const handleSignOut = () => {
@@ -98,6 +98,8 @@ export function DrawerContent({ navigation, progress }) {
     </DrawerContentScrollView>
   );
 }
+
+export default DrawerContent;
 
 const styles = StyleSheet.create({
   navItem: {

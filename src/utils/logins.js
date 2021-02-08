@@ -36,7 +36,7 @@ const login = async (email, password) => {
   try {
     const [authRes, authErr] = await handle(
       fetcher({
-        endPoint: routes.authRoutes.login,
+        endPoint: authRoutes.login,
         method: 'POST',
         body: {
           email,

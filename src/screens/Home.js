@@ -2,21 +2,13 @@ import { Block, Divider, Text } from '@components/index';
 import { theme } from '@constants/index';
 import { fetcher, handle } from '@utils/apiFetcher';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Share, StatusBar } from 'react-native';
+import { FlatList, StatusBar } from 'react-native';
 import Animated from 'react-native-reanimated';
 import DesignCard from 'src/derivedComponents/Cards/DesignCard';
 
-const { SIZES, COLORS } = theme;
+const { SIZES } = theme;
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
-const onShare = async (msg, slug) => {
-  await Share.share({
-    message: msg,
-    title: 'SPacejoy',
-    url: slug,
-  });
-};
 
 const Home = ({ navigation }) => {
   const [isLoading, setLoading] = useState(true);

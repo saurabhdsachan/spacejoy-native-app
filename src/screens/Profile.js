@@ -2,7 +2,7 @@ import { Block, Button, Text } from '@components/index';
 import { images, theme } from '@constants/index';
 import { AuthContext } from '@utils/helpers/withAuthContext';
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 
 const { SIZES, COLORS } = theme;
 
@@ -11,6 +11,7 @@ const Profile = ({ navigation }) => {
   const { name = '', email = '', picture = '', channel } = data;
   return (
     <Block middle center color={COLORS.white}>
+      <Image source={images.onboarding1} resizeMode="cover" style={styles.designFeedImage} />
       <Image
         source={{ uri: picture || images.defaultAvatar }}
         resizeMode="cover"
@@ -35,5 +36,13 @@ const Profile = ({ navigation }) => {
     </Block>
   );
 };
+
+const styles = StyleSheet.create({
+  designFeedImage: {
+    borderRadius: SIZES.radius / 2,
+    height: '100%',
+    width: '100%',
+  },
+});
 
 export default Profile;

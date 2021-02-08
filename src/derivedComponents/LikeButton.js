@@ -1,6 +1,6 @@
 import { Button } from '@components/';
 import { SIZES } from '@constants/';
-import routes from '@constants/routes';
+import { designRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,7 +9,7 @@ const LikeButton = ({ id, liked, onLikeChange, type }) => {
   const onLikeIconClick = async () => {
     const nextLikeStatus = !liked;
     console.log('nextLikeStatus', nextLikeStatus);
-    const endPoint = routes.designRoutes.getLikeApi(type, id);
+    const endPoint = designRoutes.getLikeApi(type, id);
     try {
       const [, likeErr] = await handle(
         fetcher({

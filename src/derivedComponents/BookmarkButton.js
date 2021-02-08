@@ -1,6 +1,6 @@
 import { Block, Button, Divider, Radio, Text } from '@components/';
 import { COLORS, images, SIZES } from '@constants/';
-import routes from '@constants/routes';
+import routes, { designRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Image, StyleSheet, TextInput } from 'react-native';
@@ -29,7 +29,7 @@ const CreateBookmarkSection = ({ onCreateBookmark, onCancel, type }) => {
       });
     }
     setLoading(true);
-    const endPoint = routes.designRoutes.getUserBookmarks();
+    const endPoint = designRoutes.getUserBookmarks();
     try {
       const [createdBookmark, errorCreatingBookmark] = await handle(
         fetcher({

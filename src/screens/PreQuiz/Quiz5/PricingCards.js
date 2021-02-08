@@ -4,6 +4,7 @@ import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colorMap } from './fetchers';
+
 const { SIZES, COLORS } = theme;
 
 const PricingCard = ({ slug, data, cardWidth, firstCard, lastCard }) => {
@@ -26,7 +27,7 @@ const PricingCard = ({ slug, data, cardWidth, firstCard, lastCard }) => {
             {includedFeatures.map((item) => {
               return (
                 <Block center row key={item._id} paddingVertical={SIZES.base / 2}>
-                  <Icon name="checkbox" size={SIZES.font * 1.5} color={COLORS.gray} />
+                  <Icon name="checkbox" size={SIZES.font * 1.5} color="#6D7278" />
                   <Text ml2>{item.label}</Text>
                 </Block>
               );
@@ -34,7 +35,7 @@ const PricingCard = ({ slug, data, cardWidth, firstCard, lastCard }) => {
             {excludedFeatures.map((item) => {
               return (
                 <Block center row key={item._id} paddingVertical={SIZES.base / 2}>
-                  <Icon name="close" size={SIZES.font * 1.5} color={COLORS.gray} />
+                  <Icon name="close" size={SIZES.font * 1.5} color="#6D7278" />
                   <Text ml1 regular color="#202325">
                     {item.label}
                   </Text>

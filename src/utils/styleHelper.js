@@ -10,4 +10,6 @@ function elevationShadowStyle(elevation) {
   };
 }
 
-export { elevationShadowStyle };
+function foo() {}
+
+export { elevationShadowStyle, foo };

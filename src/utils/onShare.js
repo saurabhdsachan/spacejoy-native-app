@@ -11,10 +11,9 @@ const { Share } = require('react-native');
  */
 const onShare = async (props) => {
   const { data, onSuccess, onError } = props;
-
   try {
     const { message, title, url } = data;
-    const result = await Share.share(
+    await Share.share(
       {
         message,
         url,

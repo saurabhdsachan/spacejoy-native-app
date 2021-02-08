@@ -1,4 +1,4 @@
-import { DrawerContent } from '@components/DrawerContent';
+import DrawerContent from '@components/DrawerContent';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import WalkThrough from '@screens/WalkThrough';
 import { AuthContext } from '@utils/helpers/withAuthContext';
