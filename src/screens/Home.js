@@ -24,7 +24,6 @@ const Home = ({ navigation }) => {
       })
     );
     if (err) setError(true);
-    console.log('dataList', dataList);
     setDesignFeed(dataList.data || []);
     setLoading(false);
   };

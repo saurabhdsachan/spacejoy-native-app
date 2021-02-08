@@ -1,6 +1,6 @@
 import { Block, Button, Divider, Radio, Text } from '@components/';
 import { COLORS, images, SIZES } from '@constants/';
-import routes, { designRoutes } from '@constants/routes';
+import { designRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Image, StyleSheet, TextInput } from 'react-native';
@@ -111,7 +111,7 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
         savingBookmarks: false,
         creatingBookmark: false,
       });
-      const endPoint = routes.designRoutes.getUserBookmarks(type);
+      const endPoint = designRoutes.getUserBookmarks(type);
 
       try {
         const [fetchedBookmarkList, error] = await handle(fetcher({ endPoint, method: 'GET' }));
@@ -161,7 +161,7 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
       });
       return;
     }
-    const endPoint = routes.designRoutes.getBookmarkMappingApi(type, selectedBookmark, selectedIdForBookmark);
+    const endPoint = designRoutes.getBookmarkMappingApi(type, selectedBookmark, selectedIdForBookmark);
     setLoading({
       loadingBookmarks: false,
       savingBookmarks: true,

@@ -1,4 +1,4 @@
 import * as authRoutes from './authRoutes';
-import designRoutes from './designRoutes';
+import * as designRoutes from './designRoutes';
 
 export { authRoutes, designRoutes };

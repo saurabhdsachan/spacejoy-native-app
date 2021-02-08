@@ -18,8 +18,4 @@ const getBookmarkMappingApi = (type, bookmarkId, id) => {
   }
 };
 
-export default {
-  getLikeApi,
-  getUserBookmarks,
-  getBookmarkMappingApi,
-};
+export { getLikeApi, getUserBookmarks, getBookmarkMappingApi };
