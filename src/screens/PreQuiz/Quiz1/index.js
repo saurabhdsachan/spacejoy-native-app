@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Block, Button, Text } from '@components/index';
-import { images, theme } from '@constants/index';
+import { theme } from '@constants/index';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React, { useEffect, useState } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
@@ -10,8 +10,6 @@ import QuizCard from './QuizCard';
 import quiz from './quizData';
 
 const { SIZES, COLORS } = theme;
-
-const { sofa, lamp, chair, teddy } = images;
 
 const Quiz1 = ({ navigation }) => {
   const [quizData, setQuizRenderData] = useState([...quiz]);
@@ -145,7 +143,6 @@ export default Quiz1;
 const styles = StyleSheet.create({
   radioCard: {
     borderRadius: SIZES.radius,
-    // padding: SIZES.padding,
     overflow: 'hidden',
     marginBottom: SIZES.padding,
   },
@@ -156,10 +153,10 @@ const styles = StyleSheet.create({
     marginLeft: SIZES.padding / 2,
   },
   half: {
-    minHeight: 90,
+    minHeight: 70,
     height: 'auto',
   },
   full: {
-    height: 230,
+    height: 220,
   },
 });

@@ -7,10 +7,10 @@ import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Quantity from './QuantitySelector';
 
 const { SIZES } = theme;
-const QuizCard = ({ data, stylesArray, align, imgStyles, inline }) => {
+const QuizCard = ({ data, stylesArray, align, inline }) => {
   const { addSelection } = React.useContext(DesignSelectionContext);
 
-  const { blockColor, radioColor, title, selected, quantity } = data;
+  const { blockColor, radioColor, title, quantity } = data;
   const alignMiddle = { ...(align && { middle: true }) };
   const isInline = { ...(inline ? { inline: true } : { inline: false }) };
   const select = () => {
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   buttonStyles: {
     height: '100%',
     width: '100%',
-    padding: 18,
+    padding: SIZES.padding,
   },
   livingRoom: {
     position: 'absolute',

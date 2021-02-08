@@ -107,22 +107,20 @@ const Quiz5 = ({ navigation }) => {
           }}
         />
       </Block>
-      <Block flex={2}>
-        <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
-          <Block center row space="between">
-            <Button ghost color={COLORS.white} size="sm" onPress={() => navigation.goBack()}>
-              <Text center>
-                <Icon name="ios-arrow-back" size={14} /> Prev
-              </Text>
-            </Button>
-            <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Quiz5')}>
-              <Text center color={COLORS.white}>
-                Next <Icon name="ios-arrow-forward" size={14} />
-              </Text>
-            </Button>
-          </Block>
-        </LinearGradient>
-      </Block>
+      <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
+        <Block center row space="between">
+          <Button ghost color={COLORS.white} size="sm" onPress={() => navigation.goBack()}>
+            <Text center>
+              <Icon name="ios-arrow-back" size={14} /> Prev
+            </Text>
+          </Button>
+          <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Quiz5')}>
+            <Text center color={COLORS.white}>
+              Next <Icon name="ios-arrow-forward" size={14} />
+            </Text>
+          </Button>
+        </Block>
+      </LinearGradient>
     </Block>
   );
 };

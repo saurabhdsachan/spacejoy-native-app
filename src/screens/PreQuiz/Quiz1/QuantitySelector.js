@@ -1,3 +1,4 @@
+import { SIZES } from '@constants/';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -22,6 +23,7 @@ const QuantitySelector = ({ borderColor, quantity, item }) => {
 
 const styles = StyleSheet.create({
   viewStyles: {
+    borderRadius: SIZES.radius / 3,
     flexDirection: 'row',
     alignSelf: 'flex-start',
     borderWidth: 1,
