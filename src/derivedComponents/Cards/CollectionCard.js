@@ -4,7 +4,6 @@ import { elevationShadowStyle } from '@utils/styleHelper';
 import React, { useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import BookmarkButton from '../BookmarkButton';
 import ShareButton from '../ShareButton';
 
 const CollectionCard = ({ data, navigation }) => {
@@ -28,12 +27,12 @@ const CollectionCard = ({ data, navigation }) => {
         </TouchableOpacity>
       </Block>
       <Block row spaceBetween end padding={[SIZES.padding, 0]}>
-        <Block flex={10}>
+        <Block flex={11}>
           <Text numberOfLines={1} body>
             {collectionData.name}
           </Text>
         </Block>
-        <Block row middle center flex={2}>
+        <Block row middle center flex={1}>
           <Block>
             <ShareButton
               message={collectionData.name}
@@ -41,14 +40,14 @@ const CollectionCard = ({ data, navigation }) => {
               title={collectionData.name}
             />
           </Block>
-          <Block>
+          {/* <Block>
             <BookmarkButton
               id={collectionData._id}
               bookmarked={collectionData.bookmarked}
               onBookmarkChange={onBookmarkChange}
               type="collection"
             />
-          </Block>
+          </Block> */}
         </Block>
       </Block>
     </Block>

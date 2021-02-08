@@ -21,7 +21,7 @@ const Radio = ({ button, onChange, inline, bold, children }) => {
             {
               height: button.size || SIZES.base * 3,
               width: button.size || SIZES.base * 3,
-              borderColor: button.color,
+              borderColor: button.selected ? button.color || COLORS.primary1 : button.color,
             },
           ]}
         >
@@ -33,7 +33,7 @@ const Radio = ({ button, onChange, inline, bold, children }) => {
                 {
                   height: button.size / 2 || SIZES.base * 2.25,
                   width: button.size / 2 || SIZES.base * 2.25,
-                  backgroundColor: button.color,
+                  backgroundColor: button.color || COLORS.primary1,
                 },
               ]}
             />

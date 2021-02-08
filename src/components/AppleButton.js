@@ -13,7 +13,6 @@ const AppleSignin = ({ handleSigninError, handleSignInSuccess, ...props }) => {
         requestedOperation: appleAuth.Operation.LOGIN,
         requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
       });
-      console.log();
       // retrieve identityToken from sign in request
       const { identityToken, authorizationCode, user, fullName, email } = appleAuthRequestResponse;
       // identityToken generated

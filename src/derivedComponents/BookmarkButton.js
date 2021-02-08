@@ -47,13 +47,14 @@ const CreateBookmarkSection = ({ onCreateBookmark, onCancel, type }) => {
           errorMessage: 'Something went wrong. Try again later',
         });
       } else {
+        setLoading(false);
         onCreateBookmark(createdBookmark.data);
         onCancel(false);
       }
     } catch (e) {
       console.error(e);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   // ideabook creation end
@@ -168,9 +169,7 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
       creatingBookmark: false,
     });
     try {
-      console.log('endPoint', endPoint);
       const [data, err] = await handle(fetcher({ endPoint, method: 'POST', body: {} }));
-      console.log('data, err', data, err);
       if (err) {
         throw new Error(err.message);
       }
@@ -225,7 +224,7 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
             {loading.loadingBookmarks ? (
               <ActivityIndicator />
             ) : (
-              <Image source={images.offer} style={{ width: 100, height: 100, resizeMode: 'contain' }} />
+              <Image source={images.offer} style={styles.emptyImage} />
             )}
             {loading.loadingBookmarks ? (
               <Text center small mt2>
@@ -283,20 +282,22 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
         ),
         ItemSeparatorComponent: () => <Divider />,
         keyExtractor: (item) => item?._id,
-        renderItem: ({ item }) => (
-          <Block key={item?._id} paddingVertical={SIZES.padding}>
-            <Radio
-              inline
-              button={{
-                size: 22,
-                label: item?.name,
-                value: item?._id,
-                selected: selectedBookmark === item?._id,
-              }}
-              onChange={onCheck}
-            />
-          </Block>
-        ),
+        renderItem: ({ item }) => {
+          return (
+            <Block key={item?._id} paddingVertical={SIZES.padding}>
+              <Radio
+                inline
+                button={{
+                  size: 22,
+                  label: item?.name,
+                  value: item?._id,
+                  selected: selectedBookmark === item?._id,
+                }}
+                onChange={onCheck}
+              />
+            </Block>
+          );
+        },
       }}
     />
   );
@@ -336,6 +337,7 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius / 6,
     marginBottom: SIZES.padding / 2,
   },
+  emptyImage: { width: 100, height: 100, resizeMode: 'contain' },
   errorText: {
     color: 'red',
     paddingVertical: SIZES.base,

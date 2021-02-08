@@ -8,7 +8,7 @@ import Button from './Button';
 import Divider from './Divider';
 import Text from './Text';
 
-const { SIZES, COLORS } = theme;
+const { SIZES } = theme;
 
 const Item = ({ data: { asset } }) => (
   <Block center row margin={[SIZES.padding / 2, 0, SIZES.padding / 2, 0]}>

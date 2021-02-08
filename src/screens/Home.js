@@ -16,6 +16,7 @@ const Home = ({ navigation }) => {
   const [error, setError] = useState(false);
 
   const getDesignFeed = async () => {
+    setLoading(true);
     const [dataList, err] = await handle(
       fetcher({
         endPoint: `/designs/search/public?skip=${Math.random() * 10}&limit=100&sort=-1`,
