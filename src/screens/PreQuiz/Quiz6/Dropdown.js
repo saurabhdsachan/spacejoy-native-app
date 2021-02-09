@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-// import RNPickerSelect from '@react-native-picker/picker';
-import Icon from 'react-native-vector-icons/Ionicons';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import RNPickerSelect, { defaultStyles } from 'react-native-picker-select';
+import RNPickerSelect from 'react-native-picker-select';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Dropdown = ({ data, onChange, value }) => {
   const [formattedData, setFormattedData] = useState([]);

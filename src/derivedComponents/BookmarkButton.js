@@ -119,7 +119,7 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
         if (error) {
           throw new Error();
         } else {
-          if (fetchedBookmarkList.data.length) setBookmarkList(fetchedBookmarkList.data);
+          if (fetchedBookmarkList?.data?.length) setBookmarkList(fetchedBookmarkList.data);
           else {
             setBookmarkList([]);
             setFetchError(true);

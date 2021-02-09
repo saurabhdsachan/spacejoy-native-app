@@ -1,31 +1,32 @@
 import { Block, Button, Text } from '@components/';
 import { theme } from '@constants/';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Dropdown from './Dropdown';
 
 const { COLORS, SIZES } = theme;
 
-const RightItem = () => (
-  <Block middle center color={COLORS.yellow} paddingHorizontal={SIZES.padding}>
-    <Text right white>
-      Get{' '}
-      <Text bold white>
-        50% off
-      </Text>{' '}
-      on this room
-    </Text>
-  </Block>
-);
-
 const RoomItem = ({ data: { item, index }, removeSelection, updateSelection, pricingItems }) => {
+  const rightItem = (progress, dragX) => {
+    const scale = progress.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 1],
+      extrapolate: 'clamp',
+    });
+    return (
+      <View style={styles.rightItem}>
+        <Button onPress={() => removeSelection(item)}>
+          <Animated.Text right white style={{ transform: [{ scale }], color: COLORS.white }}>
+            Delete
+          </Animated.Text>
+        </Button>
+      </View>
+    );
+  };
   return (
-    <Swipeable
-      onSwipeableRightOpen={() => console.log('Swiped right')}
-      renderRightActions={(progress, dragx) => <RightItem />}
-    >
+    <Swipeable onSwipeableRightOpen={() => console.log('Swiped right')} renderRightActions={rightItem}>
       <Block row spaceBetween middle color={COLORS.white} style={[styles.radioCard]}>
         <Block flex={5} middle>
           <Text>{item.title}</Text>
@@ -51,9 +52,15 @@ const styles = StyleSheet.create({
   radioCard: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: COLORS.gray2,
-    paddingVertical: SIZES.padding / 1.5,
+    paddingVertical: SIZES.padding / 1.3,
     paddingHorizontal: SIZES.padding,
     overflow: 'hidden',
+  },
+  rightItem: {
+    backgroundColor: COLORS.red,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 100,
   },
 });
 

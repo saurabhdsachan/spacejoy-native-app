@@ -169,8 +169,8 @@ const Quiz6 = () => {
             />
           </Block>
           <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
-            <Block middle>
-              <Button color={COLORS.black}>
+            <Block middle center>
+              <Button color={COLORS.black} style={{ width: 150 }}>
                 <Text white center>{`Pay $${totalAmount}`}</Text>
               </Button>
             </Block>
