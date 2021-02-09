@@ -3,7 +3,7 @@ import { Block, Button, Text } from '@components/index';
 import { theme } from '@constants/index';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Animated, Dimensions, StatusBar, StyleSheet } from 'react-native';
+import { ActivityIndicator, Animated, StatusBar, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { Modalize } from 'react-native-modalize';
@@ -16,9 +16,8 @@ import Dropdown from './Dropdown';
 
 const { SIZES, COLORS } = theme;
 
-const { width, height } = Dimensions.get('window');
+const { width } = SIZES;
 const ITEM_SIZE = width * 0.8;
-const SPACING = SIZES.base * 2;
 const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
 
 const sortByKey = (array, key) => {
@@ -97,11 +96,6 @@ const Quiz6 = () => {
     setModalOpen(true);
     setIndicatorStatus(true);
   };
-  const onClose = () => {
-    modalizeRef.current?.close();
-    setModalOpen(false);
-    setIndicatorStatus(false);
-  };
   const scrollXInterpolation = isModalOpen ? { scrollX } : { scrollX: null };
   return (
     <Block style={styles.container} color="white">
@@ -133,11 +127,11 @@ const Quiz6 = () => {
                 onOpen();
                 setCurrentActive(0);
               }}
-              style={{ width: 180 }}
+              style={{ width: 200 }}
             >
               <Text center>
-                <Icon name="chevron-down-outline" size={14} /> Compare Prices{' '}
                 <Icon name="chevron-down-outline" size={14} />
+                Compare Packages <Icon name="chevron-down-outline" size={14} />
               </Text>
             </Button>
           </Block>
@@ -167,7 +161,7 @@ const Quiz6 = () => {
               {sortedArray.map((item, index) => {
                 const { title } = item;
                 let titleForView;
-                if (sortedArray[index].title === sortedArray[index + 1]?.title) {
+                if (sortedArray[index]?.title === sortedArray[index + 1]?.title) {
                   titleForView = j === 0 ? `${title}` : `${title} - ${j}`;
                   j++;
                 } else {
@@ -193,7 +187,7 @@ const Quiz6 = () => {
                         value={item?.selectedPackage || item?.defaultSelection}
                       />
                     </Block>
-                    <Block flex={1} style={{ alignItems: 'flex-end' }}>
+                    <Block flex={1} end>
                       <Button raw onPress={() => removeSelection(item)}>
                         <Icon name="remove-circle-outline" size={14} color={COLORS.red} />
                       </Button>
@@ -204,9 +198,9 @@ const Quiz6 = () => {
             </ScrollView>
           </Block>
           <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
-            <Block flex={1} middle center>
-              <Button color={COLORS.black} size="sm">
-                <Text color="white">{`Pay $${totalAmount}`}</Text>
+            <Block middle>
+              <Button color={COLORS.black}>
+                <Text white center>{`Pay $${totalAmount}`}</Text>
               </Button>
             </Block>
           </LinearGradient>
