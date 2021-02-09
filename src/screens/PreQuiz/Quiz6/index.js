@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Block, Button, Text } from '@components/index';
 import { theme } from '@constants/index';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
@@ -78,7 +77,6 @@ const Quiz6 = () => {
         });
       }, 0);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentActive]);
 
   useEffect(() => {
@@ -108,7 +106,7 @@ const Quiz6 = () => {
         <StatusBar barStyle="dark-content" />
         <Text h2>Package</Text>
       </Block>
-      <Block color="white" flex={false} middle style={{ height: 113 }} margin={[SIZES.padding, 0, 0, 0]}>
+      <Block color="white" flex={false} middle style={{ height: 120 }} margin={[SIZES.padding, 0, 0, 0]}>
         <PricingTabs
           data={pricingItems}
           onPress={setCurrentActive}
@@ -130,8 +128,8 @@ const Quiz6 = () => {
               style={{ width: 200 }}
             >
               <Text center>
+                <Icon name="chevron-down-outline" size={14} /> Compare Packages{' '}
                 <Icon name="chevron-down-outline" size={14} />
-                Compare Packages <Icon name="chevron-down-outline" size={14} />
               </Text>
             </Button>
           </Block>
@@ -189,7 +187,7 @@ const Quiz6 = () => {
                     </Block>
                     <Block flex={1} end>
                       <Button raw onPress={() => removeSelection(item)}>
-                        <Icon name="remove-circle-outline" size={14} color={COLORS.red} />
+                        <Icon name="remove-circle-outline" size={16} color={COLORS.red} />
                       </Button>
                     </Block>
                   </Block>
