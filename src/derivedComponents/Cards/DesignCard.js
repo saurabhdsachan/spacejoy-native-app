@@ -13,7 +13,7 @@ import ShareButton from '../ShareButton';
 const DesignCard = ({ data: designDataProp, navigation }) => {
   const [data, setData] = useState(designDataProp);
 
-  const onBookmarked = (value) => {
+  const onBookmarkChange = (value) => {
     setData({ ...data, bookmarked: value });
   };
 
@@ -37,7 +37,12 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
           />
         </Block>
         <Block end flex={1}>
-          <BookmarkButton bookmarked={data?.bookmarked} onBookmarked={onBookmarked} type="design" id={data?._id} />
+          <BookmarkButton
+            bookmarked={data?.bookmarked}
+            onBookmarkChange={onBookmarkChange}
+            type="design"
+            id={data?._id}
+          />
         </Block>
       </Block>
       <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Details', { feedItem: data })}>
