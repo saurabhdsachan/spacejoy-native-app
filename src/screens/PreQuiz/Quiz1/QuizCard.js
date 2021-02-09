@@ -13,27 +13,21 @@ const QuizCard = ({ data, stylesArray, align, inline }) => {
   const { blockColor, radioColor, title, quantity } = data;
   const alignMiddle = { ...(align && { middle: true }) };
   const isInline = { ...(inline ? { inline: true } : { inline: false }) };
-  const select = () => {
-    console.log('this is fired');
-    if (!data.quantity) {
-      addSelection(data);
-    }
-  };
+  const select = () => !data.quantity && addSelection(data);
 
   return (
-    // <TouchableOpacity activeOpacity={0.8} onPress={() => select(data.id)}>
     <Block color={blockColor} style={stylesArray} {...alignMiddle}>
       <TouchableOpacity style={styles.buttonStyles} onPress={() => select(data.id)}>
         <Radio
-          bold
-          onChange={() => {}}
           {...isInline}
+          bold
           button={{
             label: title,
             size: 18,
             color: radioColor,
             selected: !!quantity,
           }}
+          onChange={() => select(data.id)}
         />
         {quantity > 0 && (
           <Quantity
@@ -44,7 +38,7 @@ const QuizCard = ({ data, stylesArray, align, inline }) => {
             selections={data.selections}
           />
         )}
-        {data.image ? <Image source={data.image} resizeMode="cover" style={styles[data.slug]} /> : null}
+        {data.image && <Image source={data.image} resizeMode="cover" style={styles[data.slug]} />}
       </TouchableOpacity>
     </Block>
   );
@@ -64,8 +58,8 @@ const styles = StyleSheet.create({
   livingRoom: {
     position: 'absolute',
     bottom: -20,
-    right: -20,
-    height: 130,
+    right: -50,
+    height: 150,
     width: '100%',
   },
   bedRoom: {
@@ -84,10 +78,10 @@ const styles = StyleSheet.create({
   },
   openLiving: {
     position: 'absolute',
-    bottom: -10,
-    right: 0,
+    bottom: 0,
+    right: 20,
     height: 120,
-    width: '80%',
+    width: '70%',
   },
   spaceRight: {
     marginRight: SIZES.padding / 2,

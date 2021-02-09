@@ -5,6 +5,7 @@ import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React, { useEffect, useState } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import QuizCard from './QuizCard';
 import quiz from './quizData';
@@ -50,10 +51,10 @@ const Quiz1 = ({ navigation }) => {
     }
   }, [userDesignSelections]);
   return (
-    <Block color={COLORS.white} padding={[SIZES.safe + 20, SIZES.padding, SIZES.padding, SIZES.padding]}>
+    <Block color={COLORS.white} padding={[SIZES.safe + 20, SIZES.padding, 0, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
       <Text h2>Which space in your home are you looking to transform?</Text>
-      <Block flex={18} padding={[SIZES.padding, 0, SIZES.padding, 0]}>
+      <Block padding={[SIZES.padding, 0, 0, 0]}>
         <ScrollView>
           <Block row>
             <QuizCard
@@ -122,18 +123,20 @@ const Quiz1 = ({ navigation }) => {
           </Block>
         </ScrollView>
       </Block>
-      <Block flex={2} center row space="between">
-        <Button ghost color={COLORS.white} size="sm" onPress={() => navigation.goBack()}>
-          <Text center>
-            <Icon name="ios-arrow-back" size={14} /> Prev
-          </Text>
-        </Button>
-        <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Quiz2')}>
-          <Text center color={COLORS.white}>
-            Next <Icon name="ios-arrow-forward" size={14} />
-          </Text>
-        </Button>
-      </Block>
+      <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
+        <Block center row space="between">
+          <Button ghost color={COLORS.white} size="sm" onPress={() => navigation.goBack()}>
+            <Text center>
+              <Icon name="ios-arrow-back" size={14} /> Prev
+            </Text>
+          </Button>
+          <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Quiz2')}>
+            <Text center color={COLORS.white}>
+              Next <Icon name="ios-arrow-forward" size={14} />
+            </Text>
+          </Button>
+        </Block>
+      </LinearGradient>
     </Block>
   );
 };
@@ -145,6 +148,8 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius,
     overflow: 'hidden',
     marginBottom: SIZES.padding,
+    minWidth: SIZES.width * 0.05,
+    flexBasis: 50,
   },
   spaceRight: {
     marginRight: SIZES.padding / 2,
@@ -158,5 +163,11 @@ const styles = StyleSheet.create({
   },
   full: {
     height: 220,
+  },
+  bottomButtons: {
+    position: 'absolute',
+    bottom: 0,
+    width: SIZES.width,
+    padding: SIZES.padding,
   },
 });

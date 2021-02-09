@@ -10,7 +10,7 @@ export const COLORS = {
   accent: '#FA6496',
   secondary: '#F7B500',
   red: '#fa4a5b',
-  yellow: '#FF9800',
+  yellow: '#F8CA43',
   green: '#00C48C',
   blue: '#0682FE',
   teal: '#00BCD4',

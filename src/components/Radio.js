@@ -1,5 +1,4 @@
 import { theme } from '@constants/';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import Block from './Block';
@@ -12,7 +11,7 @@ const Radio = ({ button, onChange, inline, bold, children }) => {
   const radioStyles = [styles.radioButton, inline && styles.inline];
   const labelStyles = [styles.label, inline && styles.labelInline, bold && styles.labelBold];
   return (
-    <Button raw onPress={() => onChange(button.value)} style={radioStyles}>
+    <Button raw onPress={() => onChange && onChange(button.value)} style={radioStyles}>
       <Block row={inline} center={inline} flex={false}>
         <Block
           flex={false}
@@ -46,18 +45,6 @@ const Radio = ({ button, onChange, inline, bold, children }) => {
       </Block>
     </Button>
   );
-};
-
-Radio.defaultProps = {
-  button: {
-    size: 18,
-  },
-};
-
-Radio.propTypes = {
-  button: PropTypes.shape({
-    size: PropTypes.number,
-  }),
 };
 
 export default Radio;

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Block, Button, Radio, Text } from '@components/index';
 import { images, theme } from '@constants/index';
 import QuizData from '@data/Quiz4';
@@ -11,7 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const { SIZES, COLORS } = theme;
 
-const { q4 } = images;
+const { homeBg } = images;
 
 const Quiz3 = ({ navigation }) => {
   const { userDesignSelections } = React.useContext(DesignSelectionContext);
@@ -28,9 +27,11 @@ const Quiz3 = ({ navigation }) => {
   return (
     <Block color={COLORS.white} padding={[SIZES.safe + 200, SIZES.padding, 0, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
-      <Image source={q4} style={styles.imageBg} />
+      <Image source={homeBg} style={styles.imageBg} />
       <Text h2>When should your space be ready?</Text>
-      <Text small>A timeline will help us work towards your goal</Text>
+      <Text small mt1>
+        A timeline will help us work towards your goal
+      </Text>
       <ScrollView bounces={false}>
         {QuizData.map((item, index) => (
           <Block
@@ -47,7 +48,7 @@ const Quiz3 = ({ navigation }) => {
               button={{
                 label: item.title,
                 size: 18,
-                color: item.bg,
+                color: COLORS[item.bg],
                 selected: false,
               }}
             />
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFill,
     resizeMode: 'cover',
     flex: 1,
-    height: SIZES.height,
+    height: 250,
     width: SIZES.width,
   },
 });
