@@ -3,7 +3,7 @@ import { theme } from '@constants/index';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, StatusBar, StyleSheet } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { FlatList } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { Modalize } from 'react-native-modalize';
 import { Portal } from 'react-native-portalize';
@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { fetchPricingItems } from '../Quiz5/fetchers';
 import PricingCard from '../Quiz5/PricingCards';
 import PricingTabs from '../Quiz5/PricingTabs';
-import Dropdown from './Dropdown';
+import RoomItem from './RoomItem';
 
 const { SIZES, COLORS } = theme;
 
@@ -28,7 +28,7 @@ const sortByKey = (array, key) => {
 };
 
 const Quiz6 = () => {
-  const [pricingItems, setPricingitems] = useState([]);
+  const [pricingItems, setPricingItems] = useState([]);
   const [currentActive, setCurrentActive] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [loading, setLoadingStatus] = useState(false);
@@ -39,7 +39,6 @@ const Quiz6 = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { userDesignSelections, removeSelection, updateSelection } = React.useContext(DesignSelectionContext);
   const sortedArray = sortByKey(userDesignSelections, 'title');
-  let j = 0;
   const flatList = useRef(null);
   useEffect(() => {
     // fetch pricing items
@@ -55,7 +54,7 @@ const Quiz6 = () => {
           return { ...price, active: false, ref: React.createRef() };
         });
         setPricingMap(priceMap);
-        setPricingitems(dataToRender);
+        setPricingItems(dataToRender);
         setLoadingStatus(false);
         // setCurrentActive(1);
       })
@@ -154,46 +153,20 @@ const Quiz6 = () => {
               </Text>
             </Block>
           </Block>
-          <Block flex={4} color="white" padding={[0, SIZES.padding]}>
-            <ScrollView style={styles.lastChild}>
-              {sortedArray.map((item, index) => {
-                const { title } = item;
-                let titleForView;
-                if (sortedArray[index]?.title === sortedArray[index + 1]?.title) {
-                  titleForView = j === 0 ? `${title}` : `${title} - ${j}`;
-                  j++;
-                } else {
-                  titleForView = j === 0 ? `${title}` : `${title} - ${j}`;
-                  j = 0;
-                }
-                return (
-                  <Block
-                    middle
-                    key={item.selectionItemId}
-                    row
-                    spaceBetween
-                    style={[styles.radioCard, index === sortedArray.length - 1 && styles.lastChild]}
-                  >
-                    <Block flex={5} middle>
-                      <Text>{titleForView}</Text>
-                    </Block>
-
-                    <Block flex={4}>
-                      <Dropdown
-                        data={pricingItems}
-                        onChange={(value) => updateSelection(item, value)}
-                        value={item?.selectedPackage || item?.defaultSelection}
-                      />
-                    </Block>
-                    <Block flex={1} end>
-                      <Button raw onPress={() => removeSelection(item)}>
-                        <Icon name="remove-circle-outline" size={16} color={COLORS.red} />
-                      </Button>
-                    </Block>
-                  </Block>
-                );
-              })}
-            </ScrollView>
+          <Block flex={4} color="white">
+            <FlatList
+              keyExtractor={(item, index) => `roomItem-${index}`}
+              data={sortedArray}
+              contentContainerStyle={styles.lastCard}
+              renderItem={({ item, index }) => (
+                <RoomItem
+                  data={{ item, index }}
+                  removeSelection={removeSelection}
+                  updateSelection={updateSelection}
+                  pricingItems={pricingItems}
+                />
+              )}
+            />
           </Block>
           <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
             <Block middle>
@@ -252,26 +225,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  lastChild: {
-    paddingBottom: 100,
-    borderBottomWidth: 0,
-  },
-  radioCard: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: COLORS.gray2,
-    paddingVertical: SIZES.padding / 1.5,
-    overflow: 'hidden',
-  },
   cartHeader: {
     borderBottomWidth: 2,
     borderBottomColor: theme.COLORS.gray2,
   },
-
   bottomButtons: {
     position: 'absolute',
     bottom: 0,
     width: SIZES.width,
     padding: SIZES.padding,
+  },
+  lastCard: {
+    paddingBottom: 100,
   },
 });
 export default Quiz6;
