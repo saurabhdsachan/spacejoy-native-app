@@ -2,6 +2,7 @@ import { Block, Button, Text } from '@components/';
 import Accordion from '@components/Accordion';
 import Loader from '@components/Loader';
 import { COLORS, SIZES } from '@constants/index';
+import { MILD } from '@constants/theme';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -116,19 +117,13 @@ const SingleCollection = ({ route, navigation }) => {
               {collectionData?.description}
             </Text>
             <Button raw onPress={onChangeSizeClick}>
-              <Text color={COLORS.primary1} mt2>
-                {ellipsis ? 'Expand' : 'Collapse'}
+              <Text color={COLORS.primary1} mt1>
+                {ellipsis ? 'read more...' : 'hide'}
               </Text>
             </Button>
           </Block>
-
-          <Block color="#f3f3f3">
-            <Block padding={SIZES.padding}>
-              <Text h3 bold>
-                Hand-Picked {collectionItem?.name}
-              </Text>
-            </Block>
-            <Block padding={[0, SIZES.padding]} color="white">
+          <Block color={MILD.blue}>
+            <Block padding={[0, SIZES.padding]}>
               {collectionData?.designList?.map((item) => (
                 <DesignCard key={item?._id} data={item} navigation={navigation} />
               ))}

@@ -105,16 +105,20 @@ const Details = ({ route, navigation }) => {
       </Block>
 
       <Block padding={SIZES.padding}>
+        <Text small capitalize color={COLORS.primary1}>
+          {feedItem.theme.name}
+        </Text>
         <Text h2 mb2>
           {feedItem.name}
         </Text>
         <Text small>
-          For this glamorous living room with bursts of color, we chose some mid-century furniture pieces and added tons
-          of textures to create that unique space...
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium, aliquam architecto! Earum aut deserunt
+          eligendi eos obcaecati dignissimos eveniet debitis nemo non nihil veritatis hic saepe quidem, aperiam iure
+          optio.
         </Text>
         <ProductsList data={productList} isLoading={isLoading} />
       </Block>
-      <Marketing />
+      <Marketing navigation={navigation} />
     </ScrollView>
   );
 };

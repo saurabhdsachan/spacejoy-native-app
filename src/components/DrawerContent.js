@@ -62,6 +62,11 @@ function DrawerContent({ navigation, progress }) {
         </Block>
         <Block flex={2} style={{ margin: SIZES.padding }}>
           <Block style={styles.navItem}>
+            <Button raw onPress={() => navigation.navigate('Profile')}>
+              <Text body>My Profile</Text>
+            </Button>
+          </Block>
+          <Block style={styles.navItem}>
             <Button raw onPress={() => navigation.navigate('My Designs')}>
               <Text body>Design Orders</Text>
             </Button>
@@ -72,13 +77,8 @@ function DrawerContent({ navigation, progress }) {
             </Button>
           </Block>
           <Block style={styles.navItem}>
-            <Button raw onPress={() => navigation.navigate('Profile')}>
-              <Text body>My Profile</Text>
-            </Button>
-          </Block>
-          <Block style={styles.navItem}>
             <Button raw onPress={() => navigation.navigate('Store')}>
-              <Text body>Design Challenges</Text>
+              <Text body>Ideabook</Text>
             </Button>
           </Block>
           {token && (
