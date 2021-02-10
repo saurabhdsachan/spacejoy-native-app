@@ -1,7 +1,7 @@
 import Avatar from '@components/Avatar';
 import { Block, Carousel, Divider, Marketing, Text } from '@components/index';
 import ProductsList from '@components/ProductsList';
-import { theme } from '@constants/index';
+import { images, theme } from '@constants/index';
 import { fetcher, handle } from '@utils/apiFetcher';
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
@@ -68,8 +68,12 @@ const Details = ({ route, navigation }) => {
       <Block row center padding={SIZES.padding}>
         <Block flex={10}>
           <Avatar
-            uri="https://res.cloudinary.com/spacejoy/image/upload/c_thumb,g_face,fl_lossy,q_auto,f_auto,h_120,w_120/v1581506948/web/Customer%20Stories_Assets/Amber/Amber_profile_n4lpwa.jpg"
-            user={{ name: 'Amber Esperaza', city: 'Austin', state: 'Texas' }}
+            uri={
+              feedItem?.owner?.avatar
+                ? `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,c_fill,g_faces,h_200,w_200/${feedItem?.owner?.avatar}`
+                : images.defaultAvatar
+            }
+            user={{ name: feedItem?.owner?.profile?.name || 'Anonymous User', city: 'Austin', state: 'Texas' }}
           />
         </Block>
         <Block row flex={4} middle>
