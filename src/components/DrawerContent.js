@@ -83,6 +83,13 @@ function DrawerContent({ navigation, progress }) {
           </Block>
           {token && (
             <Block style={styles.navItem}>
+              <Button raw onPress={() => navigation.navigate('Ideabook')}>
+                <Text body>Your Ideabook</Text>
+              </Button>
+            </Block>
+          )}
+          {token && (
+            <Block style={styles.navItem}>
               <Button raw onPress={handleSignOut}>
                 <Text body>Sign Out</Text>
               </Button>

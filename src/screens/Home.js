@@ -17,16 +17,19 @@ const Home = ({ navigation }) => {
 
   const getDesignFeed = async () => {
     setLoading(true);
-    const [dataList, err] = await handle(
-      fetcher({
-        endPoint: `/designs/search/public?skip=${Math.random() * 10}&limit=100&sort=-1`,
-        method: 'POST',
-        body: { data: {} },
-      })
-    );
-    if (err) setError(true);
-    setDesignFeed(dataList.data || []);
-    setLoading(false);
+    try {
+      const [dataList, err] = await handle(
+        fetcher({
+          endPoint: `/designs/search/public?skip=${Math.random() * 10}&limit=100&sort=-1`,
+          method: 'POST',
+          body: { data: {} },
+        })
+      );
+      if (err) setError(true);
+      setDesignFeed(dataList.data || []);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {

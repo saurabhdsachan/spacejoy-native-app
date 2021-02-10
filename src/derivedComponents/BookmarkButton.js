@@ -88,7 +88,7 @@ const CreateBookmarkSection = ({ onCreateBookmark, onCancel, type }) => {
   );
 };
 
-const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type }) => {
+const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type, bookmarkId }) => {
   const [bookmarkList, setBookmarkList] = useState([]);
   const [loading, setLoading] = useState({
     loadingBookmarks: false,
@@ -97,7 +97,7 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
   });
 
   const [fetchError, setFetchError] = useState(true);
-  const [selectedBookmark, setSelectedBookMark] = useState();
+  const [selectedBookmark, setSelectedBookMark] = useState(bookmarkId);
 
   const ref = useRef(null);
 
@@ -163,6 +163,7 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
       return;
     }
     const endPoint = designRoutes.getBookmarkMappingApi(type, selectedBookmark, selectedIdForBookmark);
+    console.log('endPoint', endPoint);
     setLoading({
       loadingBookmarks: false,
       savingBookmarks: true,
@@ -174,7 +175,7 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
         throw new Error(err.message);
       }
       if (data) {
-        onBookmarkChange(true);
+        onBookmarkChange({ status: true, bookmarkId: selectedBookmark });
         ref?.current?.close();
       }
     } catch (e) {
@@ -186,6 +187,8 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
       creatingBookmark: false,
     });
   };
+
+  console.log('selectedBookmarkId', selectedBookmark);
 
   // ideabook creation
   const [bookmarkCreationMode, setBookmarkCreationMode] = useState(false);
@@ -303,11 +306,10 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
   );
 };
 
-const BookmarkButton = ({ id, bookmarked, onBookmarkChange, type }) => {
+const BookmarkButton = ({ id, bookmarked, onBookmarkChange, type, bookmarkId }) => {
   const [selectedIdForBookmark, setSelectedIdForBookmark] = useState('');
-
-  const toggleBookmark = (bookmarkId) => {
-    setSelectedIdForBookmark(bookmarkId);
+  const toggleBookmark = (designId) => {
+    setSelectedIdForBookmark(designId);
   };
 
   return (
@@ -323,6 +325,7 @@ const BookmarkButton = ({ id, bookmarked, onBookmarkChange, type }) => {
           onBookmarkChange={onBookmarkChange}
           selectedIdForBookmark={selectedIdForBookmark}
           onClosed={toggleBookmark}
+          bookmarkId={bookmarkId}
         />
       </Portal>
     </>

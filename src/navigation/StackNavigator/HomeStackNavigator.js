@@ -2,6 +2,8 @@ import { HeaderBack, HeaderLeft, HeaderRight } from '@components/index';
 import { createStackNavigator } from '@react-navigation/stack';
 import Details from '@screens/Details';
 import Home from '@screens/Home';
+import Ideabook from '@screens/Ideabook';
+import IdeabookDetailedView from '@screens/IdeabookDetailedView';
 import Profile from '@screens/Profile';
 import React from 'react';
 
@@ -28,6 +30,16 @@ const HomeStackNavigator = ({ navigation }) => {
           headerLeft: () => <HeaderLeft navigation={navigation} hasLogo />,
           headerRight: () => <HeaderRight />,
         }}
+      />
+      <Stack.Screen
+        name="Ideabook"
+        component={Ideabook}
+        options={{ headerTransparent: true, headerLeft: () => <></>, headerRight: () => <HeaderRight /> }}
+      />
+      <Stack.Screen
+        name="IdeabookDetailedView"
+        component={IdeabookDetailedView}
+        options={{ headerTransparent: true, headerRight: () => <HeaderRight /> }}
       />
       <Stack.Screen
         name="Details"

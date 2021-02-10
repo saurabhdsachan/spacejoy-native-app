@@ -14,7 +14,7 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
   const [data, setData] = useState(designDataProp);
 
   const onBookmarkChange = (value) => {
-    setData({ ...data, bookmarked: value });
+    setData({ ...data, bookmarked: value.status, bookmarkId: value.id });
   };
 
   const handleLike = (liked) => {
@@ -40,6 +40,7 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
           <BookmarkButton
             bookmarked={data?.bookmarked}
             onBookmarkChange={onBookmarkChange}
+            bookmarkId={data?.bookmarkId}
             type="design"
             id={data?._id}
           />
@@ -51,7 +52,7 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
             thumbnailSource={images.pattern}
             source={{
               uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,h_${SIZES.height * 2}/${
-                data.cdnRender[2]
+                data?.cdnRender[2]
               }`,
             }}
             resizeMode="cover"

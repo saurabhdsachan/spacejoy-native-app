@@ -29,15 +29,19 @@ const Details = ({ route, navigation }) => {
     if (err) setProductList([]);
     else {
       setProductList(() => {
-        const deduplicateProductList = data?.data?.assets.reduce((acc, currentProduct) => {
-          if (!acc[currentProduct?._id]) {
-            acc[currentProduct?.asset?._id] = currentProduct;
-            return { ...acc };
-          }
-          return acc;
-        }, {});
+        try {
+          const deduplicateProductList = data?.data?.assets.reduce((acc, currentProduct) => {
+            if (!acc[currentProduct?._id]) {
+              acc[currentProduct?.asset?._id] = currentProduct;
+              return { ...acc };
+            }
+            return acc;
+          }, {});
 
-        return Object.values(deduplicateProductList);
+          return Object.values(deduplicateProductList);
+        } catch (e) {
+          return [];
+        }
       });
     }
     setLoading(false);
@@ -59,6 +63,8 @@ const Details = ({ route, navigation }) => {
   const onBookmarkChange = (value) => {
     setFeedItem({ ...feedItem, bookmarked: value });
   };
+
+  console.log('feedItem.bookmarkId', feedItem);
 
   return (
     <ScrollView style={{ backgroundColor: COLORS.white }}>
@@ -91,6 +97,7 @@ const Details = ({ route, navigation }) => {
                 bookmarked={feedItem?.bookmarked}
                 onBookmarkChange={onBookmarkChange}
                 type="design"
+                bookmarkId={feedItem?.bookmarkId}
               />
             </Text>
           </Block>
