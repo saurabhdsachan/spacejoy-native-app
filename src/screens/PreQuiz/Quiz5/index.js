@@ -76,7 +76,7 @@ const Quiz5 = ({ navigation }) => {
         <StatusBar barStyle="dark-content" />
         <Text h2>Select Package</Text>
         <Text small light>
-          Select Package
+          100% Happiness Guaranteed
         </Text>
       </Block>
       <Block flex={2} color="white" row center middle>

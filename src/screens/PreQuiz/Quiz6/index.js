@@ -140,16 +140,16 @@ const Quiz6 = () => {
             flex={0.5}
           >
             <Block middle>
-              <Text bold>
+              <Text h3>
                 Room Type{' '}
                 <Text light>
-                  {userDesignSelections?.length > 4 ? ` ( ${userDesignSelections?.length} rooms )` : ''}
+                  {userDesignSelections?.length > 4 ? ` [ ${userDesignSelections?.length} rooms ]` : ''}
                 </Text>
               </Text>
             </Block>
             <Block middle center>
-              <Text bold center>
-                Package
+              <Text h3 right>
+                Design Packages
               </Text>
             </Block>
           </Block>

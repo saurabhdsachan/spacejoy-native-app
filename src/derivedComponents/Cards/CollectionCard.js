@@ -1,6 +1,5 @@
 import { Block, Text } from '@components/';
 import { SIZES } from '@constants/';
-import { elevationShadowStyle } from '@utils/styleHelper';
 import React, { useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -56,14 +55,17 @@ const CollectionCard = ({ data, navigation }) => {
 
 const styles = StyleSheet.create({
   collectionFeedCard: {
-    borderRadius: SIZES.radius / 2,
     marginVertical: SIZES.base,
   },
-  container: { flexGrow: 1, justifyContent: 'center' },
+  container: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
   collectionFeedImageHolder: {
-    ...elevationShadowStyle(0),
     height: 175,
     width: '100%',
+    borderRadius: SIZES.radius / 2,
+    overflow: 'hidden',
   },
   collectionFeedImage: {
     height: '100%',

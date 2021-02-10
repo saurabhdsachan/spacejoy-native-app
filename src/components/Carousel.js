@@ -1,13 +1,30 @@
 import { images, theme } from '@constants/index';
-import React, { useRef } from 'react';
-import { Animated, SafeAreaView, StyleSheet, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, Modal, SafeAreaView, StyleSheet, View } from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Block from './Block';
+import Button from './Button';
 import ProgressiveImage from './ProgressiveImage';
 
 const { COLORS, SIZES } = theme;
 
 const Carousel = ({ data }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
+  const [initIndex, setInitIndex] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [imageData, setImageData] = useState([]);
+
+  useEffect(() => {
+    const tmp = [];
+    data.map((image) =>
+      tmp.push({
+        url: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,w_${SIZES.width * 2}/${image}`,
+      })
+    );
+    console.log('tmp', tmp);
+    setImageData(tmp);
+  }, [data]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -21,17 +38,29 @@ const Carousel = ({ data }) => {
         >
           {data?.map((image, imageIndex) => {
             return (
-              <ProgressiveImage
-                resizeMode="cover"
-                key={imageIndex}
-                thumbnailSource={images.pattern}
-                source={{
-                  uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,w_${
-                    SIZES.width * 2
-                  }/${image}`,
-                }}
-                style={{ width: SIZES.width, height: 250 }}
-              />
+              <Block key={imageIndex}>
+                <ProgressiveImage
+                  resizeMode="cover"
+                  thumbnailSource={images.pattern}
+                  source={{
+                    uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,w_${
+                      SIZES.width * 2
+                    }/${image}`,
+                  }}
+                  style={{ width: SIZES.width, height: 250 }}
+                />
+                <Button
+                  size="sm"
+                  color={COLORS.semiTransparent}
+                  style={styles.zoomButton}
+                  onPress={() => {
+                    setShowModal(true);
+                    setInitIndex(imageIndex);
+                  }}
+                >
+                  <Icon name="expand-sharp" size={20} style={styles.zoomIcon} />
+                </Button>
+              </Block>
             );
           })}
         </Animated.ScrollView>
@@ -62,6 +91,16 @@ const Carousel = ({ data }) => {
           })}
         </View>
       </Block>
+      <Modal visible={showModal} transparent={true}>
+        <ImageViewer
+          useNativeDriver
+          enableSwipeDown
+          swipeDownThreshold={100}
+          imageUrls={imageData}
+          index={initIndex}
+          onSwipeDown={() => setShowModal(false)}
+        />
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -88,6 +127,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  zoomButton: {
+    position: 'absolute',
+    bottom: SIZES.base * 3,
+    right: SIZES.base * 1.25,
+    width: SIZES.base * 5,
+    height: SIZES.base * 5,
+    borderRadius: 2,
+  },
+  zoomIcon: {
+    ...StyleSheet.absoluteFill,
+    top: SIZES.base * 1.25,
+    left: SIZES.base * 1.25,
   },
 });
 

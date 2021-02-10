@@ -46,11 +46,13 @@ const Home = ({ navigation }) => {
         refreshing={isLoading}
         ListEmptyComponent={
           error && (
-            <Block center>
-              <Text mt4 title>
-                Uh-Oh
+            <Block center middle>
+              <Text center mt4 mb2 h2>
+                Uh-Oh...
               </Text>
-              <Text>Failed to Load your feed. Pull down to try again</Text>
+              <Text small center>
+                Failed to Load your feed. Pull down to try again
+              </Text>
             </Block>
           )
         }

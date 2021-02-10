@@ -28,12 +28,16 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
   };
 
   return (
-    <Block color={COLORS.white} middle style={styles.designFeedCard} key={data._id}>
+    <Block middle style={styles.designFeedCard} key={data._id}>
       <Block row center>
         <Block flex={3}>
           <Avatar
-            uri={data?.owner?.avatar || images.defaultAvatar}
-            user={{ name: 'Amber Esperaza', city: 'Austin', state: 'Texas' }}
+            uri={
+              data?.owner?.avatar
+                ? `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,c_fill,g_faces,h_200,w_200/${data?.owner?.avatar}`
+                : images.defaultAvatar
+            }
+            user={{ name: data?.owner?.profile?.name || 'Anonymous User', city: 'Austin', state: 'Texas' }}
           />
         </Block>
         <Block end flex={1}>
@@ -60,7 +64,7 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
           />
         </Block>
       </TouchableOpacity>
-      <Block row paddingHorizontal={SIZES.padding / 2}>
+      <Block row paddingHorizontal={SIZES.padding / 2} paddingVertical={SIZES.padding / 2}>
         <Block>
           <LikeButton id={data?._id} liked={data?.liked} onLikeChange={handleLike} type="designs" />
         </Block>
@@ -77,10 +81,10 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
           </Button>
         </Block>
       </Block>
-      <Text h3 left mt2>
-        {data.name}
+      <Text small capitalize color={COLORS.red}>
+        {data.theme.name}
       </Text>
-      <Text left mt2 mb2 small>
+      <Text h2 left mt1 mb1>
         {data.name}
       </Text>
     </Block>

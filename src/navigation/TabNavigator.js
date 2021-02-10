@@ -8,7 +8,7 @@ import {
   HomeStackNavigator,
   MyDesignsStackNavigator,
   NewActionStackNavigator,
-  StoreStackNavigator,
+  StoreStackNavigator
 } from './StackNavigator';
 
 const { COLORS, SIZES } = theme;
@@ -16,7 +16,7 @@ const { COLORS, SIZES } = theme;
 const Tab = createBottomTabNavigator();
 
 const TabBarLabels = {
-  Home: 'Feeds',
+  Home: 'Home',
   Collection: 'Collections',
   NewAction: 'New Project',
 };

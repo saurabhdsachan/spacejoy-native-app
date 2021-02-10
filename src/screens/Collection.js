@@ -103,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Collection;
+export default React.memo(Collection);
