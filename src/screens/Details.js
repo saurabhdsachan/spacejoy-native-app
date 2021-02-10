@@ -25,19 +25,18 @@ const Details = ({ route, navigation }) => {
         method: 'GET',
       })
     );
-    console.log('data,err', data, err);
-    if (err) setProductList([]);
-    else {
+    if (err) {
+      setProductList([]);
+    } else {
       setProductList(() => {
-        const deduplicateProductList = data?.data?.assets.reduce((acc, currentProduct) => {
+        const deduplicateProductList = data?.data?.assets?.reduce((acc, currentProduct) => {
           if (!acc[currentProduct?._id]) {
             acc[currentProduct?.asset?._id] = currentProduct;
             return { ...acc };
           }
           return acc;
         }, {});
-
-        return Object.values(deduplicateProductList);
+        return deduplicateProductList ? Object.values(deduplicateProductList) : [];
       });
     }
     setLoading(false);
