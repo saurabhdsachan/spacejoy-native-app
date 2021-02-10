@@ -1,83 +1,24 @@
-import { Block, Button, Divider, ProgressiveImage, Text } from '@components/';
-import { images, SIZES } from '@constants/';
+import { Block, Divider, Text } from '@components/';
+import Loader from '@components/Loader';
+import { SIZES } from '@constants/';
 import { ideabookHeader } from '@constants/images';
 import { designRoutes } from '@constants/routes';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { fetcher, handle } from '@utils/apiFetcher';
-import React, { useEffect, useMemo, useState } from 'react';
-import { FlatList, Image, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-
-const BookmarkCard = ({ bookmark, navigation }) => {
-  const [singleDesign, setSingleDesign] = useState({});
-
-  useEffect(() => {
-    const getSingleDesignFromBookmark = async () => {
-      const endPoint = designRoutes.getDetailedBookmarkApi(bookmark._id);
-      try {
-        const [{ data }, err] = await handle(fetcher({ endPoint, method: 'GET' }));
-        if (err || !data.length || !data[0].design) {
-          throw new Error();
-        }
-        if (data[0].design) {
-          setSingleDesign(data[0]?.design);
-        }
-      } catch (e) {
-        setSingleDesign({});
-      }
-    };
-    getSingleDesignFromBookmark();
-  }, [bookmark]);
-
-  const boomarkThumbnailImage = useMemo(() => {
-    try {
-      return `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,w_200/${
-        singleDesign?.designImages?.find((imageObj) => imageObj.imgType === 'render').cdn
-      }`;
-    } catch (e) {
-      return 'placeholder';
-    }
-  }, [singleDesign]);
-
-  return (
-    <Button raw onPress={() => navigation.navigate('IdeabookDetailedView', { bookmark })}>
-      <Block margin={[SIZES.padding, 0]} row center>
-        <ProgressiveImage
-          style={bookmarkcardStyles.bookmarkImage}
-          thumbnailSource={images.pattern}
-          source={{
-            uri: boomarkThumbnailImage,
-          }}
-        />
-        <Block padding={[0, SIZES.padding]}>
-          <Text h2 capitalize>
-            {bookmark.name}
-          </Text>
-          <Text gray numberOfLines={3}>
-            Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
-            Lorem Ipsum Dolor{' '}
-          </Text>
-        </Block>
-      </Block>
-    </Button>
-  );
-};
-
-const bookmarkcardStyles = StyleSheet.create({
-  bookmarkImage: {
-    height: 100,
-    width: 100,
-    borderRadius: SIZES.radius,
-  },
-});
+import BookmarkCard from 'src/derivedComponents/Cards/BookmarkCard';
 
 const Ideabook = ({ navigation }) => {
   const headerHeight = useHeaderHeight();
   const [bookmarkList, setBookmarkList] = useState([]);
   const [type, setType] = useState('design');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getBookmarks = async () => {
+      setLoading(true);
       const endPoint = designRoutes.getUserBookmarks();
 
       try {
@@ -92,6 +33,8 @@ const Ideabook = ({ navigation }) => {
         }
       } catch (e) {
         console.error(e);
+      } finally {
+        setLoading(false);
       }
     };
     getBookmarks();
@@ -108,7 +51,7 @@ const Ideabook = ({ navigation }) => {
       >
         <Image resizeMode="contain" style={styles.headerImage} source={ideabookHeader} />
       </LinearGradient>
-      <Block padding={[SIZES.padding, SIZES.padding, 0, SIZES.padding]}>
+      <View paddingHorizontal={SIZES.padding}>
         <Text h1 mb2>
           Ideabook
         </Text>
@@ -117,15 +60,17 @@ const Ideabook = ({ navigation }) => {
           where all your favourite designs live.
         </Text>
         <Divider style={styles.dividerMargin} />
-        <FlatList
-          ListItemSeparator={<Divider />}
-          data={bookmarkList}
-          keyExtractor={(item) => {
-            return item?._id;
-          }}
-          renderItem={({ item }) => <BookmarkCard bookmark={item} navigation={navigation} />}
-        />
-      </Block>
+      </View>
+      <FlatList
+        contentContainerStyle={{ paddingHorizontal: SIZES.padding }}
+        ListItemSeparator={<Divider />}
+        ListEmptyComponent={loading ? <Loader /> : <Text center>Create new Ideabooks to see them here</Text>}
+        data={bookmarkList}
+        keyExtractor={(item) => {
+          return item?._id;
+        }}
+        renderItem={({ item }) => <BookmarkCard bookmark={item} navigation={navigation} />}
+      />
     </Block>
   );
 };

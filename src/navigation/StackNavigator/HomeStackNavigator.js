@@ -39,7 +39,7 @@ const HomeStackNavigator = ({ navigation }) => {
       <Stack.Screen
         name="IdeabookDetailedView"
         component={IdeabookDetailedView}
-        options={{ headerTransparent: true, headerRight: () => <HeaderRight /> }}
+        options={{ headerRight: () => <HeaderRight /> }}
       />
       <Stack.Screen
         name="Details"

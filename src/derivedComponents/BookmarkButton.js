@@ -188,8 +188,6 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
     });
   };
 
-  console.log('selectedBookmarkId', selectedBookmark);
-
   // ideabook creation
   const [bookmarkCreationMode, setBookmarkCreationMode] = useState(false);
   const [error, setError] = useState({ error: false, errorMessage: '' });
