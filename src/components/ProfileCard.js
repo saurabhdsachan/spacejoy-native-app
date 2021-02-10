@@ -1,4 +1,4 @@
-import { Block, Button, Text } from '@components/index';
+import { Block, Text } from '@components/index';
 import { images, theme } from '@constants/index';
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
@@ -49,7 +49,7 @@ const ProfileCard = ({ user, uri }) => {
         </Block>
       </Block>
 
-      <Block row>
+      {/* <Block row>
         <Block flex={8}>
           <Button ghost onPress={() => {}}>
             <Text center>Share</Text>
@@ -63,7 +63,7 @@ const ProfileCard = ({ user, uri }) => {
             </Text>
           </Button>
         </Block>
-      </Block>
+      </Block> */}
     </Block>
   );
 };
