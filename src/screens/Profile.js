@@ -1,8 +1,10 @@
 import { Block, Button, Text } from '@components/index';
-import { images, theme } from '@constants/index';
+import { images, theme, webUrls } from '@constants/index';
 import { AuthContext } from '@utils/helpers/withAuthContext';
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const { SIZES, COLORS } = theme;
 
@@ -71,10 +73,28 @@ const Profile = ({ navigation }) => {
         </Block>
       </Block>
 
-      <Block flex={4} padding={SIZES.padding} bottom>
-        <Text small center color={COLORS.gray}>
-          v.1.0.1
+      <Block flex={4} padding={SIZES.padding}>
+        <Text h2 mb3>
+          Policies
         </Text>
+        {webUrls.map((item) => (
+          <TouchableOpacity
+            key={item.title}
+            style={styles.link}
+            onPress={() => navigation.navigate('Browser', { data: item })}
+          >
+            <Block center middle row>
+              <Block>
+                <Text>{item.title}</Text>
+              </Block>
+              <Block>
+                <Text right>
+                  <Icon name="ios-chevron-forward-outline" size={14} />
+                </Text>
+              </Block>
+            </Block>
+          </TouchableOpacity>
+        ))}
       </Block>
     </Block>
   );
@@ -98,7 +118,14 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius / 1.5,
     marginRight: SIZES.padding,
   },
-  buttonWrapper: {},
+  link: {
+    display: 'flex',
+    height: SIZES.base * 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: COLORS.gray2,
+  },
 });
 
 export default Profile;
