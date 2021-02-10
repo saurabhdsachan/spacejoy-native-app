@@ -1,5 +1,6 @@
 import { HeaderBack, HeaderLeft, HeaderRight } from '@components/index';
 import { createStackNavigator } from '@react-navigation/stack';
+import Browser from '@screens/Browser';
 import Details from '@screens/Details';
 import Home from '@screens/Home';
 import Ideabook from '@screens/Ideabook';
@@ -54,6 +55,13 @@ const HomeStackNavigator = ({ navigation }) => {
         options={{
           headerTransparent: true,
           headerRight: () => <HeaderRight />,
+        }}
+      />
+      <Stack.Screen
+        name="Browser"
+        component={Browser}
+        options={{
+          headerTransparent: false,
         }}
       />
     </Stack.Navigator>
