@@ -42,6 +42,23 @@ class Button extends PureComponent {
       style,
     ];
 
+    if (gradient) {
+      return (
+        <TouchableOpacity activeOpacity={opacity || 0.4} onPress={!loading ? onPress : null}>
+          <LinearGradient
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            locations={[0, 1]}
+            style={raw ? null : buttonStyles}
+            {...props}
+            colors={[COLORS.primary1, COLORS.primary2]}
+          >
+            {loading ? <ActivityIndicator /> : children}
+          </LinearGradient>
+        </TouchableOpacity>
+      );
+    }
+
     return (
       <TouchableOpacity
         style={raw ? null : buttonStyles}
@@ -49,7 +66,6 @@ class Button extends PureComponent {
         {...props}
         onPress={!loading ? onPress : null}
       >
-        {gradient && <LinearGradient style={styles.rotate} colors={[COLORS.primary2, COLORS.primary1]} />}
         {loading ? <ActivityIndicator /> : children}
       </TouchableOpacity>
     );
@@ -70,12 +86,9 @@ Button.defaultProps = {
 export default Button;
 
 const styles = StyleSheet.create({
-  rotate: {
-    zIndex: -1,
-    position: 'absolute',
+  gradientHeight: {
     height: SIZES.width,
     width: SIZES.width,
-    transform: [{ rotate: '135deg' }],
   },
   button: {
     overflow: 'hidden',
