@@ -11,7 +11,7 @@ import { fetcher, handle } from '@utils/apiFetcher';
 import { AuthContext } from '@utils/helpers/withAuthContext';
 import { oAuthLogin } from '@utils/logins';
 import React, { useState } from 'react';
-import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, TextInput } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, Platform, StyleSheet, TextInput } from 'react-native';
 
 const SignUp = () => {
   const { signUp } = React.useContext(AuthContext);
@@ -99,7 +99,7 @@ const SignUp = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <Block flex={false}>
         {loading && (
           <Block

@@ -9,7 +9,14 @@ import { COLORS, images, SIZES } from '@constants/index';
 import { AuthContext } from '@utils/helpers/withAuthContext';
 import { login, oAuthLogin } from '@utils/logins';
 import React, { useState } from 'react';
-import { ActivityIndicator, ImageBackground, KeyboardAvoidingView, StyleSheet, TextInput } from 'react-native';
+import {
+  ActivityIndicator,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  TextInput
+} from 'react-native';
 
 const { bg } = images;
 
@@ -74,7 +81,7 @@ const Login = ({ navigation }) => {
     }
   };
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ImageBackground source={bg} style={styles.imageBg}>
         {loading && (
           <Block center middle color={COLORS.semiTransparent} style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}>
