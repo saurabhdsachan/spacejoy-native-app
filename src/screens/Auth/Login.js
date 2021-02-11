@@ -113,14 +113,10 @@ const Login = ({ navigation }) => {
               />
             </Block>
             <Block flex={false}>
-              <Button gradient onPress={handleLogin} style={{ borderRadius: SIZES.radius / 4 }}>
-                {loading ? (
-                  <ActivityIndicator size="small" color={COLORS.white} />
-                ) : (
-                  <Text center white size={16}>
-                    Login
-                  </Text>
-                )}
+              <Button loading={loading} gradient onPress={handleLogin} style={{ borderRadius: SIZES.radius / 4 }}>
+                <Text center white size={16}>
+                  Login
+                </Text>
               </Button>
             </Block>
           </Block>

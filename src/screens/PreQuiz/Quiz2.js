@@ -16,9 +16,9 @@ const Quiz2 = ({ navigation }) => {
   };
 
   return (
-    <Block color={COLORS.white} padding={[SIZES.safe + 20, SIZES.padding, SIZES.padding, SIZES.padding]}>
+    <Block color={COLORS.white} padding={[SIZES.safe, SIZES.padding, SIZES.padding, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
-      <Text h2 mb3>
+      <Text h2 mb1>
         What does your average budget look like?
       </Text>
       <Block flex={18} padding={[SIZES.padding, 0, SIZES.padding, 0]}>

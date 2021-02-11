@@ -50,7 +50,7 @@ const Quiz1 = ({ navigation }) => {
     }
   }, [userDesignSelections]);
   return (
-    <Block color={COLORS.white} padding={[SIZES.safe + 20, SIZES.padding, 0, SIZES.padding]}>
+    <Block color={COLORS.white} padding={[SIZES.safe, SIZES.padding, 0, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
       <Text h2>Which space in your home are you looking to transform?</Text>
       <Text small mt1>
