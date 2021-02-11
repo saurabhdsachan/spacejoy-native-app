@@ -81,11 +81,11 @@ const Login = ({ navigation }) => {
             <ActivityIndicator size="small" />
           </Block>
         )}
-        <Block flex={false} padding={[SIZES.height * 0.15, SIZES.padding * 2, 0, SIZES.padding * 2]}>
+        <Block flex={false} padding={[SIZES.height * 0.18, SIZES.padding * 2, 0, SIZES.padding * 2]}>
           <Text title mb1>
             Login
           </Text>
-          <Text small mb3>
+          <Text small mb4>
             Welcome Back
           </Text>
           {loginError && (
