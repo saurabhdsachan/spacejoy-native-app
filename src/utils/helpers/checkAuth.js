@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const checkAuth = async (navigationObj, additionalParams, callback, redirectUrl, currentRoute) => {
+const checkAuth = async (navigationObj, additionalParams, callback = () => {}, redirectUrl, currentRoute) => {
   // additionalParams describe data to be sent to new route
   // callback is function to br called on success
   try {
@@ -12,14 +12,14 @@ const checkAuth = async (navigationObj, additionalParams, callback, redirectUrl,
     } else {
       navigationObj.navigate('ModalAuth', {
         screen: 'Login',
-        params: { additionalParams, ...(callback && { callback }), redirectUrl, currentRoute },
+        params: { additionalParams, callback, redirectUrl, currentRoute },
       });
     }
   } catch (e) {
     // Error in fetching token
     navigationObj.navigate('ModalAuth', {
       screen: 'Login',
-      params: { additionalParams, ...(callback && { callback }), redirectUrl, currentRoute },
+      params: { additionalParams, callback, redirectUrl, currentRoute },
     });
   }
 };

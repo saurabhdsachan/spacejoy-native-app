@@ -25,12 +25,12 @@ const Login = ({ navigation, route }) => {
   useEffect(() => {
     const { dispatch } = authNavContext;
     const {
-      params: { redirectUrl = '', additionalParams, currentRoute },
+      params: { redirectUrl = '', additionalParams, currentRoute, callback = () => {} },
     } = route;
     if (redirectUrl.length) {
       dispatch({
         type: 'ADD_REDIRECT_ROUTE',
-        payload: { redirectRouteData: additionalParams, redirectUrl, currentRoute },
+        payload: { redirectRouteData: additionalParams, redirectUrl, currentRoute, callback },
       });
     }
   }, []);
@@ -63,7 +63,7 @@ const Login = ({ navigation, route }) => {
     const { state } = authNavContext;
     if (state.redirectUrl && state.redirectUrl.length) {
       if (state.redirectRouteData) {
-        console.log('redirection data', state.redirectRouteData);
+        state.callback();
         navigation.navigate(state.redirectUrl, { ...state.redirectRouteData });
       } else {
         navigation.navigate(state.redirectUrl);

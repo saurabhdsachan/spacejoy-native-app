@@ -3,14 +3,13 @@ import Avatar from '@components/Avatar';
 import { COLORS, images, SIZES } from '@constants/';
 import onShare from '@utils/onShare';
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BookmarkButton from '../BookmarkButton';
 import LikeButton from '../LikeButton';
 import ShareButton from '../ShareButton';
 
-const DesignCard = ({ data: designDataProp, navigation, noBookmark }) => {
+const DesignCard = ({ data: designDataProp, navigation, noBookmark, route }) => {
   const [data, setData] = useState(designDataProp);
 
   const onBookmarkChange = (value) => {
@@ -68,7 +67,14 @@ const DesignCard = ({ data: designDataProp, navigation, noBookmark }) => {
       </TouchableOpacity>
       <Block row paddingHorizontal={SIZES.padding / 2} paddingVertical={SIZES.padding / 2}>
         <Block>
-          <LikeButton id={data?._id} liked={data?.liked} onLikeChange={handleLike} type="designs" />
+          <LikeButton
+            id={data?._id}
+            liked={data?.liked}
+            onLikeChange={handleLike}
+            type="designs"
+            navigation={navigation}
+            route={route}
+          />
         </Block>
         <Block>
           <Button raw onPress={() => onShare(data.name, data.slug)}>

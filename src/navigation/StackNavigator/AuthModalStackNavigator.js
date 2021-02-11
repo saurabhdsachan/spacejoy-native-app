@@ -13,17 +13,27 @@ const screenOptions = {
 
 const initialState = {
   defaultNavigationTo: 'Home',
+  redirectUrl: '',
+  redirectRouteData: {},
+  currentRoute: '',
+  callback: () => {},
 };
 const reducer = (prevState, action) => {
   switch (action.type) {
     case 'ADD_REDIRECT_ROUTE': {
       const { payload } = action;
-      const { redirectRouteData, redirectUrl = '', currentRoute } = payload;
+      const { redirectRouteData, redirectUrl = '', currentRoute, callback = () => {} } = payload;
       return {
         ...prevState,
         redirectUrl,
         currentRoute,
+        callback,
         ...(redirectRouteData && { redirectRouteData }),
+      };
+    }
+    case 'RESET_NAV_CONTEXT': {
+      return {
+        ...initialState,
       };
     }
   }
