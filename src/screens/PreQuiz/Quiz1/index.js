@@ -53,6 +53,9 @@ const Quiz1 = ({ navigation }) => {
     <Block color={COLORS.white} padding={[SIZES.safe + 20, SIZES.padding, 0, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
       <Text h2>Which space in your home are you looking to transform?</Text>
+      <Text small mt1>
+        Give our designers an idea of your requirements
+      </Text>
       <Block padding={[SIZES.padding, 0, 0, 0]}>
         <ScrollView>
           <Block row>

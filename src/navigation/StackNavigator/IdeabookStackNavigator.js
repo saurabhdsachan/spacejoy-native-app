@@ -30,7 +30,7 @@ const IdeabookStackNavigator = ({ navigation }) => {
         screenOptions={{ headerShown: false }}
         name="IdeabookDetailedView"
         component={IdeabookDetailedView}
-        options={{ ...ScreenHeaderOptions, headerTransparent: true }}
+        options={ScreenHeaderOptions}
       />
     </Stack.Navigator>
   );

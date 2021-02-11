@@ -1,4 +1,4 @@
-import { animations } from '@constants/';
+import { animations } from '@constants/index';
 import LottieView from 'lottie-react-native';
 import React, { useState } from 'react';
 import { Animated, Easing } from 'react-native';

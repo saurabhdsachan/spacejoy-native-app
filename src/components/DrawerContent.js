@@ -27,7 +27,7 @@ function DrawerContent({ navigation, progress }) {
   };
   const translateX = Animated.interpolate(progress, {
     inputRange: [0.5, 1],
-    outputRange: [-50, 10],
+    outputRange: [70, 0],
   });
   const scale = Animated.interpolate(progress, {
     inputRange: [0.8, 1],
@@ -35,22 +35,22 @@ function DrawerContent({ navigation, progress }) {
   });
   return (
     <DrawerContentScrollView>
-      <Block space="between" style={{ height: SIZES.height - 100 }}>
-        <Block style={{ margin: SIZES.padding, paddingTop: SIZES.padding }}>
-          <Block>
+      <Block flex={false}>
+        <Block flex={false} style={{ margin: SIZES.padding, paddingTop: SIZES.padding }}>
+          <Block flex={false}>
             <Animated.Image
               source={{ uri: picture || images.defaultAvatar }}
               resizeMode="cover"
               style={{
                 height: 75,
                 width: 75,
-                borderRadius: 50,
+                borderRadius: SIZES.radius,
                 marginBottom: SIZES.padding / 2,
                 transform: [{ translateX, scale }],
               }}
             />
           </Block>
-          <Block>
+          <Block flex={false}>
             <Text h2 mt2>
               {name}
             </Text>
@@ -59,38 +59,38 @@ function DrawerContent({ navigation, progress }) {
             </Text>
           </Block>
         </Block>
-        <Block flex={2} style={{ margin: SIZES.padding }}>
-          <Block style={styles.navItem}>
+        <Block flex={false} style={{ margin: SIZES.padding }}>
+          <Block flex={false} style={styles.navItem}>
             <Button raw onPress={() => navigation.navigate('Profile')}>
               <Text body>My Profile</Text>
             </Button>
           </Block>
-          <Block style={styles.navItem}>
+          <Block flex={false} style={styles.navItem}>
             <Button raw onPress={() => navigation.navigate('My Designs')}>
               <Text body>Design Orders</Text>
             </Button>
           </Block>
-          <Block style={styles.navItem}>
+          <Block flex={false} style={styles.navItem}>
             <Button raw onPress={() => navigation.navigate('Store')}>
               <Text body>Store Orders</Text>
             </Button>
           </Block>
           {token && (
-            <Block style={styles.navItem}>
+            <Block flex={false} style={styles.navItem}>
               <Button raw onPress={() => navigation.navigate('Ideabook')}>
                 <Text body>Ideabook</Text>
               </Button>
             </Block>
           )}
           {token && (
-            <Block style={styles.navItem}>
+            <Block flex={false} style={styles.navItem}>
               <Button raw onPress={handleSignOut}>
                 <Text body>Sign Out</Text>
               </Button>
             </Block>
           )}
         </Block>
-        <Block bottom flex={2}>
+        <Block flex={false}>
           <Text center color={COLORS.gray}>
             version: 1.0.0
           </Text>

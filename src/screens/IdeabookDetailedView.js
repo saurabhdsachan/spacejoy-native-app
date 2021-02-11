@@ -66,10 +66,10 @@ const IdeabookDetailedView = ({ route, navigation }) => {
                 <Text center mt4 mb2 h2>
                   Uh-Oh...
                 </Text>
-                <Text small center>
+                <Text small center mb3>
                   Failed to load your Ideabook. Tap to try loading again.
                 </Text>
-                <Button ghost onPress={onTryAgain}>
+                <Button size="sm" ghost onPress={onTryAgain}>
                   <Text>Try Again</Text>
                 </Button>
               </Block>
