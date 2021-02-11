@@ -30,7 +30,7 @@ const BookmarkCard = ({ bookmark, navigation }) => {
     getSingleDesignFromBookmark();
   }, [bookmark]);
 
-  const boomarkThumbnailImage = useMemo(() => {
+  const bookmarkThumbnailImage = useMemo(() => {
     try {
       return `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,w_200/${
         singleDesign?.designImages?.find((imageObj) => imageObj.imgType === 'render').cdn
@@ -59,24 +59,24 @@ const BookmarkCard = ({ bookmark, navigation }) => {
     <Button raw onPress={() => navigation.navigate('IdeabookDetailedView', { bookmark })}>
       <Block margin={[SIZES.padding, 0]} row center>
         <ProgressiveImage
-          style={bookmarkcardStyles.bookmarkImage}
+          style={styles.bookmarkImage}
           thumbnailSource={images.pattern}
           source={{
-            uri: boomarkThumbnailImage,
+            uri: bookmarkThumbnailImage,
           }}
         />
         <Block flex={10} padding={[0, SIZES.padding]}>
-          <Text h2 capitalize>
+          <Text h3 capitalize>
             {bookmark.name}
           </Text>
-          <Text gray numberOfLines={3}>
+          <Text small numberOfLines={2}>
             Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor Lorem Ipsum Dolor
             Lorem Ipsum Dolor{' '}
           </Text>
         </Block>
         <Block>
-          <Button loading={deleteInProcess} raw onPress={removeBookmark}>
-            <Icon color="red" size={SIZES.h3} name="trash" />
+          <Button raw loading={deleteInProcess} onPress={removeBookmark}>
+            <Icon size={SIZES.h3} name="trash" color={COLORS.gray} />
           </Button>
         </Block>
       </Block>
@@ -84,7 +84,7 @@ const BookmarkCard = ({ bookmark, navigation }) => {
   );
 };
 
-const bookmarkcardStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   bookmarkImage: {
     height: 100,
     width: 100,
@@ -98,4 +98,4 @@ const bookmarkcardStyles = StyleSheet.create({
   },
 });
 
-export default BookmarkCard;
+export default React.memo(BookmarkCard);

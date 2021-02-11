@@ -6,9 +6,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {
   CollectionStackNavigator,
   HomeStackNavigator,
+  IdeabookStackNavigator,
   MyDesignsStackNavigator,
-  NewActionStackNavigator,
-  StoreStackNavigator
+  NewActionStackNavigator
 } from './StackNavigator';
 
 const { COLORS, SIZES } = theme;
@@ -38,6 +38,8 @@ const BottomTabNavigator = () => {
               iconName = focused ? 'images' : 'images-outline';
             } else if (route.name === 'Store') {
               iconName = focused ? 'basket' : 'basket-outline';
+            } else if (route.name === 'Ideabook') {
+              iconName = focused ? 'bulb-sharp' : 'bulb-outline';
             }
 
             // You can return any component that you like here!
@@ -72,7 +74,8 @@ const BottomTabNavigator = () => {
           }}
         />
         <Tab.Screen name="My Designs" component={MyDesignsStackNavigator} />
-        <Tab.Screen name="Store" component={StoreStackNavigator} />
+
+        <Tab.Screen name="Ideabook" component={IdeabookStackNavigator} />
       </Tab.Navigator>
     </Host>
   );

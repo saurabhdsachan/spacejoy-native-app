@@ -16,7 +16,6 @@ const ScreenHeaderOptions = {
   headerStyle: {
     backgroundColor: 'white',
     borderBottomColor: 'white',
-    shadowColor: 'transparent',
   },
 };
 
@@ -47,4 +46,4 @@ const CollectionStackNavigator = ({ navigation }) => {
   );
 };
 
-export default React.memo(CollectionStackNavigator);
+export default CollectionStackNavigator;

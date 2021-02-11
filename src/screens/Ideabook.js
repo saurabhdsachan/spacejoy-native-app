@@ -1,12 +1,12 @@
-import { Block, Divider, Text } from '@components/';
+import { Block, Button, Divider, Text } from '@components/';
 import Loader from '@components/Loader';
-import { SIZES } from '@constants/';
+import { COLORS, SIZES } from '@constants/';
 import { ideabookHeader } from '@constants/images';
 import { designRoutes } from '@constants/routes';
 import { useHeaderHeight } from '@react-navigation/stack';
 import { fetcher, handle } from '@utils/apiFetcher';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, View } from 'react-native';
+import { FlatList, Image, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import BookmarkCard from 'src/derivedComponents/Cards/BookmarkCard';
 
@@ -20,7 +20,6 @@ const Ideabook = ({ navigation }) => {
     const getBookmarks = async () => {
       setLoading(true);
       const endPoint = designRoutes.getUserBookmarks();
-
       try {
         const [fetchedBookmarkList, error] = await handle(fetcher({ endPoint, method: 'GET' }));
         if (error) {
@@ -41,7 +40,7 @@ const Ideabook = ({ navigation }) => {
   }, [type]);
 
   return (
-    <Block color="white">
+    <Block color={COLORS.white}>
       <LinearGradient
         start={{ x: 1, y: 1 }}
         end={{ x: 0, y: 0 }}
@@ -51,26 +50,40 @@ const Ideabook = ({ navigation }) => {
       >
         <Image resizeMode="contain" style={styles.headerImage} source={ideabookHeader} />
       </LinearGradient>
-      <View paddingHorizontal={SIZES.padding}>
+      <Block flex={1} paddingHorizontal={SIZES.padding}>
         <Text h1 mb2>
           Ideabook
         </Text>
-        <Text gray>
+        <Text small>
           The place where all your favourite designs live. The place where all your favourite designs live. The place
           where all your favourite designs live.
         </Text>
-        <Divider style={styles.dividerMargin} />
-      </View>
-      <FlatList
-        contentContainerStyle={{ paddingHorizontal: SIZES.padding }}
-        ListItemSeparator={<Divider />}
-        ListEmptyComponent={loading ? <Loader /> : <Text center>Create new Ideabooks to see them here</Text>}
-        data={bookmarkList}
-        keyExtractor={(item) => {
-          return item?._id;
-        }}
-        renderItem={({ item }) => <BookmarkCard bookmark={item} navigation={navigation} />}
-      />
+      </Block>
+      <Block flex={4}>
+        <FlatList
+          contentContainerStyle={{ paddingHorizontal: SIZES.padding }}
+          ListItemSeparator={<Divider />}
+          ListEmptyComponent={
+            loading ? (
+              <Loader />
+            ) : (
+              <Block center middle paddingVertical={SIZES.padding * 3}>
+                <Text mb2 mt1 center>
+                  Create new Ideabook
+                </Text>
+                <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Collection')}>
+                  <Text center white>
+                    Go to Collections
+                  </Text>
+                </Button>
+              </Block>
+            )
+          }
+          data={bookmarkList}
+          keyExtractor={(item) => item?._id}
+          renderItem={({ item }) => <BookmarkCard bookmark={item} navigation={navigation} />}
+        />
+      </Block>
     </Block>
   );
 };

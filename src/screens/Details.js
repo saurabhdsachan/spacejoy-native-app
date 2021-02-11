@@ -71,10 +71,8 @@ const Details = ({ route, navigation }) => {
 
   return (
     <ScrollView style={{ backgroundColor: COLORS.white }}>
-      <StatusBar barStyle="dark-content" backgroundColor="red" />
-      <Block>
-        <Carousel data={feedItem.cdnRender} />
-      </Block>
+      <StatusBar barStyle="dark-content" />
+      <Carousel data={feedItem.cdnRender} />
       <Block row center padding={SIZES.padding}>
         <Block flex={10}>
           <Avatar
