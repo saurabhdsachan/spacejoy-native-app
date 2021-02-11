@@ -23,7 +23,6 @@ const oAuthLogin = async (user, token, provider, code = '') => {
       const { token: userToken, user: userInfo } = data;
       return { token: userToken, user: userInfo };
     } else {
-      console.log('error');
       throw new Error('Something went wrong');
     }
   } catch (e) {
@@ -32,7 +31,6 @@ const oAuthLogin = async (user, token, provider, code = '') => {
 };
 
 const login = async (email, password) => {
-  console.log(authRoutes);
   try {
     const [authRes, authErr] = await handle(
       fetcher({
@@ -45,7 +43,6 @@ const login = async (email, password) => {
         },
       })
     );
-    console.log('authRes, authErr', authRes, authErr);
     if (!authErr) {
       const { data, statusCode } = authRes;
       if (statusCode <= 301 && !authErr && data) {

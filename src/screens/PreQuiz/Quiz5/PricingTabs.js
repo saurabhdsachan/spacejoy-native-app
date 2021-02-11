@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Block, Text, Button } from '@components/index';
-import { StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { Block, Text } from '@components/index';
 import { theme } from '@constants/index';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
 import { colorMap } from './fetchers';
 import Indicator from './Indicator';
 
@@ -47,7 +47,6 @@ const PricingTabs = ({ data = [], onPress, currentActive, scrollX, onPressCb = (
     }
   }, [mData]);
   const layoutCb = (event, index) => {
-    console.log('method called');
     const { x, y, width: tabWidth, height: tabHeight } = event.nativeEvent.layout;
     const obj = {};
     obj[index] = { x, y, width: tabWidth, height: tabHeight };

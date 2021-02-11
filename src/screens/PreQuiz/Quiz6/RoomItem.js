@@ -26,7 +26,7 @@ const RoomItem = ({ data: { item, index }, removeSelection, updateSelection, pri
     );
   };
   return (
-    <Swipeable onSwipeableRightOpen={() => console.log('Swiped right')} renderRightActions={rightItem}>
+    <Swipeable renderRightActions={rightItem}>
       <Block row spaceBetween middle color={COLORS.white} style={[styles.radioCard]}>
         <Block flex={5} middle>
           <Text>{item.title}</Text>

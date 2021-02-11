@@ -39,7 +39,6 @@ const Quiz1 = ({ navigation }) => {
 
       const updatedData = [...quizData].map((quizItem) => {
         if (designSelectionMap[quizItem.id]) {
-          console.log(designSelectionMap[quizItem.id]);
           return { ...quizItem, quantity: designSelectionMap[quizItem.id].length };
         } else {
           return { ...quizItem, quantity: 0 };

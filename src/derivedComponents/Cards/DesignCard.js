@@ -52,13 +52,7 @@ const DesignCard = ({ data: designDataProp, navigation, noBookmark }) => {
           </Block>
         )}
       </Block>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => {
-          console.log('data', JSON.stringify(data, null, 1));
-          navigation.navigate('Details', { feedItem: data });
-        }}
-      >
+      <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Details', { feedItem: data })}>
         <Block style={styles.designFeedImageHolder}>
           <ProgressiveImage
             thumbnailSource={images.pattern}

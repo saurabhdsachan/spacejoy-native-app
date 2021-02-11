@@ -16,7 +16,6 @@ function DrawerContent({ navigation, progress }) {
   const { token, data, signOut } = React.useContext(AuthContext);
   const { name = '', email = '', picture = '', channel } = data;
   const handleSignOut = () => {
-    console.log('sign out pressed');
     if (channel === 'facebook') {
       fbLogout();
     } else if (channel === 'google') {

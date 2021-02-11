@@ -163,7 +163,6 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
       return;
     }
     const endPoint = designRoutes.getBookmarkMappingApi(type, selectedBookmark, selectedIdForBookmark);
-    console.log('endPoint', endPoint);
     setLoading({
       loadingBookmarks: false,
       savingBookmarks: true,

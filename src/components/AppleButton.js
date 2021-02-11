@@ -5,7 +5,6 @@ import { StyleSheet } from 'react-native';
 
 const AppleSignin = ({ handleSigninError, handleSignInSuccess, ...props }) => {
   const onAppleButtonPress = async () => {
-    console.log('apple button tapped ---');
     props.onTap ? props.onTap() : () => {};
     try {
       // make sign in request and return a response object containing authentication data
@@ -17,7 +16,6 @@ const AppleSignin = ({ handleSigninError, handleSignInSuccess, ...props }) => {
       const { identityToken, authorizationCode, user, fullName, email } = appleAuthRequestResponse;
       // identityToken generated
       if (identityToken && authorizationCode) {
-        console.log('in this block ------- auth');
         const userObj = {
           data: {
             name: `${fullName.givenName || ''} ${fullName.familyName || ''}`,
@@ -28,13 +26,11 @@ const AppleSignin = ({ handleSigninError, handleSignInSuccess, ...props }) => {
         };
         handleSignInSuccess(userObj, identityToken, authorizationCode);
       } else {
-        console.log('in this block ------- auth no token');
         // no token, failed sign in
         handleSigninError('Error while signing in.');
       }
     } catch (error) {
       // handle error
-      console.log('in error');
       handleSigninError(error.message);
     }
   };

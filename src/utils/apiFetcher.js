@@ -48,7 +48,6 @@ const fetcher = async ({ endPoint, method, type = 'text', body }) => {
       }
     })
     .catch((err) => {
-      console.log('in this error', err);
       throw new Error(err.message);
     });
 };
