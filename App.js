@@ -1,6 +1,8 @@
 import DrawerNavigator from '@navigation/DrawerNavigator';
+import { AuthModalStackNavigator } from '@navigation/StackNavigator';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { AuthContext, useAuthContext } from '@utils/helpers/withAuthContext';
 import * as React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -11,6 +13,26 @@ const configureGoogleSign = () =>
     offlineAccess: false,
   });
 
+const screenOptions = {
+  headerShown: false,
+  headerTintColor: 'black',
+};
+
+const RootStack = createStackNavigator();
+const RootStackScreen = () => {
+  return (
+    <RootStack.Navigator headerMode="false" initialRouteName="DrawerContent" screenOptions={screenOptions} mode="modal">
+      <RootStack.Screen name="DrawerContent" component={DrawerNavigator} />
+      <RootStack.Screen
+        name="ModalAuth"
+        component={AuthModalStackNavigator}
+        options={{ cardStyle: { backgroundColor: 'transparent' } }}
+        mode="modal"
+      />
+    </RootStack.Navigator>
+  );
+};
+
 export default function App() {
   const { authContext } = useAuthContext();
   React.useEffect(() => {
@@ -20,7 +42,7 @@ export default function App() {
     <AuthContext.Provider value={authContext}>
       <SafeAreaProvider>
         <NavigationContainer>
-          <DrawerNavigator />
+          <RootStackScreen />
         </NavigationContainer>
       </SafeAreaProvider>
     </AuthContext.Provider>

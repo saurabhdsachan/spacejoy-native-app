@@ -18,7 +18,6 @@ const screenOptionStyle = {
     shadowColor: 'transparent',
   },
 };
-
 const HomeStackNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>

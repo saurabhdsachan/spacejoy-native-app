@@ -1,7 +1,7 @@
 import CardTextFieldScreen from '@components/CardTextFieldScreen';
 import { Block, Button, Text } from '@components/index';
 import { theme } from '@constants/index';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import stripe from 'tipsi-stripe';
@@ -21,7 +21,9 @@ const PaymentScreen = ({ route }) => {
   const [loading, setLoadingStatus] = useState(false);
   const [token, setToken] = useState(null);
   const [error, setError] = useState(null);
-
+  useEffect(() => {
+    console.log('route values are ----', route);
+  }, [route]);
   const trackCardParams = (cardParams) => {
     // enable card and track card params
     setCardParams(cardParams);

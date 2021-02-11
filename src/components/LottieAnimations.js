@@ -7,13 +7,15 @@ const getAnimation = (name) => {
   switch (name) {
     case 'name':
       return animations.Like;
+    case 'empty':
+      return animations.Empty;
     default:
       return animations.Like;
   }
 };
 
 const defaultOptions = {
-  autoPlay: false,
+  autoPlay: true,
   loop: false,
 };
 
@@ -21,7 +23,7 @@ const LottieAnimations = ({ name, height, width, loop, autoPlay, ...props }) => 
   return <LottieView source={getAnimation(name)} autoPlay loop {...defaultOptions} {...props} />;
 };
 
-const LottiePlayer = (animationName, start, end, direction) => {
+const LottiePlayer = (animationName, start, end, ...props) => {
   const [progress] = useState(new Animated.Value(start));
   const playAnimation = () => {
     Animated.timing(progress, {
@@ -32,9 +34,9 @@ const LottiePlayer = (animationName, start, end, direction) => {
     }).start();
   };
   return {
-    component: <LottieAnimations name={animationName} progress={progress} />,
+    component: <LottieAnimations name={animationName} progress={progress} {...props} />,
     playAnimation,
   };
 };
 
-export default LottiePlayer;
+export { LottiePlayer, LottieAnimations };

@@ -64,6 +64,21 @@ function DrawerContent({ navigation, progress }) {
             </Text>
           </Block>
         </Block>
+        {token ? null : (
+          <Block paddingHorizontal={SIZES.padding} row flex={false}>
+            <Button raw onPress={() => navigation.navigate('Auth', { screen: 'Login' })}>
+              <Text>Login</Text>
+            </Button>
+            <Block flex={false} marginHorizontal={SIZES.padding / 2}>
+              <Text center middle>
+                |
+              </Text>
+            </Block>
+            <Button raw onPress={() => navigation.navigate('Auth', { screen: 'SignUp' })}>
+              <Text>Sign up</Text>
+            </Button>
+          </Block>
+        )}
         <Block flex={false} style={{ margin: SIZES.padding }}>
           <Block flex={false} animated style={styles.navItem}>
             <Button raw onPress={() => navigation.navigate('Profile')}>

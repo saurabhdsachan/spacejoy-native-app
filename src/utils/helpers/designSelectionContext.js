@@ -1,3 +1,4 @@
+import sortByKey from '@utils/helpers/helpers';
 import React, { useMemo, useReducer } from 'react';
 
 const DesignSelectionContext = React.createContext();
@@ -22,23 +23,38 @@ const reducer = (prevState, action) => {
     }
     case 'REMOVE_ITEM': {
       const { item } = action;
-      const { id } = item;
+      const { id, selectionItemId = '' } = item;
       let index;
+      const keyToSearch = selectionItemId ? 'selectionItemId' : 'id';
+      const indexToSearch = selectionItemId || id;
 
       for (let i = 0; i < prevState.userDesignSelections.length; i++) {
-        if (prevState.userDesignSelections[i].id === id) {
+        if (prevState.userDesignSelections[i][keyToSearch] === indexToSearch) {
           index = i;
           break;
         }
       }
 
+      const updatedArray = [
+        ...prevState.userDesignSelections.slice(0, index),
+        ...prevState.userDesignSelections.slice(index + 1),
+      ];
+
+      let j = 0;
+      const sortedArray = [...sortByKey(updatedArray, 'title')];
+      const newArray = sortedArray.map((obj, i) => {
+        j += 1;
+        const str = `${obj.title.split(' -')[0]} - ${j}`;
+        if (obj?.id !== sortedArray[i + 1]?.id) {
+          j = 0;
+        }
+        return { ...obj, title: str };
+      });
+
       if (typeof index !== 'undefined') {
         return {
           ...prevState,
-          userDesignSelections: [
-            ...prevState.userDesignSelections.slice(0, index),
-            ...prevState.userDesignSelections.slice(index + 1),
-          ],
+          userDesignSelections: newArray,
         };
       }
       return {
@@ -47,10 +63,16 @@ const reducer = (prevState, action) => {
     }
     case 'ADD_ITEM': {
       const { item } = action;
-      const { defaultQuantity } = item;
+      const { defaultQuantity, id } = item;
       const { userDesignSelections } = prevState;
-
-      const newCartItem = { ...item, selectionItemId: userDesignSelections.length + defaultQuantity };
+      // check if item exists with same id
+      const countOfSimilarItems = userDesignSelections.filter((selItem) => selItem.id === id).length;
+      const titleSuffix = `- ${countOfSimilarItems + 1}`;
+      const newCartItem = {
+        ...item,
+        title: `${item.title} ${titleSuffix}`,
+        selectionItemId: userDesignSelections.length + defaultQuantity,
+      };
 
       return {
         ...prevState,
