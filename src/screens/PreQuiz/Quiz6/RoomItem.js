@@ -8,7 +8,7 @@ import Dropdown from './Dropdown';
 
 const { COLORS, SIZES } = theme;
 
-const RoomItem = ({ data: { item, index }, removeSelection, updateSelection, pricingItems }) => {
+const RoomItem = ({ data: { item, index }, removeSelection, updateSelection, pricingItems, updateStorage }) => {
   const rightItem = (progress, dragX) => {
     const scale = progress.interpolate({
       inputRange: [0, 1],
@@ -39,12 +39,21 @@ const RoomItem = ({ data: { item, index }, removeSelection, updateSelection, pri
         <Block flex={4}>
           <Dropdown
             data={pricingItems}
-            onChange={(value) => updateSelection(item, value)}
+            onChange={(value) => {
+              updateSelection(item, value, 'quiz1');
+              updateStorage('quiz1');
+            }}
             value={item?.selectedPackage || item?.defaultSelection}
           />
         </Block>
         <Block flex={1} end>
-          <Button raw onPress={() => removeSelection(item)}>
+          <Button
+            raw
+            onPress={() => {
+              removeSelection(item, 'quiz1');
+              updateStorage('quiz1');
+            }}
+          >
             <Icon name="remove-circle-outline" size={16} color={COLORS.red} />
           </Button>
         </Block>

@@ -31,7 +31,9 @@ const Quiz6 = ({ navigation, route }) => {
   const [pricingMap, setPricingMap] = useState({});
   const scrollX = new Animated.Value(0);
   const [isModalOpen, setModalOpen] = useState(false);
-  const { userDesignSelections, removeSelection, updateSelection } = React.useContext(DesignSelectionContext);
+  const { userDesignSelections, removeSelection, updateSelection, saveToStorage } = React.useContext(
+    DesignSelectionContext
+  );
   const sortedArray = sortByKey(userDesignSelections, 'title');
   const j = 0;
   const flatList = useRef(null);
@@ -161,6 +163,7 @@ const Quiz6 = ({ navigation, route }) => {
                       removeSelection={removeSelection}
                       updateSelection={updateSelection}
                       pricingItems={pricingItems}
+                      updateStorage={saveToStorage}
                     />
                   )}
                 />

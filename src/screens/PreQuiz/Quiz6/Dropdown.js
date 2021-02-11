@@ -11,6 +11,7 @@ const Dropdown = ({ data, onChange, value }) => {
       const capitalizedlabel = slug.charAt(0).toUpperCase().concat(slug.substring(1, slug.length));
       return { ...item, label: `${capitalizedlabel} $${item?.salePrice.value}`, value: item?.slug };
     });
+
     setFormattedData(dataToRender);
   }, [data]);
   return (

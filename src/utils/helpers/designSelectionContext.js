@@ -1,15 +1,27 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import sortByKey from '@utils/helpers/helpers';
-import React, { useMemo, useReducer } from 'react';
+import React, { useEffect, useMemo, useReducer } from 'react';
 
 const DesignSelectionContext = React.createContext();
 
 const reducer = (prevState, action) => {
   const { type } = action;
   switch (type) {
+    case 'SAVE_DATA_TO_APP': {
+      const { data } = action;
+      const obj = {};
+      Object.keys(data).forEach((item) => {
+        obj[item] = data[item];
+      });
+      return {
+        ...prevState,
+        ...obj,
+      };
+    }
     case 'UPDATE_ITEM': {
-      const { item, value } = action;
+      const { item, value, quizTitle } = action;
       const { selectionItemId } = item;
-      const newArray = [...prevState.userDesignSelections].map((selItem) => {
+      const newArray = [...prevState[quizTitle].userDesignSelections].map((selItem) => {
         if (selItem.selectionItemId === selectionItemId) {
           return { ...selItem, selectedPackage: value };
         } else {
@@ -18,26 +30,29 @@ const reducer = (prevState, action) => {
       });
       return {
         ...prevState,
-        userDesignSelections: [...newArray],
+        [quizTitle]: {
+          ...prevState[quizTitle],
+          userDesignSelections: [...newArray],
+        },
       };
     }
     case 'REMOVE_ITEM': {
-      const { item } = action;
+      const { item, quizTitle } = action;
       const { id, selectionItemId = '' } = item;
       let index;
       const keyToSearch = selectionItemId ? 'selectionItemId' : 'id';
       const indexToSearch = selectionItemId || id;
 
-      for (let i = 0; i < prevState.userDesignSelections.length; i++) {
-        if (prevState.userDesignSelections[i][keyToSearch] === indexToSearch) {
+      for (let i = 0; i < prevState[quizTitle].userDesignSelections.length; i++) {
+        if (prevState[quizTitle].userDesignSelections[i][keyToSearch] === indexToSearch) {
           index = i;
           break;
         }
       }
 
       const updatedArray = [
-        ...prevState.userDesignSelections.slice(0, index),
-        ...prevState.userDesignSelections.slice(index + 1),
+        ...prevState[quizTitle].userDesignSelections.slice(0, index),
+        ...prevState[quizTitle].userDesignSelections.slice(index + 1),
       ];
 
       let j = 0;
@@ -54,7 +69,10 @@ const reducer = (prevState, action) => {
       if (typeof index !== 'undefined') {
         return {
           ...prevState,
-          userDesignSelections: newArray,
+          [quizTitle]: {
+            ...prevState[quizTitle],
+            userDesignSelections: newArray,
+          },
         };
       }
       return {
@@ -62,9 +80,9 @@ const reducer = (prevState, action) => {
       };
     }
     case 'ADD_ITEM': {
-      const { item } = action;
+      const { item, quizTitle } = action;
       const { defaultQuantity, id } = item;
-      const { userDesignSelections } = prevState;
+      const { userDesignSelections } = prevState[quizTitle];
       // check if item exists with same id
       const countOfSimilarItems = userDesignSelections.filter((selItem) => selItem.id === id).length;
       const titleSuffix = `- ${countOfSimilarItems + 1}`;
@@ -76,7 +94,18 @@ const reducer = (prevState, action) => {
 
       return {
         ...prevState,
-        userDesignSelections: [...userDesignSelections, { ...newCartItem }],
+        [quizTitle]: {
+          ...prevState[quizTitle],
+          userDesignSelections: [...userDesignSelections, { ...newCartItem }],
+        },
+      };
+    }
+    case 'SAVE_USER_ANSWER': {
+      const { quizTitle, value } = action;
+      console.log(quizTitle, value);
+      return {
+        ...prevState,
+        [quizTitle]: value,
       };
     }
     default: {
@@ -86,25 +115,71 @@ const reducer = (prevState, action) => {
 };
 
 const initialState = {
-  userDesignSelections: [],
+  quiz1: {
+    userDesignSelections: [],
+  },
+  quiz2: '',
+  quiz3: '',
+  quiz4: '',
 };
 
 const useDesignSelectionContext = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  useEffect(() => {
+    const hydrateLocalState = async () => {
+      let userQuizData;
+      try {
+        const quizData = await AsyncStorage.getItem('userQuizResponse');
+        if (quizData) {
+          userQuizData = JSON.parse(quizData);
+        } else {
+          userQuizData = {};
+        }
+      } catch (e) {
+        // console.log('error message -------', e.message);
+        await AsyncStorage.removeItem('userQuizResponse');
+        userQuizData = {};
+      } finally {
+        dispatch({ type: 'SAVE_DATA_TO_APP', data: userQuizData });
+      }
+    };
+
+    hydrateLocalState();
+  }, []);
   const designSelectionsContext = useMemo(
     () => ({
-      addSelection: (item) => {
-        dispatch({ type: 'ADD_ITEM', item });
+      addSelection: (item, quizTitle) => {
+        dispatch({ type: 'ADD_ITEM', item, quizTitle });
       },
-      removeSelection: (item) => {
-        dispatch({ type: 'REMOVE_ITEM', item });
+      removeSelection: (item, quizTitle) => {
+        dispatch({ type: 'REMOVE_ITEM', item, quizTitle });
       },
-      updateSelection: (item, value) => {
-        dispatch({ type: 'UPDATE_ITEM', value, item });
+      updateSelection: (item, value, quizTitle) => {
+        dispatch({ type: 'UPDATE_ITEM', value, item, quizTitle });
       },
-      userDesignSelections: state.userDesignSelections,
+      userDesignSelections: state.quiz1.userDesignSelections,
+      userAnswers: { quiz2: state.quiz2, quiz3: state.quiz3, quiz4: state.quiz4 },
+      saveUserAnswer: (quizTitle, value) => {
+        dispatch({ type: 'SAVE_USER_ANSWER', value, quizTitle });
+      },
+      saveToStorage: async (quizTitle) => {
+        // save to async storage
+        try {
+          const userQuizResponse = await AsyncStorage.getItem('userQuizResponse');
+          if (!userQuizResponse) {
+            await AsyncStorage.setItem('userQuizResponse', JSON.stringify({}));
+          }
+          const currentStateDataForStep = state[quizTitle];
+          const data = await AsyncStorage.getItem('userQuizResponse');
+          const currentData = JSON.parse(data);
+          currentData[quizTitle] = currentStateDataForStep;
+          await AsyncStorage.setItem('userQuizResponse', JSON.stringify(currentData));
+        } catch {
+          console.log('Error occurred in saving data');
+        }
+      },
     }),
-    [state.userDesignSelections]
+    [state]
   );
   return {
     designSelectionsContext,
