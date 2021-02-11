@@ -81,17 +81,19 @@ const Login = ({ navigation }) => {
             <ActivityIndicator size="small" />
           </Block>
         )}
-        <Block padding={[SIZES.safe * 2, SIZES.padding * 2, 0, SIZES.padding * 2]}>
+        <Block flex={false} padding={[SIZES.height * 0.15, SIZES.padding * 2, 0, SIZES.padding * 2]}>
           <Text title mb1>
             Login
           </Text>
-          <Text small>Welcome Back</Text>
+          <Text small mb3>
+            Welcome Back
+          </Text>
           {loginError && (
             <Block flex={0.5} bottom>
               <LoginError errorText={loginError} />
             </Block>
           )}
-          <Block flex={2} bottom>
+          <Block flex={false} bottom>
             <Block flex={false}>
               <TextInput
                 keyboardType="email-address"
@@ -122,12 +124,12 @@ const Login = ({ navigation }) => {
               </Button>
             </Block>
           </Block>
-          <Block middle flex={0.5}>
+          <Block flex={false} middle>
             <Text color={COLORS.gray} center>
               --- or ---
             </Text>
           </Block>
-          <Block flex={0.5} row>
+          <Block flex={false} row>
             <Block style={{ marginRight: SIZES.padding }}>
               <GoogleLoginButton
                 handleSignInSuccess={handleSigninSuccess}
@@ -149,7 +151,7 @@ const Login = ({ navigation }) => {
               />
             </Block>
           </Block>
-          <Block flex={1}>
+          <Block flex={false}>
             <AppleButton
               handleSignInSuccess={handleSigninSuccess}
               handleSigninError={handleSigninError}
@@ -159,7 +161,7 @@ const Login = ({ navigation }) => {
               }}
             />
           </Block>
-          <Block flex={2} top center middle>
+          <Block flex={false} top center middle>
             <Button raw onPress={handleRedirectToSignUp}>
               <Text>
                 Create New Account <Text primary>Sign Up</Text>
