@@ -11,7 +11,7 @@ import { fetcher, handle } from '@utils/apiFetcher';
 import { AuthContext } from '@utils/helpers/withAuthContext';
 import { oAuthLogin } from '@utils/logins';
 import React, { useState } from 'react';
-import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, TextInput, View } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, TextInput } from 'react-native';
 
 const SignUp = () => {
   const { signUp } = React.useContext(AuthContext);
@@ -100,23 +100,32 @@ const SignUp = () => {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <View style={{ flexGrow: 1 }}>
+      <Block flex={false}>
         {loading && (
-          <Block center middle color={COLORS.semiTransparent} style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}>
+          <Block
+            flex={false}
+            center
+            middle
+            color={COLORS.semiTransparent}
+            style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}
+          >
             <ActivityIndicator size="small" />
           </Block>
         )}
 
-        <Block padding={[SIZES.safe * 2, SIZES.padding * 2, 0, SIZES.padding * 2]}>
+        <Block flex={false} padding={[SIZES.height * 0.1, SIZES.padding * 2, 0, SIZES.padding * 2]}>
           <Text title mb1>
-            SIGNUP
+            Signup
+          </Text>
+          <Text small mb4>
+            to select a design package and send your project details to your designer
           </Text>
           {loginError && (
-            <Block flex={0.5} bottom>
+            <Block flex={false} bottom marginBottom={SIZES.padding}>
               <LoginError errorText={loginError} />
             </Block>
           )}
-          <Block flex={4} bottom>
+          <Block flex={false} bottom>
             <Block flex={false}>
               <TextInput
                 keyboardType="default"
@@ -180,13 +189,13 @@ const SignUp = () => {
             </Block>
           </Block>
 
-          <Block middle flex={0.5}>
+          <Block middle flex={false}>
             <Text color={COLORS.gray} center>
               --- or ---
             </Text>
           </Block>
-          <Block flex={0.5} row>
-            <Block style={{ marginRight: SIZES.padding }}>
+          <Block flex={false} row>
+            <Block flex={1} style={{ marginRight: SIZES.padding }}>
               <GoogleLoginButton
                 handleSignInSuccess={handleSigninSuccess}
                 handleSigninError={handleSigninError}
@@ -207,7 +216,7 @@ const SignUp = () => {
               />
             </Block>
           </Block>
-          <Block flex={0.5}>
+          <Block flex={false}>
             <AppleButton
               handleSignInSuccess={handleSigninSuccess}
               handleSigninError={handleSigninError}
@@ -217,13 +226,13 @@ const SignUp = () => {
               }}
             />
           </Block>
-          <Block flex={2} middle>
+          <Block flex={false} middle>
             <Text color="#6D7278" middle center>
               By signing up, you agree to our Terms and privacy policy
             </Text>
           </Block>
         </Block>
-      </View>
+      </Block>
     </KeyboardAvoidingView>
   );
 };
