@@ -22,7 +22,6 @@ const Carousel = ({ data }) => {
         url: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,w_${SIZES.width * 2}/${image}`,
       })
     );
-    console.log('tmp', tmp);
     setImageData(tmp);
   }, [data]);
 

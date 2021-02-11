@@ -10,11 +10,11 @@ import BookmarkButton from '../BookmarkButton';
 import LikeButton from '../LikeButton';
 import ShareButton from '../ShareButton';
 
-const DesignCard = ({ data: designDataProp, navigation }) => {
+const DesignCard = ({ data: designDataProp, navigation, noBookmark }) => {
   const [data, setData] = useState(designDataProp);
 
   const onBookmarkChange = (value) => {
-    setData({ ...data, bookmarked: value });
+    setData({ ...data, bookmarked: value.status, bookmarkId: value.bookmarkId });
   };
 
   const handleLike = (liked) => {
@@ -22,9 +22,9 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
   };
 
   const shareParams = {
-    message: designDataProp.name,
+    message: designDataProp?.name,
     url: `https://www.spacejoy.com/interior-designs/${designDataProp?.room?.slug}/${designDataProp?.slug}`,
-    title: designDataProp.name,
+    title: designDataProp?.name,
   };
 
   return (
@@ -40,22 +40,31 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
             user={{ name: data?.owner?.profile?.name || 'Anonymous User', city: 'Austin', state: 'Texas' }}
           />
         </Block>
-        <Block end flex={1}>
-          <BookmarkButton
-            bookmarked={data?.bookmarked}
-            onBookmarkChange={onBookmarkChange}
-            type="design"
-            id={data?._id}
-          />
-        </Block>
+        {!noBookmark && (
+          <Block end flex={1}>
+            <BookmarkButton
+              bookmarked={data?.bookmarked}
+              onBookmarkChange={onBookmarkChange}
+              bookmarkId={data?.bookmarkId}
+              type="design"
+              id={data?._id}
+            />
+          </Block>
+        )}
       </Block>
-      <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Details', { feedItem: data })}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => {
+          console.log('data', JSON.stringify(data, null, 1));
+          navigation.navigate('Details', { feedItem: data });
+        }}
+      >
         <Block style={styles.designFeedImageHolder}>
           <ProgressiveImage
             thumbnailSource={images.pattern}
             source={{
               uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,h_${SIZES.height * 2}/${
-                data.cdnRender[2]
+                data?.cdnRender[2]
               }`,
             }}
             resizeMode="cover"
@@ -81,7 +90,7 @@ const DesignCard = ({ data: designDataProp, navigation }) => {
         </Block>
       </Block>
       <Text small capitalize color={COLORS.red}>
-        {data.theme.name}
+        {data?.theme?.name}
       </Text>
       <Text h2 left mt1 mb1>
         {data.name}

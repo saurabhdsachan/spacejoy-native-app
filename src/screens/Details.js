@@ -17,32 +17,42 @@ const Details = ({ route, navigation }) => {
   const [isLoading, setLoading] = useState(true);
   const [productList, setProductList] = useState([]);
 
-  const getProductList = async () => {
-    setLoading(true);
-    const [data, err] = await handle(
-      fetcher({
-        endPoint: `/web/designs/public/slug/${feedItem.slug}`,
-        method: 'GET',
-      })
-    );
-    if (err) {
-      setProductList([]);
-    } else {
-      setProductList(() => {
-        const deduplicateProductList = data?.data?.assets?.reduce((acc, currentProduct) => {
-          if (!acc[currentProduct?._id]) {
-            acc[currentProduct?.asset?._id] = currentProduct;
-            return { ...acc };
-          }
-          return acc;
-        }, {});
-        return deduplicateProductList ? Object.values(deduplicateProductList) : [];
-      });
-    }
-    setLoading(false);
-  };
   useEffect(() => {
+    let mounted = true;
+    const getProductList = async () => {
+      setLoading(true);
+      const [data, err] = await handle(
+        fetcher({
+          endPoint: `/web/designs/public/slug/${feedItem.slug}`,
+          method: 'GET',
+        })
+      );
+      if (mounted) {
+        if (err) {
+          setProductList([]);
+        } else {
+          setProductList(() => {
+            try {
+              const deduplicateProductList = data?.data?.assets.reduce((acc, currentProduct) => {
+                if (!acc[currentProduct?._id]) {
+                  acc[currentProduct?.asset?._id] = currentProduct;
+                  return { ...acc };
+                }
+                return acc;
+              }, {});
+
+              return Object.values(deduplicateProductList);
+            } catch (e) {
+              return [];
+            }
+          });
+        }
+        setLoading(false);
+      }
+    };
+
     getProductList();
+    return () => (mounted = false);
   }, []);
 
   const onLike = (value) => {
@@ -56,7 +66,7 @@ const Details = ({ route, navigation }) => {
   };
 
   const onBookmarkChange = (value) => {
-    setFeedItem({ ...feedItem, bookmarked: value });
+    setFeedItem({ ...feedItem, bookmarked: value.status, bookmarkId: value.bookmarkId });
   };
 
   return (
@@ -94,6 +104,7 @@ const Details = ({ route, navigation }) => {
                 bookmarked={feedItem?.bookmarked}
                 onBookmarkChange={onBookmarkChange}
                 type="design"
+                bookmarkId={feedItem?.bookmarkId}
               />
             </Text>
           </Block>
@@ -106,7 +117,7 @@ const Details = ({ route, navigation }) => {
 
       <Block padding={SIZES.padding}>
         <Text small capitalize color={COLORS.primary1}>
-          {feedItem.theme.name}
+          {feedItem?.theme?.name}
         </Text>
         <Text h2 mb2>
           {feedItem.name}

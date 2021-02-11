@@ -1,11 +1,11 @@
 // just copy this code from the driving repo :)
 import { theme } from '@constants/index';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 const { COLORS, FONTS, SIZES } = theme;
 
-export default class Typography extends Component {
+export default class Typography extends PureComponent {
   render() {
     const {
       h1,

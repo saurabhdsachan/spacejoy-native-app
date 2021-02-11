@@ -1,9 +1,8 @@
 import { theme } from '@constants/index';
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import Block from './Block';
+import { StyleSheet, View } from 'react-native';
 
-const Divider = ({ style, ...props }) => <Block style={[styles.divider, style]} {...props} />;
+const Divider = ({ style, ...props }) => <View style={[styles.divider, style]} {...props} />;
 
 export default Divider;
 

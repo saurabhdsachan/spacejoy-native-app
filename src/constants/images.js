@@ -16,6 +16,7 @@ export const lamp = require('../assets/images/lamp.png');
 export const bg = require('../assets/images/bg.jpg');
 export const pattern = require('../assets/images/pattern.jpg');
 export const homeBg = require('../assets/images/home-bg.jpg');
+export const ideabookHeader = require('../assets/images/Ideabook.png');
 
 export const defaultAvatar =
   'https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,c_fill,g_faces,h_200,w_200/server/user/avatar/5de7b9e1dd634e002393ecbb';
@@ -40,4 +41,5 @@ export default {
   bg,
   pattern,
   homeBg,
+  ideabookHeader,
 };

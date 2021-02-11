@@ -1,12 +1,12 @@
 import { theme } from '@constants/index';
 import { elevationShadowStyle } from '@utils/styleHelper';
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 const { COLORS, SIZES } = theme;
 
-class Button extends Component {
+class Button extends PureComponent {
   render() {
     const {
       raw,

@@ -6,6 +6,10 @@ const getUserBookmarks = () => {
   return '/v1/bookmarks';
 };
 
+const getDetailedBookmarkApi = (bookmarkId) => {
+  return `/v1/bookmarks/${bookmarkId}`;
+};
+
 const getBookmarkMappingApi = (type, bookmarkId, id) => {
   if (type === 'design') {
     return `/v1/bookmarks/${bookmarkId}/designs/${id}`;
@@ -18,4 +22,4 @@ const getBookmarkMappingApi = (type, bookmarkId, id) => {
   }
 };
 
-export { getLikeApi, getUserBookmarks, getBookmarkMappingApi };
+export { getLikeApi, getUserBookmarks, getBookmarkMappingApi, getDetailedBookmarkApi };
