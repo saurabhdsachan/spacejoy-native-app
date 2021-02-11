@@ -57,7 +57,7 @@ const BookmarkCard = ({ bookmark, navigation }) => {
 
   return (
     <Button raw onPress={() => navigation.navigate('IdeabookDetailedView', { bookmark })}>
-      <Block margin={[SIZES.padding, 0]} row center>
+      <Block paddingHorizontal={SIZES.padding} marginBottom={SIZES.padding} row center>
         <ProgressiveImage
           style={styles.bookmarkImage}
           thumbnailSource={images.pattern}
@@ -86,15 +86,15 @@ const BookmarkCard = ({ bookmark, navigation }) => {
 
 const styles = StyleSheet.create({
   bookmarkImage: {
-    height: 100,
-    width: 100,
-    borderRadius: SIZES.radius,
+    height: 75,
+    width: 75,
+    borderRadius: SIZES.radius * 0.5,
   },
   rightItem: {
     backgroundColor: COLORS.red,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 100,
+    width: 75,
   },
 });
 

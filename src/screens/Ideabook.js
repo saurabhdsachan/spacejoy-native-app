@@ -55,13 +55,13 @@ const Ideabook = ({ navigation }) => {
           Ideabook
         </Text>
         <Text small>
-          The place where all your favourite designs live. The place where all your favourite designs live. The place
-          where all your favourite designs live.
+          The place where all your favorite designs live. The place where all your favorite designs live. The place
+          where all your favorite designs live.
         </Text>
       </Block>
       <Block flex={4}>
         <FlatList
-          contentContainerStyle={{ paddingHorizontal: SIZES.padding }}
+          contentContainerStyle={{ paddingVertical: SIZES.padding }}
           ListItemSeparator={<Divider />}
           ListEmptyComponent={
             loading ? (

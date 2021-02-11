@@ -12,13 +12,18 @@ const RoomItem = ({ data: { item, index }, removeSelection, updateSelection, pri
   const rightItem = (progress, dragX) => {
     const scale = progress.interpolate({
       inputRange: [0, 1],
+      outputRange: [0.5, 1],
+      extrapolate: 'clamp',
+    });
+    const opacity = progress.interpolate({
+      inputRange: [0.5, 1],
       outputRange: [0, 1],
       extrapolate: 'clamp',
     });
     return (
       <View style={styles.rightItem}>
         <Button onPress={() => removeSelection(item)}>
-          <Animated.Text right white style={{ transform: [{ scale }], color: COLORS.white }}>
+          <Animated.Text right white style={{ opacity, transform: [{ scale }], color: COLORS.white }}>
             Delete
           </Animated.Text>
         </Button>
@@ -50,9 +55,9 @@ const RoomItem = ({ data: { item, index }, removeSelection, updateSelection, pri
 
 const styles = StyleSheet.create({
   radioCard: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 1,
     borderBottomColor: COLORS.gray2,
-    paddingVertical: SIZES.padding / 1.3,
+    paddingVertical: SIZES.padding / 1.2,
     paddingHorizontal: SIZES.padding,
     overflow: 'hidden',
   },
