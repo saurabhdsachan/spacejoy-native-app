@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const { SIZES, COLORS } = theme;
 
 const CouponCard = ({ title, description, code, firstCard, lastCard }) => {
+  const validateCoupon = async () => {};
   return (
     <Block color="#f2f2f2" padding={SIZES.padding} style={[styles.swipeCard]}>
       <Text regular style={[styles.couponCode, styles.textStyles]} h2 transform="uppercase">
@@ -14,7 +15,7 @@ const CouponCard = ({ title, description, code, firstCard, lastCard }) => {
       </Text>
       <Text style={[styles.textStyles, styles.couponTitle]}>{title}</Text>
       <Text style={[styles.textStyles]}>{description}</Text>
-      <Button size="sm" ghost style={{ alignSelf: 'flex-start', borderRadius: 1 }}>
+      <Button size="sm" ghost style={{ alignSelf: 'flex-start', borderRadius: 1 }} onPress={validateCoupon}>
         <Text>Use</Text>
       </Button>
     </Block>
