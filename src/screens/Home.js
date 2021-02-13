@@ -10,7 +10,7 @@ const { SIZES } = theme;
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
   const [isLoading, setLoading] = useState(true);
   const [designFeed, setDesignFeed] = useState([]);
   const [error, setError] = useState(false);
@@ -59,7 +59,7 @@ const Home = ({ navigation }) => {
         onRefresh={getDesignFeed}
         data={designFeed.list}
         ItemSeparatorComponent={() => <Divider />}
-        renderItem={({ item }) => <DesignCard data={item} navigation={navigation} />}
+        renderItem={({ item }) => <DesignCard data={item} navigation={navigation} route={route} />}
         keyExtractor={(item) => item._id}
       />
     </Block>

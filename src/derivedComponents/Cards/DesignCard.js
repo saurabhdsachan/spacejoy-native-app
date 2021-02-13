@@ -3,6 +3,7 @@ import Avatar from '@components/Avatar';
 import { COLORS, images, SIZES } from '@constants/';
 import onShare from '@utils/onShare';
 import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BookmarkButton from '../BookmarkButton';
@@ -11,7 +12,6 @@ import ShareButton from '../ShareButton';
 
 const DesignCard = ({ data: designDataProp, navigation, noBookmark, route }) => {
   const [data, setData] = useState(designDataProp);
-
   const onBookmarkChange = (value) => {
     setData({ ...data, bookmarked: value.status, bookmarkId: value.bookmarkId });
   };

@@ -68,7 +68,6 @@ const Details = ({ route, navigation }) => {
   const onBookmarkChange = (value) => {
     setFeedItem({ ...feedItem, bookmarked: value.status, bookmarkId: value.bookmarkId });
   };
-
   return (
     <ScrollView style={{ backgroundColor: COLORS.white }}>
       <StatusBar barStyle="dark-content" />
@@ -87,7 +86,14 @@ const Details = ({ route, navigation }) => {
         <Block row flex={4} middle>
           <Block end>
             <Text right>
-              <LikeButton id={feedItem?._id} liked={feedItem?.liked} onLikeChange={onLike} type="design" />
+              <LikeButton
+                id={feedItem?._id}
+                liked={feedItem?.liked}
+                onLikeChange={onLike}
+                type="design"
+                navigation={navigation}
+                route={route}
+              />
             </Text>
           </Block>
           <Block>

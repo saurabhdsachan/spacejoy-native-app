@@ -108,6 +108,13 @@ const reducer = (prevState, action) => {
         [quizTitle]: value,
       };
     }
+    case 'SAVE_PRICING_DATA': {
+      const { pricingData } = action;
+      return {
+        ...prevState,
+        pricingData,
+      };
+    }
     default: {
       return { ...prevState };
     }
@@ -121,6 +128,7 @@ const initialState = {
   quiz2: '',
   quiz3: '',
   quiz4: '',
+  pricingData: [],
 };
 
 const useDesignSelectionContext = () => {
@@ -159,8 +167,12 @@ const useDesignSelectionContext = () => {
       },
       userDesignSelections: state.quiz1.userDesignSelections,
       userAnswers: { quiz2: state.quiz2, quiz3: state.quiz3, quiz4: state.quiz4 },
+      pricingData: state.pricingData,
       saveUserAnswer: (quizTitle, value) => {
         dispatch({ type: 'SAVE_USER_ANSWER', value, quizTitle });
+      },
+      savePricingData: (pricingData) => {
+        dispatch({ type: 'SAVE_PRICING_DATA', pricingData });
       },
       saveToStorage: async (quizTitle) => {
         // save to async storage

@@ -3,7 +3,7 @@ import { COLORS } from '@constants/index';
 import { createStackNavigator } from '@react-navigation/stack';
 import DesignService from '@screens/DesignService';
 // import NewAction from '@screens/NewAction';
-import PaymentScreen from '@screens/PaymentScreen';
+import PaymentScreen from '@screens/Payment';
 import Quiz1 from '@screens/PreQuiz/Quiz1';
 import Quiz2 from '@screens/PreQuiz/Quiz2';
 import Quiz3 from '@screens/PreQuiz/Quiz3';

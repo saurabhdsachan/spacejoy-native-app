@@ -31,38 +31,55 @@ const Quiz6 = ({ navigation, route }) => {
   const [pricingMap, setPricingMap] = useState({});
   const scrollX = new Animated.Value(0);
   const [isModalOpen, setModalOpen] = useState(false);
-  const { userDesignSelections, removeSelection, updateSelection, saveToStorage } = React.useContext(
-    DesignSelectionContext
-  );
+  const {
+    userDesignSelections,
+    removeSelection,
+    updateSelection,
+    saveToStorage,
+    savePricingData,
+    pricingData,
+  } = React.useContext(DesignSelectionContext);
   const sortedArray = sortByKey(userDesignSelections, 'title');
   const j = 0;
   const flatList = useRef(null);
   console.log('scrollX value', scrollX);
   useEffect(() => {
+    const priceMap = {};
     // fetch pricing items
     setLoadingStatus(true);
-    fetchPricingItems()
-      .then((data) => {
-        const priceMap = {};
-        const dataToRender = data.map((price, index) => {
-          priceMap[price.slug] = price.salePrice.value;
-          if (index === 0) {
-            return { ...price, active: true, ref: React.createRef() };
-          }
-          return { ...price, active: false, ref: React.createRef() };
+    if (pricingData.length === 0) {
+      fetchPricingItems()
+        .then((data) => {
+          const dataToRender = data.map((price, index) => {
+            priceMap[price.slug] = price.salePrice.value;
+            if (index === 0) {
+              return { ...price, active: true, ref: React.createRef() };
+            }
+            return { ...price, active: false, ref: React.createRef() };
+          });
+          setPricingMap(priceMap);
+          setPricingItems(dataToRender);
+          setLoadingStatus(false);
+          // setCurrentActive(1);
+        })
+        .catch((e) => {
+          // set error
+          setLoadingStatus(false);
+        })
+        .finally(() => {
+          setLoadingStatus(false);
         });
-        setPricingMap(priceMap);
-        setPricingItems(dataToRender);
-        setLoadingStatus(false);
-        // setCurrentActive(1);
-      })
-      .catch((e) => {
-        // set error
-        setLoadingStatus(false);
-      })
-      .finally(() => {
-        setLoadingStatus(false);
+    } else {
+      const dataToRender = pricingData.map((price, index) => {
+        priceMap[price.slug] = price.salePrice.value;
+        if (index === 0) {
+          return { ...price, active: true, ref: React.createRef() };
+        }
+        return { ...price, active: false, ref: React.createRef() };
       });
+      setPricingMap(priceMap);
+      setPricingItems(dataToRender);
+    }
   }, []);
 
   useEffect(() => {

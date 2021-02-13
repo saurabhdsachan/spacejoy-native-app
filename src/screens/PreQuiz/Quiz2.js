@@ -19,8 +19,6 @@ const Quiz2 = ({ navigation }) => {
   };
 
   const savedAnswerForThisStep = userAnswers[quizTitle];
-  console.log('saved answer ----', savedAnswerForThisStep);
-
   return (
     <Block color={COLORS.white} padding={[SIZES.safe, SIZES.padding, SIZES.padding, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
