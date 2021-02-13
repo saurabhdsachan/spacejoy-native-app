@@ -8,7 +8,7 @@ const ProgressiveImage = ({ thumbnailSource, source, style, ...props }) => {
   const handleThumbnailLoad = () => {
     Animated.timing(thumbnailAnimated, {
       toValue: 1,
-      duration: 50,
+      duration: 10,
       useNativeDriver: true,
     }).start();
   };

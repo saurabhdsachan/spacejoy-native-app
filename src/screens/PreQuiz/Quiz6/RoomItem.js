@@ -12,11 +12,11 @@ const RoomItem = ({ data: { item, index }, removeSelection, updateSelection, pri
   const rightItem = (progress, dragX) => {
     const scale = progress.interpolate({
       inputRange: [0, 1],
-      outputRange: [0.5, 1],
+      outputRange: [0.8, 1],
       extrapolate: 'clamp',
     });
     const opacity = progress.interpolate({
-      inputRange: [0.5, 1],
+      inputRange: [0.7, 1],
       outputRange: [0, 1],
       extrapolate: 'clamp',
     });

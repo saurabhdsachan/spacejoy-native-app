@@ -4,10 +4,16 @@ import { StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Button from './Button';
 
-const HeaderBack = () => (
-  <Button size="xs" color={COLORS.white} style={styles.style}>
-    <Icon name="arrow-back" size={20} style={styles.icon} />
-  </Button>
+const HeaderBack = ({ withBorder }) => (
+  <>
+    {withBorder ? (
+      <Button size="xs" color={COLORS.white} style={styles.style}>
+        <Icon name="arrow-back" size={20} style={styles.icon} />
+      </Button>
+    ) : (
+      <Icon name="arrow-back" size={20} style={{ marginHorizontal: 10 }} />
+    )}
+  </>
 );
 
 const styles = StyleSheet.create({

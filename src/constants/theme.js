@@ -41,12 +41,12 @@ export const SIZES = {
   padding: 18,
   // font sizes
   h1: 30,
-  h2: 22,
+  h2: 20,
   h3: 16,
   h4: 14,
   title: 45,
   header: 18,
-  body: 16,
+  body: 15,
   small: 14,
   caption: 12,
 
@@ -70,7 +70,7 @@ export const FONTS = {
     fontSize: SIZES.title,
     lineHeight: 50,
   },
-  body: { fontFamily: 'Roboto-Regular', fontSize: SIZES.body, lineHeight: 22 },
+  body: { fontFamily: 'Roboto-Light', fontSize: SIZES.body, lineHeight: 20 },
   small: { fontFamily: 'Roboto-Light', fontSize: SIZES.small, lineHeight: 20 },
   caption: {
     fontFamily: 'Roboto-Regular',

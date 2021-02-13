@@ -1,4 +1,3 @@
-import { theme } from '@constants/index';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -9,7 +8,7 @@ export default Divider;
 export const styles = StyleSheet.create({
   divider: {
     height: 0,
-    borderBottomColor: theme.COLORS.gray2,
+    borderBottomColor: '#F2F2F2',
     borderBottomWidth: 1,
   },
 });
