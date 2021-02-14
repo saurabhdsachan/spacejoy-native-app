@@ -39,6 +39,7 @@ const PaymentScreen = ({ route }) => {
   const [couponsList, setCouponsList] = useState([]);
   const [couponFetchError, setCouponsFetchError] = useState(false);
   const [pricingMap, setPricingMap] = useState({});
+  const [currentCouponCode, setCurrentCouponCode] = useState('');
   const {
     userDesignSelections,
     removeSelection,
@@ -108,7 +109,6 @@ const PaymentScreen = ({ route }) => {
     }
   };
   const openCouponModal = async () => {
-    console.log('opening modal ---');
     couponModalRef?.current?.open();
     setCouponLoadingStatus(true);
     try {
@@ -136,6 +136,27 @@ const PaymentScreen = ({ route }) => {
   const headerHeight = useHeaderHeight();
 
   const sortedArray = sortByKey(userDesignSelections, 'title');
+  const validateCoupon = async (couponCode) => {
+    console.log(couponCode);
+    const [validationRes, validationErr] = await handle(
+      fetcher({
+        endPoint: checkoutRoutes.validateCoupon,
+        method: 'POST',
+        body: {
+          coupon: couponCode,
+          package: 'delight',
+          isGiftCard: false,
+        },
+      })
+    );
+    console.log('validation res is----', validationRes, validationErr);
+    if (validationRes && !validationErr) {
+      const { statusCode, data } = validationRes;
+      console.log(data, statusCode);
+    } else {
+      console.log('error while validating', validationErr);
+    }
+  };
   return (
     <Block color="white" padding={[SIZES.safe + 20, SIZES.padding, 0, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
@@ -188,13 +209,20 @@ const PaymentScreen = ({ route }) => {
           <Text style={{ textAlign: 'right' }}>$ {totalAmount}</Text>
         </Block>
       </Block>
-      <Block flex={2} color="white" paddingVertical={SIZES.padding}>
+      <Block flex={2} paddingVertical={SIZES.padding}>
         <CardTextFieldScreen onValid={trackCardParams} />
       </Block>
       <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
-        <Block flex={1} middle center>
-          <Button color={COLORS.black} size="sm" onPress={handlePayment}>
-            <Text color="white">{`Pay $${totalAmount}`}</Text>
+        <Block flex={1}>
+          <Button
+            loading={loading}
+            gradient
+            onPress={handlePayment}
+            style={{ borderRadius: SIZES.radius / 4, width: '100%' }}
+          >
+            <Text center white size={16}>
+              Pay ${totalAmount}
+            </Text>
           </Button>
         </Block>
       </LinearGradient>
@@ -215,15 +243,23 @@ const PaymentScreen = ({ route }) => {
                 placeholderTextColor={COLORS.gray}
                 style={styles.textInput}
                 placeholder="Apply Coupons"
+                onChangeText={(text) => setCurrentCouponCode(text)}
               />
-              <Button color="black" style={styles.applyBtn}>
+              <Button color="black" style={styles.applyBtn} onPress={() => validateCoupon(currentCouponCode)}>
                 <Text color="white">APPLY</Text>
               </Button>
             </Block>
 
             <ScrollView>
               {couponsList.map((item) => {
-                return <CouponCard title={item.title} code={item.code} description={item.description} />;
+                return (
+                  <CouponCard
+                    title={item.title}
+                    code={item.code}
+                    description={item.description}
+                    validateCoupon={validateCoupon}
+                  />
+                );
               })}
             </ScrollView>
           </Block>

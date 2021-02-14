@@ -24,6 +24,7 @@ const fetcher = async ({ endPoint, method, type = 'text', body }) => {
   const apiEndpoint = `${finalAPIBaseUrl}${endPoint}`;
   return fetch(apiEndpoint, options)
     .then(async (response) => {
+      console.log('response is ----', response);
       if (response.status) {
         try {
           if (response.status === 204) {
