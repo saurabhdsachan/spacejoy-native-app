@@ -8,7 +8,7 @@ const { SIZES, COLORS } = theme;
 
 const CouponCard = ({ title, description, code, firstCard, lastCard, validateCoupon }) => {
   return (
-    <Block color="#f2f2f2" padding={SIZES.padding} style={[styles.swipeCard]}>
+    <Block color="#f2f2f2" padding={SIZES.padding} style={[styles.swipeCard]} key={title}>
       <Text regular style={[styles.couponCode, styles.textStyles]} h2 transform="uppercase">
         <Icon name="pricetag-outline" size={14} style={styles.icon} /> {code}
       </Text>

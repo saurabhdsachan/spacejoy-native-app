@@ -2,7 +2,6 @@ import CardTextFieldScreen from '@components/CardTextFieldScreen';
 import { Block, Button, Text } from '@components/index';
 import { theme } from '@constants/index';
 import { checkoutRoutes } from '@constants/routes';
-import { useHeaderHeight } from '@react-navigation/stack';
 import { fetcher, handle } from '@utils/apiFetcher';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import sortByKey from '@utils/helpers/helpers';
@@ -132,7 +131,6 @@ const PaymentScreen = ({ route }) => {
   const {
     params: { totalAmount },
   } = route;
-  const headerHeight = useHeaderHeight();
 
   const sortedArray = sortByKey(userDesignSelections, 'title');
   const validateCoupon = async (couponCode) => {
@@ -210,7 +208,7 @@ const PaymentScreen = ({ route }) => {
           </Block>
         </Block>
         <Block flex={2} padding={SIZES.padding} color="#f2f2f2">
-          <Text h2 mb1>
+          <Text h2 mb2>
             Card Details
           </Text>
           <CardTextFieldScreen onValid={trackCardParams} />
@@ -274,7 +272,7 @@ const styles = StyleSheet.create({
   applyBtn: {
     position: 'absolute',
     right: 0,
-    bottom: 0,
+    bottom: 1,
     borderRadius: 1,
   },
   bottomButtons: {
