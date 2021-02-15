@@ -1,4 +1,4 @@
-import { theme } from '@constants/index';
+import { images, theme } from '@constants/index';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { AuthContext } from '@utils/helpers/withAuthContext';
 import fbLogout from '@utils/LogoutManager/FbLogout';
@@ -40,10 +40,24 @@ function DrawerContent({ navigation, progress }) {
     <DrawerContentScrollView>
       <Block flex={false}>
         <Block flex={false} style={{ margin: SIZES.padding, paddingTop: SIZES.padding }}>
-          {picture && (
+          {picture ? (
             <Block flex={false}>
               <Animated.Image
                 source={{ uri: picture }}
+                resizeMode="cover"
+                style={{
+                  height: 100,
+                  width: 100,
+                  borderRadius: SIZES.radius,
+                  marginBottom: SIZES.padding / 2,
+                  transform: [{ translateX, scale }],
+                }}
+              />
+            </Block>
+          ) : (
+            <Block flex={false}>
+              <Animated.Image
+                source={{ uri: images.defaultAvatar }}
                 resizeMode="cover"
                 style={{
                   height: 100,
