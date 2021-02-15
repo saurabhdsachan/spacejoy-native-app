@@ -7,9 +7,8 @@ import { fetcher, handle } from '@utils/apiFetcher';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import sortByKey from '@utils/helpers/helpers';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, StatusBar, StyleSheet, TextInput } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, StatusBar, StyleSheet, TextInput } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
 import { Modalize } from 'react-native-modalize';
 import { Portal } from 'react-native-portalize';
 import stripe from 'tipsi-stripe';
@@ -157,117 +156,117 @@ const PaymentScreen = ({ route }) => {
     }
   };
   return (
-    <Block color="white" padding={[SIZES.safe + 20, 0, 0, 0]}>
-      <StatusBar barStyle="dark-content" />
-      <Block flex={false} style={[styles.pageHeader, { top: headerHeight - 40 }]}>
-        <Text h2> Secure Checkout</Text>
-        <Text> Powered by Stripe </Text>
-      </Block>
-      <Block flex={false} color="white" padding={[0, SIZES.padding, 0, SIZES.padding]}>
-        <Button ghost center style={{ borderRadius: SIZES.radius / 4 }} onPress={openCouponModal}>
-          <Text center transform="capitalize">
-            Apply Coupon
-          </Text>
-        </Button>
-      </Block>
-      <Block flex={5} color="white" padding={[0, SIZES.padding]}>
-        <Block row paddingVertical={SIZES.padding} style={styles.cartHeader} space="between" flex={0.5}>
-          <Block middle>
-            <Text bold>
-              Room Type{' '}
-              <Text light>{userDesignSelections?.length > 4 ? ` ( ${userDesignSelections?.length} rooms )` : ''}</Text>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={SIZES.padding * 3}>
+      <Block color="white" padding={[SIZES.safe + 20, 0, 0, 0]}>
+        <StatusBar barStyle="dark-content" />
+        <Block flex={false} color="white" padding={[0, SIZES.padding, 0, SIZES.padding]}>
+          <Button ghost center style={{ borderRadius: SIZES.radius / 4 }} onPress={openCouponModal}>
+            <Text center transform="capitalize">
+              Apply Coupon
             </Text>
-          </Block>
-          <Block middle center>
-            <Text bold align="right">
-              Package
-            </Text>
-          </Block>
+          </Button>
         </Block>
-        <FlatList
-          keyExtractor={(item, index) => `roomItem-${index}`}
-          data={sortedArray}
-          contentContainerStyle={styles.lastCard}
-          renderItem={({ item, index }) => (
-            <RoomItem
-              data={{ item, index }}
-              removeSelection={false}
-              updateSelection={() => {}}
-              pricingItems={pricingItems}
-              updateStorage={() => {}}
-              isEditable={false}
+        <Block flex={4} color="white" padding={[0, SIZES.padding]}>
+          <Block row paddingVertical={SIZES.padding / 2} style={styles.cartHeader} space="between" flex={0.5}>
+            <Block middle>
+              <Text bold>
+                Room Type{' '}
+                <Text light>
+                  {userDesignSelections?.length > 4 ? ` ( ${userDesignSelections?.length} rooms )` : ''}
+                </Text>
+              </Text>
+            </Block>
+            <Block middle center>
+              <Text bold align="right">
+                Package
+              </Text>
+            </Block>
+          </Block>
+          <Block flex={3} style={styles.cartHeader}>
+            <FlatList
+              keyExtractor={(item, index) => `roomItem-${index}`}
+              data={sortedArray}
+              contentContainerStyle={styles.lastCard}
+              renderItem={({ item, index }) => (
+                <RoomItem
+                  data={{ item, index }}
+                  removeSelection={false}
+                  updateSelection={() => {}}
+                  pricingItems={pricingItems}
+                  updateStorage={() => {}}
+                  isEditable={false}
+                  lastChild={index === sortedArray.length - 1}
+                />
+              )}
             />
-          )}
-        />
-      </Block>
-      <Block row flex={1} color="white" padding={[0, SIZES.padding]}>
-        <Block row>
-          <Text bold>Estimated Price</Text>
+          </Block>
         </Block>
-        <Block>
-          <Text style={{ textAlign: 'right' }}>$ {totalAmount}</Text>
+        <Block row flex={1} color="white" padding={[SIZES.padding, SIZES.padding, 0, SIZES.padding]}>
+          <Block row>
+            <Text bold>Estimated Price</Text>
+          </Block>
+          <Block>
+            <Text style={{ textAlign: 'right' }}>$ {totalAmount}</Text>
+          </Block>
         </Block>
-      </Block>
-      <Block flex={2} padding={SIZES.padding} color="#f2f2f2">
-        <Text h2 mb1>
-          Card Details
-        </Text>
-        <CardTextFieldScreen onValid={trackCardParams} />
-      </Block>
-      <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
-        <Block flex={1}>
+        <Block flex={2} padding={SIZES.padding} color="#f2f2f2">
+          <Text h2 mb1>
+            Card Details
+          </Text>
+          <CardTextFieldScreen onValid={trackCardParams} />
           <Button
             loading={loading}
             gradient
             onPress={handlePayment}
-            style={{ borderRadius: SIZES.radius / 4, width: '100%' }}
+            style={{ borderRadius: SIZES.radius / 4 }}
+            marginVertical={SIZES.padding}
           >
             <Text center white size={16}>
               Pay ${totalAmount}
             </Text>
           </Button>
         </Block>
-      </LinearGradient>
-      <Portal>
-        <Modalize ref={couponModalRef} modalTopOffset={200}>
-          {loading && (
-            <Block center middle color={COLORS.semiTransparent} style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}>
-              <ActivityIndicator size="small" />
-            </Block>
-          )}
-          <Block padding={SIZES.padding}>
-            <Block>
-              <Text h2>Apply Coupon</Text>
-            </Block>
-            <Block style={{ marginTop: SIZES.padding / 2 }}>
-              <TextInput
-                keyboardType="email-address"
-                placeholderTextColor={COLORS.gray}
-                style={styles.textInput}
-                placeholder="Apply Coupons"
-                onChangeText={(text) => setCurrentCouponCode(text)}
-              />
-              <Button color="black" style={styles.applyBtn} onPress={() => validateCoupon(currentCouponCode)}>
-                <Text color="white">APPLY</Text>
-              </Button>
-            </Block>
+        <Portal>
+          <Modalize ref={couponModalRef} modalTopOffset={200}>
+            {loading && (
+              <Block center middle color={COLORS.semiTransparent} style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}>
+                <ActivityIndicator size="small" />
+              </Block>
+            )}
+            <Block padding={SIZES.padding}>
+              <Block>
+                <Text h2>Apply Coupon</Text>
+              </Block>
+              <Block style={{ marginTop: SIZES.padding / 2 }}>
+                <TextInput
+                  keyboardType="email-address"
+                  placeholderTextColor={COLORS.gray}
+                  style={styles.textInput}
+                  placeholder="Apply Coupons"
+                  onChangeText={(text) => setCurrentCouponCode(text)}
+                />
+                <Button color="black" style={styles.applyBtn} onPress={() => validateCoupon(currentCouponCode)}>
+                  <Text color="white">APPLY</Text>
+                </Button>
+              </Block>
 
-            <ScrollView>
-              {couponsList.map((item) => {
-                return (
-                  <CouponCard
-                    title={item.title}
-                    code={item.code}
-                    description={item.description}
-                    validateCoupon={validateCoupon}
-                  />
-                );
-              })}
-            </ScrollView>
-          </Block>
-        </Modalize>
-      </Portal>
-    </Block>
+              <ScrollView>
+                {couponsList.map((item) => {
+                  return (
+                    <CouponCard
+                      title={item.title}
+                      code={item.code}
+                      description={item.description}
+                      validateCoupon={validateCoupon}
+                    />
+                  );
+                })}
+              </ScrollView>
+            </Block>
+          </Modalize>
+        </Portal>
+      </Block>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -294,6 +293,10 @@ const styles = StyleSheet.create({
   pageHeader: {
     position: 'absolute',
     left: 65,
+  },
+  pageHeaderRight: {
+    position: 'absolute',
+    right: SIZES.padding,
   },
   cartHeader: {
     borderBottomWidth: 2,

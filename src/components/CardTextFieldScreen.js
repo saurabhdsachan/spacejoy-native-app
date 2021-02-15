@@ -1,12 +1,6 @@
 import React, { PureComponent } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
-import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
+import { StyleSheet, View } from 'react-native';
 import { PaymentCardTextField } from 'tipsi-stripe';
-
-const ContainerView = Platform.select({
-  ios: KeyboardAvoidingView,
-  android: View,
-});
 
 export default class CardTextFieldScreen extends PureComponent {
   static title = 'Card Text Field';
@@ -39,26 +33,17 @@ export default class CardTextFieldScreen extends PureComponent {
   };
 
   render() {
-    const { valid, params } = this.state;
-
     return (
-      <ContainerView
-        behavior="padding"
-        style={styles.container}
-        onResponderGrant={dismissKeyboard}
-        onStartShouldSetResponder={() => true}
-      >
-        <View>
-          <PaymentCardTextField
-            accessible={false}
-            style={styles.field}
-            onParamsChange={this.handleFieldParamsChange}
-            numberPlaceholder="XXXX XXXX XXXX XXXX"
-            expirationPlaceholder="MM/YY"
-            cvcPlaceholder="CVC"
-          />
-        </View>
-      </ContainerView>
+      <View>
+        <PaymentCardTextField
+          accessible={false}
+          style={styles.field}
+          onParamsChange={this.handleFieldParamsChange}
+          numberPlaceholder="XXXX XXXX XXXX XXXX"
+          expirationPlaceholder="MM/YY"
+          cvcPlaceholder="CVC"
+        />
+      </View>
     );
   }
 }

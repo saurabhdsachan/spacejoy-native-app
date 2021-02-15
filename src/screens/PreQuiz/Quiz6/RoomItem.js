@@ -15,6 +15,7 @@ const RoomItem = ({
   pricingItems,
   updateStorage,
   isEditable = true,
+  lastChild,
 }) => {
   const getPrice = (packageName) => {
     let packagePrice = '';
@@ -47,10 +48,15 @@ const RoomItem = ({
       </View>
     );
   };
-  const swipingOptions = isEditable ? rightItem : null;
   return (
     <Swipeable renderRightActions={rightItem}>
-      <Block row spaceBetween middle color={COLORS.white} style={[styles.radioCard]}>
+      <Block
+        row
+        spaceBetween
+        middle
+        color={COLORS.white}
+        style={[styles.radioCard, ...(lastChild ? [styles.lastChild] : [])]}
+      >
         <Block flex={5} middle>
           <Text>{item.title}</Text>
         </Block>
@@ -96,6 +102,9 @@ const styles = StyleSheet.create({
     paddingVertical: SIZES.padding / 1.2,
     // paddingHorizontal: SIZES.padding,
     overflow: 'hidden',
+  },
+  lastChild: {
+    borderBottomWidth: 0,
   },
   rightItem: {
     backgroundColor: COLORS.red,
