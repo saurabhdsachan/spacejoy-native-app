@@ -47,6 +47,7 @@ const RoomItem = ({
       </View>
     );
   };
+  const swipingOptions = isEditable ? rightItem : null;
   return (
     <Swipeable renderRightActions={rightItem}>
       <Block row spaceBetween middle color={COLORS.white} style={[styles.radioCard]}>
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.gray2,
     paddingVertical: SIZES.padding / 1.2,
-    paddingHorizontal: SIZES.padding,
+    // paddingHorizontal: SIZES.padding,
     overflow: 'hidden',
   },
   rightItem: {

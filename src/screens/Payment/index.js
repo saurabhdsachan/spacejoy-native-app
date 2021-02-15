@@ -149,7 +149,6 @@ const PaymentScreen = ({ route }) => {
         },
       })
     );
-    console.log('validation res is----', validationRes, validationErr);
     if (validationRes && !validationErr) {
       const { statusCode, data } = validationRes;
       console.log(data, statusCode);
@@ -158,21 +157,21 @@ const PaymentScreen = ({ route }) => {
     }
   };
   return (
-    <Block color="white" padding={[SIZES.safe + 20, SIZES.padding, 0, SIZES.padding]}>
+    <Block color="white" padding={[SIZES.safe + 20, 0, 0, 0]}>
       <StatusBar barStyle="dark-content" />
       <Block flex={false} style={[styles.pageHeader, { top: headerHeight - 40 }]}>
         <Text h2> Secure Checkout</Text>
         <Text> Powered by Stripe </Text>
       </Block>
-      <Block flex={false}>
+      <Block flex={false} color="white" padding={[0, SIZES.padding, 0, SIZES.padding]}>
         <Button ghost center style={{ borderRadius: SIZES.radius / 4 }} onPress={openCouponModal}>
           <Text center transform="capitalize">
             Apply Coupon
           </Text>
         </Button>
       </Block>
-      <Block flex={5} color="white">
-        <Block row padding={SIZES.padding} style={styles.cartHeader} space="between" flex={0.5}>
+      <Block flex={5} color="white" padding={[0, SIZES.padding]}>
+        <Block row paddingVertical={SIZES.padding} style={styles.cartHeader} space="between" flex={0.5}>
           <Block middle>
             <Text bold>
               Room Type{' '}
@@ -209,7 +208,10 @@ const PaymentScreen = ({ route }) => {
           <Text style={{ textAlign: 'right' }}>$ {totalAmount}</Text>
         </Block>
       </Block>
-      <Block flex={2} paddingVertical={SIZES.padding}>
+      <Block flex={2} padding={SIZES.padding} color="#f2f2f2">
+        <Text h2 mb1>
+          Card Details
+        </Text>
         <CardTextFieldScreen onValid={trackCardParams} />
       </Block>
       <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
