@@ -96,6 +96,8 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
     creatingBookmark: false,
   });
 
+  const mounted = useRef(true);
+
   const [fetchError, setFetchError] = useState(true);
   const [selectedBookmark, setSelectedBookMark] = useState(bookmarkId);
 
@@ -117,24 +119,33 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
       try {
         const [fetchedBookmarkList, error] = await handle(fetcher({ endPoint, method: 'GET' }));
         if (error) {
-          throw new Error();
+          console.log(error);
         } else {
-          if (fetchedBookmarkList?.data?.length) setBookmarkList(fetchedBookmarkList.data);
-          else {
-            setBookmarkList([]);
-            setFetchError(true);
+          if (fetchedBookmarkList?.data?.length) {
+            if (mounted.current) setBookmarkList(fetchedBookmarkList.data);
+            else {
+              if (mounted.current) {
+                setBookmarkList([]);
+                setFetchError(true);
+              }
+            }
           }
         }
       } catch (e) {
         console.error(e);
       }
-      setLoading({
-        loadingBookmarks: true,
-        savingBookmarks: false,
-        creatingBookmark: false,
-      });
+      if (mounted.current) {
+        setLoading({
+          loadingBookmarks: true,
+          savingBookmarks: false,
+          creatingBookmark: false,
+        });
+      }
     };
     getBookmarks();
+    return () => {
+      mounted.current = false;
+    };
   }, [type]);
 
   const onCheck = (id) => {
