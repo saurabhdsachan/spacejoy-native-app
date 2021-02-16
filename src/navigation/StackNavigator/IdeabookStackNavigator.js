@@ -7,7 +7,7 @@ import React from 'react';
 const Stack = createStackNavigator();
 
 const ScreenHeaderOptions = {
-  headerBackImage: () => <HeaderBack />,
+  headerBackImage: () => <HeaderBack withBorder />,
   headerTransparent: false,
   headerBackTitleVisible: false,
   headerTitleAlign: 'left',
