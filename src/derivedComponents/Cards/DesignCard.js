@@ -10,9 +10,8 @@ import BookmarkButton from '../BookmarkButton';
 import LikeButton from '../LikeButton';
 import ShareButton from '../ShareButton';
 
-const DesignCard = ({ data: designDataProp, navigation, noBookmark }) => {
+const DesignCard = ({ data: designDataProp, navigation, noBookmark, route }) => {
   const [data, setData] = useState(designDataProp);
-
   const onBookmarkChange = (value) => {
     setData({ ...data, bookmarked: value.status, bookmarkId: value.bookmarkId });
   };
@@ -68,7 +67,14 @@ const DesignCard = ({ data: designDataProp, navigation, noBookmark }) => {
       </TouchableOpacity>
       <Block row paddingHorizontal={SIZES.padding / 2} paddingVertical={SIZES.padding / 2}>
         <Block>
-          <LikeButton id={data?._id} liked={data?.liked} onLikeChange={handleLike} type="designs" />
+          <LikeButton
+            id={data?._id}
+            liked={data?.liked}
+            onLikeChange={handleLike}
+            type="designs"
+            navigation={navigation}
+            route={route}
+          />
         </Block>
         <Block>
           <Button raw onPress={() => onShare(data.name, data.slug)}>

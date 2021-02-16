@@ -1,6 +1,7 @@
 import { Block, Button, Radio, Text } from '@components/index';
 import { images, theme } from '@constants/index';
 import Budget from '@data/Quiz2.js';
+import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React from 'react';
 import { StatusBar, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -9,12 +10,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const { SIZES, COLORS } = theme;
 
 const { sofa, lamp, chair, teddy } = images;
-
+const quizTitle = 'quiz2';
 const Quiz2 = ({ navigation }) => {
+  const { userAnswers, saveUserAnswer, saveToStorage } = React.useContext(DesignSelectionContext);
+
   const handleChange = (value) => {
-    alert(value);
+    saveUserAnswer(quizTitle, value);
   };
 
+  const savedAnswerForThisStep = userAnswers[quizTitle];
   return (
     <Block color={COLORS.white} padding={[SIZES.safe, SIZES.padding, SIZES.padding, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
@@ -35,7 +39,7 @@ const Quiz2 = ({ navigation }) => {
                     value: item.displayName,
                     size: 18,
                     color: item.color,
-                    selected: true,
+                    selected: item.displayName === savedAnswerForThisStep,
                   }}
                 />
                 <Text bold body mb1 mt2>
@@ -53,7 +57,14 @@ const Quiz2 = ({ navigation }) => {
             <Icon name="ios-arrow-back" size={14} /> Prev
           </Text>
         </Button>
-        <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Quiz3')}>
+        <Button
+          color={COLORS.black}
+          size="sm"
+          onPress={() => {
+            saveToStorage(quizTitle);
+            navigation.navigate('Quiz3');
+          }}
+        >
           <Text center color={COLORS.white}>
             Next <Icon name="ios-arrow-forward" size={14} />
           </Text>

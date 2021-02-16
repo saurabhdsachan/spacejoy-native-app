@@ -11,10 +11,10 @@ import QuizCard from './QuizCard';
 import quiz from './quizData';
 
 const { SIZES, COLORS } = theme;
-
+const quizTitle = 'quiz1';
 const Quiz1 = ({ navigation }) => {
   const [quizData, setQuizRenderData] = useState([...quiz]);
-  const { userDesignSelections } = React.useContext(DesignSelectionContext);
+  const { userDesignSelections, saveToStorage } = React.useContext(DesignSelectionContext);
   const setSelection = (id) => {
     const updatedSelections = quizData.map((item) => {
       if (item.id === id) {
@@ -132,7 +132,14 @@ const Quiz1 = ({ navigation }) => {
               <Icon name="ios-arrow-back" size={14} /> Prev
             </Text>
           </Button>
-          <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Quiz2')}>
+          <Button
+            color={COLORS.black}
+            size="sm"
+            onPress={() => {
+              saveToStorage(quizTitle);
+              navigation.navigate('Quiz2');
+            }}
+          >
             <Text center color={COLORS.white}>
               Next <Icon name="ios-arrow-forward" size={14} />
             </Text>

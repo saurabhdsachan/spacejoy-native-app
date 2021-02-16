@@ -8,13 +8,13 @@ const QuantitySelector = ({ borderColor, quantity, item }) => {
   const { addSelection, removeSelection } = React.useContext(DesignSelectionContext);
   return (
     <View style={[styles.viewStyles, { borderColor }]}>
-      <TouchableOpacity onPress={() => removeSelection(item)} style={styles.btnStyles}>
+      <TouchableOpacity onPress={() => removeSelection(item, 'quiz1')} style={styles.btnStyles}>
         <Icon name="remove" size={18} color="#6D7278" />
       </TouchableOpacity>
       <TouchableOpacity activeOpacity={1} style={{ justifyContent: 'center' }}>
         <Text style={styles.txtStyles}>{quantity}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => addSelection(item)} style={styles.btnStyles}>
+      <TouchableOpacity onPress={() => addSelection(item, 'quiz1')} style={styles.btnStyles}>
         <Icon name="add" size={18} color="#6D7278" />
       </TouchableOpacity>
     </View>

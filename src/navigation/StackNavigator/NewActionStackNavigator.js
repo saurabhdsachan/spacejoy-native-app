@@ -2,6 +2,9 @@ import { HeaderBack } from '@components/index';
 import { COLORS } from '@constants/index';
 import { createStackNavigator } from '@react-navigation/stack';
 import DesignService from '@screens/DesignService';
+// import NewAction from '@screens/NewAction';
+import PaymentScreen from '@screens/Payment';
+import PaymentScreenHeader from '@screens/Payment/PaymentScreenHeader';
 import Quiz1 from '@screens/PreQuiz/Quiz1';
 import Quiz2 from '@screens/PreQuiz/Quiz2';
 import Quiz3 from '@screens/PreQuiz/Quiz3';
@@ -36,6 +39,15 @@ const NewActionStackNavigator = ({ navigation }) => {
         <Stack.Screen name="Quiz4" component={Quiz4} options={QuizScreenHeaderOptions} />
         <Stack.Screen name="Quiz5" component={Quiz5} options={QuizScreenHeaderOptions} />
         <Stack.Screen name="Quiz6" component={Quiz6} options={QuizScreenHeaderOptions} />
+        <Stack.Screen
+          name="PaymentScreen"
+          component={PaymentScreen}
+          options={{
+            ...QuizScreenHeaderOptions,
+            headerTitle: (props) => <PaymentScreenHeader {...props} />,
+            headerTitleAlign: 'left',
+          }}
+        />
       </Stack.Navigator>
     </DesignSelectionContext.Provider>
   );

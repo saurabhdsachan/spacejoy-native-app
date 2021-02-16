@@ -437,6 +437,10 @@ PODS:
     - React-Core
   - RNVectorIcons (7.1.0):
     - React
+  - Stripe (19.0.1)
+  - tipsi-stripe (8.0.2):
+    - React
+    - Stripe (>= 19.0.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -507,6 +511,8 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - Stripe (~> 19.0.1)
+  - tipsi-stripe (from `../node_modules/tipsi-stripe`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -540,6 +546,7 @@ SPEC REPOS:
     - nanopb
     - OpenSSL-Universal
     - PromisesObjC
+    - Stripe
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -625,6 +632,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  tipsi-stripe:
+    :path: "../node_modules/tipsi-stripe"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -699,9 +708,11 @@ SPEC CHECKSUMS:
   RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
   RNScreens: 45c457af3d2ee9e08fc01e70da87e653d46b1198
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
+  Stripe: 03313f9520a0786e2c00d9a7a2672c11e08821af
+  tipsi-stripe: e8352b11b34a5c4303debc2bc563ba2d427e2347
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 25f05bee37a3bd57b4d096c5aab22f15c329bccd
+PODFILE CHECKSUM: beec6c95d303d7a09c88cd799b4e78f1e2fd61c3
 
 COCOAPODS: 1.10.1

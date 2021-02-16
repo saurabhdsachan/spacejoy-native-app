@@ -8,7 +8,25 @@ import Dropdown from './Dropdown';
 
 const { COLORS, SIZES } = theme;
 
-const RoomItem = ({ data: { item, index }, removeSelection, updateSelection, pricingItems }) => {
+const RoomItem = ({
+  data: { item, index },
+  removeSelection,
+  updateSelection,
+  pricingItems,
+  updateStorage,
+  isEditable = true,
+  lastChild,
+}) => {
+  const getPrice = (packageName) => {
+    let packagePrice = '';
+    pricingItems.forEach((item) => {
+      if (item.slug.toLowerCase() === packageName) {
+        packagePrice = item?.salePrice.value;
+      }
+    });
+    return packagePrice;
+  };
+
   const rightItem = (progress, dragX) => {
     const scale = progress.interpolate({
       inputRange: [0, 1],
@@ -32,22 +50,46 @@ const RoomItem = ({ data: { item, index }, removeSelection, updateSelection, pri
   };
   return (
     <Swipeable renderRightActions={rightItem}>
-      <Block row spaceBetween middle color={COLORS.white} style={[styles.radioCard]}>
+      <Block
+        row
+        spaceBetween
+        middle
+        color={COLORS.white}
+        style={[styles.radioCard, ...(lastChild ? [styles.lastChild] : [])]}
+      >
         <Block flex={5} middle>
           <Text>{item.title}</Text>
         </Block>
-        <Block flex={4}>
-          <Dropdown
-            data={pricingItems}
-            onChange={(value) => updateSelection(item, value)}
-            value={item?.selectedPackage || item?.defaultSelection}
-          />
+        <Block flex={4} end>
+          {isEditable ? (
+            <Dropdown
+              data={pricingItems}
+              onChange={(value) => {
+                updateSelection(item, value, 'quiz1');
+                updateStorage('quiz1');
+              }}
+              value={item?.selectedPackage || item?.defaultSelection}
+            />
+          ) : (
+            <Text color="black" style={{ textAlign: 'right' }} transform="capitalize">
+              {item?.selectedPackage || item?.defaultSelection}{' '}
+              {` $${getPrice(item?.selectedPackage || item?.defaultSelection)}`}
+            </Text>
+          )}
         </Block>
-        <Block flex={1} end>
-          <Button raw onPress={() => removeSelection(item)}>
-            <Icon name="remove-circle-outline" size={16} color={COLORS.red} />
-          </Button>
-        </Block>
+        {removeSelection ? (
+          <Block flex={1} end>
+            <Button
+              raw
+              onPress={() => {
+                removeSelection(item, 'quiz1');
+                updateStorage('quiz1');
+              }}
+            >
+              <Icon name="remove-circle-outline" size={16} color={COLORS.red} />
+            </Button>
+          </Block>
+        ) : null}
       </Block>
     </Swipeable>
   );
@@ -58,8 +100,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.gray2,
     paddingVertical: SIZES.padding / 1.2,
-    paddingHorizontal: SIZES.padding,
+    // paddingHorizontal: SIZES.padding,
     overflow: 'hidden',
+  },
+  lastChild: {
+    borderBottomWidth: 0,
   },
   rightItem: {
     backgroundColor: COLORS.red,

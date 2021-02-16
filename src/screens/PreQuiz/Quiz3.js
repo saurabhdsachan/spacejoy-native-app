@@ -1,6 +1,7 @@
 import { Block, Button, Radio, Text } from '@components/';
 import { images, theme } from '@constants/index';
 import QuizData from '@data/Quiz3';
+import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React from 'react';
 import { Animated, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -12,12 +13,12 @@ const { quiz3Banner, bg } = images;
 const HEADER_MIN_HEIGHT = 170;
 const HEADER_MAX_HEIGHT = 280;
 
-const handleChange = (value) => {
-  alert(value);
-};
+const quizTitle = 'quiz3';
 
 const Quiz3 = ({ navigation }) => {
   const scrollY = React.useRef(new Animated.Value(0)).current;
+  const { userAnswers, saveUserAnswer, saveToStorage } = React.useContext(DesignSelectionContext);
+  const savedAnswerForThisStep = userAnswers[quizTitle];
 
   const inputRange = [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT];
 
@@ -44,6 +45,9 @@ const Quiz3 = ({ navigation }) => {
     outputRange: [0, 200],
     extrapolate: 'clamp',
   });
+  const handleChange = (value) => {
+    saveUserAnswer(quizTitle, value);
+  };
 
   return (
     <Block middle color={COLORS.white} padding={SIZES.padding}>
@@ -61,7 +65,7 @@ const Quiz3 = ({ navigation }) => {
                 value: item.title,
                 size: 18,
                 color: item.bg,
-                selected: false,
+                selected: item.title === savedAnswerForThisStep,
               }}
               onChange={handleChange}
             />
@@ -109,7 +113,14 @@ const Quiz3 = ({ navigation }) => {
             <Icon name="ios-arrow-back" size={14} /> Prev
           </Text>
         </Button>
-        <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Quiz4')}>
+        <Button
+          color={COLORS.black}
+          size="sm"
+          onPress={() => {
+            saveToStorage(quizTitle);
+            navigation.navigate('Quiz4');
+          }}
+        >
           <Text center color={COLORS.white}>
             Next <Icon name="ios-arrow-forward" size={14} />
           </Text>
