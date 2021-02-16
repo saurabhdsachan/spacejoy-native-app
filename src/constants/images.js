@@ -19,7 +19,7 @@ export const homeBg = require('../assets/images/home-bg.jpg');
 export const ideabookHeader = require('../assets/images/Ideabook.png');
 
 export const defaultAvatar =
-  'https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,c_fill,g_faces,h_200,w_200/server/user/avatar/5de7b9e1dd634e002393ecbb';
+  'https://images.unsplash.com/photo-1579783483458-83d02161294e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1328';
 
 export default {
   onboarding1,

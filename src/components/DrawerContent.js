@@ -15,7 +15,7 @@ const { SIZES, COLORS } = theme;
 
 function DrawerContent({ navigation, progress }) {
   const { token, data, signOut } = React.useContext(AuthContext);
-  const { name = '', email = '', picture = '', channel } = data;
+  const { name, email, picture, channel } = data;
 
   const handleSignOut = () => {
     if (channel === 'facebook') {
@@ -70,12 +70,16 @@ function DrawerContent({ navigation, progress }) {
             </Block>
           )}
           <Block flex={false}>
-            <Text h2 mt2>
-              {name}
-            </Text>
-            <Text caption color="gray">
-              {email}
-            </Text>
+            {name && (
+              <Text h2 mt2>
+                {name}
+              </Text>
+            )}
+            {email && (
+              <Text caption color="gray">
+                {email}
+              </Text>
+            )}
           </Block>
         </Block>
         {token ? null : (
@@ -96,21 +100,21 @@ function DrawerContent({ navigation, progress }) {
         <Block flex={false} style={{ margin: SIZES.padding }}>
           <Block flex={false} animated style={styles.navItem}>
             <Button raw onPress={() => navigation.navigate('Profile')}>
-              <Text body>
+              <Text>
                 <Icon name="person-outline" size={14} /> My Profile
               </Text>
             </Button>
           </Block>
           <Block flex={false} animated style={styles.navItem}>
             <Button raw onPress={() => navigation.navigate('My Designs')}>
-              <Text body>
+              <Text>
                 <Icon name="ios-image-outline" size={14} /> Design Orders
               </Text>
             </Button>
           </Block>
           <Block flex={false} animated style={styles.navItem}>
             <Button raw onPress={() => navigation.navigate('Store')}>
-              <Text body>
+              <Text>
                 <Icon name="basket-outline" size={14} /> Store Orders
               </Text>
             </Button>
@@ -118,7 +122,7 @@ function DrawerContent({ navigation, progress }) {
           {token && (
             <Block flex={false} animated style={styles.navItem}>
               <Button raw onPress={() => navigation.navigate('Ideabook')}>
-                <Text body>
+                <Text>
                   <Icon name="bulb-outline" size={14} /> Ideabook
                 </Text>
               </Button>
@@ -127,7 +131,7 @@ function DrawerContent({ navigation, progress }) {
           {token && (
             <Block flex={false} animated style={styles.navItem}>
               <Button raw onPress={handleSignOut}>
-                <Text body>
+                <Text>
                   <Icon name="md-walk-outline" size={14} /> Sign Out
                 </Text>
               </Button>
