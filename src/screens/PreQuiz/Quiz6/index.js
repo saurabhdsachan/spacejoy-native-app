@@ -1,8 +1,11 @@
 import { Block, Button, Text } from '@components/index';
+import { LottieAnimations } from '@components/LottieAnimations';
 import { theme } from '@constants/index';
+import checkAuth from '@utils/helpers/checkAuth';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
+import sortByKey from '@utils/helpers/helpers';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Animated, StatusBar, StyleSheet } from 'react-native';
+import { ActivityIndicator, Animated, Dimensions, StatusBar, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { Modalize } from 'react-native-modalize';
@@ -15,56 +18,68 @@ import RoomItem from './RoomItem';
 
 const { SIZES, COLORS } = theme;
 
-const { width } = SIZES;
+const { width } = Dimensions.get('window');
 const ITEM_SIZE = width * 0.8;
 const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
 
-const sortByKey = (array, key) => {
-  return [...array].sort((a, b) => {
-    const x = a[key];
-    const y = b[key];
-    return x < y ? -1 : x > y ? 1 : 0;
-  });
-};
-
-const Quiz6 = () => {
+const Quiz6 = ({ navigation, route }) => {
   const [pricingItems, setPricingItems] = useState([]);
   const [currentActive, setCurrentActive] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [loading, setLoadingStatus] = useState(false);
-  const [showIndicator, setIndicatorStatus] = useState(false);
   const modalizeRef = useRef(null);
   const [pricingMap, setPricingMap] = useState({});
-  const scrollX = React.useRef(new Animated.Value(0)).current;
+  const scrollX = new Animated.Value(0);
   const [isModalOpen, setModalOpen] = useState(false);
-  const { userDesignSelections, removeSelection, updateSelection } = React.useContext(DesignSelectionContext);
+  const {
+    userDesignSelections,
+    removeSelection,
+    updateSelection,
+    saveToStorage,
+    savePricingData,
+    pricingData,
+  } = React.useContext(DesignSelectionContext);
   const sortedArray = sortByKey(userDesignSelections, 'title');
+  const j = 0;
   const flatList = useRef(null);
+  console.log('scrollX value', scrollX);
   useEffect(() => {
+    const priceMap = {};
     // fetch pricing items
     setLoadingStatus(true);
-    fetchPricingItems()
-      .then((data) => {
-        const priceMap = {};
-        const dataToRender = data.map((price, index) => {
-          priceMap[price.slug] = price.salePrice.value;
-          if (index === 0) {
-            return { ...price, active: true, ref: React.createRef() };
-          }
-          return { ...price, active: false, ref: React.createRef() };
+    if (pricingData.length === 0) {
+      fetchPricingItems()
+        .then((data) => {
+          const dataToRender = data.map((price, index) => {
+            priceMap[price.slug] = price.salePrice.value;
+            if (index === 0) {
+              return { ...price, active: true, ref: React.createRef() };
+            }
+            return { ...price, active: false, ref: React.createRef() };
+          });
+          setPricingMap(priceMap);
+          setPricingItems(dataToRender);
+          setLoadingStatus(false);
+          // setCurrentActive(1);
+        })
+        .catch((e) => {
+          // set error
+          setLoadingStatus(false);
+        })
+        .finally(() => {
+          setLoadingStatus(false);
         });
-        setPricingMap(priceMap);
-        setPricingItems(dataToRender);
-        setLoadingStatus(false);
-        // setCurrentActive(1);
-      })
-      .catch((e) => {
-        // set error
-        setLoadingStatus(false);
-      })
-      .finally(() => {
-        setLoadingStatus(false);
+    } else {
+      const dataToRender = pricingData.map((price, index) => {
+        priceMap[price.slug] = price.salePrice.value;
+        if (index === 0) {
+          return { ...price, active: true, ref: React.createRef() };
+        }
+        return { ...price, active: false, ref: React.createRef() };
       });
+      setPricingMap(priceMap);
+      setPricingItems(dataToRender);
+    }
   }, []);
 
   useEffect(() => {
@@ -91,8 +106,12 @@ const Quiz6 = () => {
   const onOpen = () => {
     modalizeRef.current?.open();
     setModalOpen(true);
-    setIndicatorStatus(true);
   };
+
+  const cleanUpAfterModalClose = () => {
+    setModalOpen(false);
+  };
+  const resetScrollPosition = () => {};
   const scrollXInterpolation = isModalOpen ? { scrollX } : { scrollX: null };
   return (
     <Block style={styles.container} color="white">
@@ -105,13 +124,8 @@ const Quiz6 = () => {
         <StatusBar barStyle="dark-content" />
         <Text h2>Package</Text>
       </Block>
-      <Block color="white" flex={false} middle style={{ height: 120 }} margin={[SIZES.padding, 0, 0, 0]}>
-        <PricingTabs
-          data={pricingItems}
-          onPress={setCurrentActive}
-          {...scrollXInterpolation}
-          showIndicator={showIndicator}
-        />
+      <Block color="white" flex={false} middle style={{ height: 113 }} margin={[SIZES.padding, 0, 0, 0]}>
+        <PricingTabs data={pricingItems} onPress={setCurrentActive} {...scrollXInterpolation} showIndicator={false} />
       </Block>
       {!loading && (
         <Block flex={1} color="white">
@@ -132,49 +146,82 @@ const Quiz6 = () => {
               </Text>
             </Button>
           </Block>
-          <Block
-            row
-            padding={[0, SIZES.padding, 0, SIZES.padding]}
-            style={styles.cartHeader}
-            space="between"
-            flex={0.5}
-          >
-            <Block middle>
-              <Text h3>
-                Room Type{' '}
-                <Text light>
-                  {userDesignSelections?.length > 4 ? ` [ ${userDesignSelections?.length} rooms ]` : ''}
-                </Text>
-              </Text>
-            </Block>
-            <Block middle center>
-              <Text h3 right>
-                Design Packages
-              </Text>
-            </Block>
-          </Block>
-          <Block flex={4} color="white">
-            <FlatList
-              keyExtractor={(item, index) => `roomItem-${index}`}
-              data={sortedArray}
-              contentContainerStyle={styles.lastCard}
-              renderItem={({ item, index }) => (
-                <RoomItem
-                  data={{ item, index }}
-                  removeSelection={removeSelection}
-                  updateSelection={updateSelection}
-                  pricingItems={pricingItems}
+          {userDesignSelections.length > 0 ? (
+            <>
+              <Block
+                row
+                padding={[0, SIZES.padding, 0, SIZES.padding]}
+                style={styles.cartHeader}
+                space="between"
+                flex={0.5}
+              >
+                <Block middle>
+                  <Text bold>
+                    Room Type{' '}
+                    <Text light>
+                      {userDesignSelections?.length > 4 ? ` ( ${userDesignSelections?.length} rooms )` : ''}
+                    </Text>
+                  </Text>
+                </Block>
+                <Block middle center>
+                  <Text bold center>
+                    Package
+                  </Text>
+                </Block>
+              </Block>
+              <Block flex={4} color="white" padding={[0, SIZES.padding]}>
+                <FlatList
+                  keyExtractor={(item, index) => `roomItem-${index}`}
+                  data={sortedArray}
+                  contentContainerStyle={styles.lastCard}
+                  renderItem={({ item, index }) => (
+                    <RoomItem
+                      data={{ item, index }}
+                      removeSelection={removeSelection}
+                      updateSelection={updateSelection}
+                      pricingItems={pricingItems}
+                      updateStorage={saveToStorage}
+                    />
+                  )}
                 />
-              )}
-            />
-          </Block>
-          <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
-            <Block middle center>
-              <Button color={COLORS.black} style={{ width: 150 }}>
-                <Text white center>{`Pay $${totalAmount}`}</Text>
-              </Button>
-            </Block>
-          </LinearGradient>
+              </Block>
+              <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
+                <Block flex={1} middle center>
+                  <Button
+                    color={COLORS.black}
+                    size="sm"
+                    onPress={() => {
+                      checkAuth(navigation, { totalAmount }, undefined, 'PaymentScreen', route.name);
+                    }}
+                  >
+                    <Text color="white">{`Pay $${totalAmount}`}</Text>
+                  </Button>
+                </Block>
+              </LinearGradient>
+            </>
+          ) : (
+            <>
+              <Block flex={false} height={300}>
+                <Text middle center mt2>
+                  You have no items in your cart
+                </Text>
+                <LottieAnimations name="empty" height={100} autoPlay={true} />
+              </Block>
+              <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
+                <Block flex={1} middle center>
+                  <Button
+                    color={COLORS.black}
+                    size="sm"
+                    onPress={() => {
+                      navigation.navigate('Quiz1');
+                    }}
+                  >
+                    <Text color="white">Go Back to selecting rooms</Text>
+                  </Button>
+                </Block>
+              </LinearGradient>
+            </>
+          )}
         </Block>
       )}
       <Portal>
@@ -184,6 +231,8 @@ const Quiz6 = () => {
           adjustToContentHeight={true}
           scrollViewProps={{ showsVerticalScrollIndicator: false }}
           withOverlay={true}
+          onClosed={cleanUpAfterModalClose}
+          onOpened={resetScrollPosition}
         >
           <Block padding={[0, 0, SIZES.padding * 2, 0]}>
             <Block padding={SIZES.padding}>

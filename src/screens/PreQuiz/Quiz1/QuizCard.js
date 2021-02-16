@@ -13,7 +13,7 @@ const QuizCard = ({ data, stylesArray, align, inline }) => {
   const { blockColor, radioColor, title, quantity } = data;
   const alignMiddle = { ...(align && { middle: true }) };
   const isInline = { ...(inline ? { inline: true } : { inline: false }) };
-  const select = () => !data.quantity && addSelection(data);
+  const select = () => !data.quantity && addSelection(data, 'quiz1');
 
   return (
     <Block color={blockColor} style={stylesArray} {...alignMiddle}>
