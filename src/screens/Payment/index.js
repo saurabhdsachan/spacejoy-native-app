@@ -2,14 +2,16 @@ import CardTextFieldScreen from '@components/CardTextFieldScreen';
 import { Block, Button, Text } from '@components/index';
 import { theme } from '@constants/index';
 import { checkoutRoutes } from '@constants/routes';
+import SuccessOverlay from '@screens/SuccessOverlay';
 import { fetcher, handle } from '@utils/apiFetcher';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import sortByKey from '@utils/helpers/helpers';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, KeyboardAvoidingView, StatusBar, StyleSheet, TextInput } from 'react-native';
+import { ActivityIndicator, Keyboard, KeyboardAvoidingView, StatusBar, StyleSheet, TextInput } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { Modalize } from 'react-native-modalize';
 import { Portal } from 'react-native-portalize';
+import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import stripe from 'tipsi-stripe';
 import { fetchPricingItems } from '../PreQuiz/Quiz5/fetchers';
 import RoomItem from '../PreQuiz/Quiz6/RoomItem';
@@ -25,28 +27,49 @@ stripe.setOptions({
   publishableKey: stripeToken,
 });
 
-const PaymentScreen = ({ route }) => {
+const makePayment = async (token) => {
+  try {
+    const payload = {
+      packageName: 'bliss',
+      projectId: '',
+      token,
+    };
+    const [paymentRes, paymentErr] = await handle(
+      fetcher({ endPoint: checkoutRoutes.paymentRoute, body: { data: payload }, method: 'POST' })
+    );
+    console.log(paymentRes, paymentErr);
+    if (paymentRes && !paymentErr) {
+      const { statusCode, data } = paymentRes;
+      if (statusCode <= 301) {
+        return data;
+      } else {
+        throw new Error();
+      }
+    } else {
+      throw new Error();
+    }
+  } catch {
+    throw new Error();
+  }
+};
+
+const PaymentScreen = ({ route, navigation }) => {
   const [pricingItems, setPricingItems] = useState([]);
   const [cardParams, setCardParams] = useState({});
   const [loading, setLoadingStatus] = useState(false);
   const [token, setToken] = useState(null);
-  const [error, setError] = useState(null);
+  const [paymentError, setPaymentError] = useState(null);
   // coupons logic
   const [loadingCoupons, setCouponLoadingStatus] = useState(true);
-  const couponModalRef = useRef(null);
   const [couponsList, setCouponsList] = useState([]);
   const [couponFetchError, setCouponsFetchError] = useState(false);
   const [pricingMap, setPricingMap] = useState({});
   const [currentCouponCode, setCurrentCouponCode] = useState('');
-  const {
-    userDesignSelections,
-    removeSelection,
-    updateSelection,
-    saveToStorage,
-    savePricingData,
-    pricingData,
-  } = React.useContext(DesignSelectionContext);
+  const { userDesignSelections, clearContextData, clearStorageData, pricingData } = React.useContext(
+    DesignSelectionContext
+  );
 
+  const couponModalRef = useRef(null);
   useEffect(() => {
     const priceMap = {};
     // fetch pricing items
@@ -89,21 +112,29 @@ const PaymentScreen = ({ route }) => {
     // enable card and track card params
     setCardParams(cardParams);
   };
-
+  const successOverlayRef = useRef(null);
+  const closeModal = () => {
+    successOverlayRef?.current?.close();
+  };
   const handlePayment = async () => {
-    console.log('function fired ----');
     try {
       setLoadingStatus(true);
       setToken(null);
-      setError(null);
-
+      setPaymentError(null);
       const stripeTok = await stripe.createTokenWithCard(cardParams);
-      console.log('token is ----', stripeTok);
+      const { tokenId } = stripeTok;
+      setToken(tokenId);
+      await makePayment(tokenId);
       setLoadingStatus(false);
-      setToken(stripeToken);
-      setError(null);
+      setPaymentError(null);
+      clearContextData();
+      clearStorageData();
+      // navigate to success page
+      Keyboard.dismiss();
+      successOverlayRef?.current?.open();
     } catch (error) {
-      setError(null);
+      console.log('an error occurred during pyament', error.message);
+      setPaymentError('An error occurred during payment. Please try again');
     }
   };
   const openCouponModal = async () => {
@@ -153,8 +184,21 @@ const PaymentScreen = ({ route }) => {
       console.log('error while validating', validationErr);
     }
   };
+
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={SIZES.padding * 3}>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior="padding"
+      keyboardVerticalOffset={SIZES.padding * 3}
+      onResponderGrant={dismissKeyboard}
+      onStartShouldSetResponder={() => true}
+    >
+      {loading && (
+        <Block center middle color={COLORS.semiTransparent} style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}>
+          <ActivityIndicator size="small" />
+        </Block>
+      )}
+
       <Block color="white" padding={[SIZES.safe + 20, 0, 0, 0]}>
         <StatusBar barStyle="dark-content" />
         <Block flex={false} color="white" padding={[0, SIZES.padding, 0, SIZES.padding]}>
@@ -211,6 +255,7 @@ const PaymentScreen = ({ route }) => {
           <Text h2 mb2>
             Card Details
           </Text>
+
           <CardTextFieldScreen onValid={trackCardParams} />
           <Button
             loading={loading}
@@ -226,7 +271,7 @@ const PaymentScreen = ({ route }) => {
         </Block>
         <Portal>
           <Modalize ref={couponModalRef} modalTopOffset={200}>
-            {loading && (
+            {loadingCoupons && (
               <Block center middle color={COLORS.semiTransparent} style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}>
                 <ActivityIndicator size="small" />
               </Block>
@@ -263,6 +308,13 @@ const PaymentScreen = ({ route }) => {
             </Block>
           </Modalize>
         </Portal>
+        <SuccessOverlay
+          setRef={(ref) => {
+            successOverlayRef.current = ref;
+          }}
+          navigation={navigation}
+          closeModal={closeModal}
+        />
       </Block>
     </KeyboardAvoidingView>
   );

@@ -115,6 +115,11 @@ const reducer = (prevState, action) => {
         pricingData,
       };
     }
+    case 'CLEAR_ALL': {
+      return {
+        ...initialState,
+      };
+    }
     default: {
       return { ...prevState };
     }
@@ -173,6 +178,16 @@ const useDesignSelectionContext = () => {
       },
       savePricingData: (pricingData) => {
         dispatch({ type: 'SAVE_PRICING_DATA', pricingData });
+      },
+      clearStorageData: async () => {
+        try {
+          await AsyncStorage.setItem('userQuizResponse', JSON.stringify(initialState));
+        } catch (e) {
+          console.log('Error in clearing storage', e.message);
+        }
+      },
+      clearContextData: () => {
+        dispatch({ type: 'CLEAR_ALL' });
       },
       saveToStorage: async (quizTitle) => {
         // save to async storage

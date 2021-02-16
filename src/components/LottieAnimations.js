@@ -9,6 +9,8 @@ const getAnimation = (name) => {
       return animations.Like;
     case 'empty':
       return animations.Empty;
+    case 'paymentSuccess':
+      return animations.PaymentSuccessful;
     default:
       return animations.Like;
   }
