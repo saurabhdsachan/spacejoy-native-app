@@ -30,7 +30,6 @@ const Quiz6 = ({ navigation, route }) => {
   const [pricingMap, setPricingMap] = useState({});
   const scrollX = new Animated.Value(0);
   const [isModalOpen, setModalOpen] = useState(false);
-
   const {
     userDesignSelections,
     removeSelection,

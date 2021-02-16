@@ -1,8 +1,9 @@
 import { Block, Button, Text } from '@components/index';
 import { theme } from '@constants/index';
 import checkAuth from '@utils/helpers/checkAuth';
+import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Animated, Dimensions, StatusBar, StyleSheet } from 'react-native';
+import { ActivityIndicator, Alert, Animated, Dimensions, StatusBar, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { fetchPricingItems } from './fetchers';
 import PricingCard from './PricingCards';
@@ -21,6 +22,9 @@ const Quiz5 = ({ navigation, route }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const flatList = useRef(null);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [selectedPackage, setSelectedPackage] = useState('');
+  const { userDesignSelections, updateSelection, saveToStorage } = React.useContext(DesignSelectionContext);
+
   useEffect(() => {
     // fetch pricing items
     setLoadingStatus(true);
@@ -44,7 +48,15 @@ const Quiz5 = ({ navigation, route }) => {
         setLoadingStatus(false);
       });
   }, []);
-
+  const handlePayButtonClick = () => {
+    if (userDesignSelections.length === 0) {
+      Alert.alert('Please select a room');
+    } else {
+      updateSelection(userDesignSelections[0], selectedPackage, 'quiz1');
+      saveToStorage('quiz1');
+      checkAuth(navigation, { totalAmount: totalAmount || 0 }, undefined, 'PaymentScreen', route.name);
+    }
+  };
   useEffect(() => {
     if (flatList && flatList.current) {
       setTimeout(() => {
@@ -67,6 +79,7 @@ const Quiz5 = ({ navigation, route }) => {
   const handleScrollEnd = (e) => {
     const currentIndex = Math.ceil(e.nativeEvent.contentOffset.x / ITEM_SIZE);
     setTotalAmount(pricingItems[currentIndex]?.salePrice?.value);
+    setSelectedPackage(pricingItems[currentIndex]?.slug);
   };
   useEffect(() => {
     console.log('scrollX values', scrollX);
@@ -115,13 +128,7 @@ const Quiz5 = ({ navigation, route }) => {
       </Block>
       <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
         <Block flex={1} middle center>
-          <Button
-            color={COLORS.black}
-            size="sm"
-            onPress={() => {
-              checkAuth(navigation, { totalAmount: totalAmount || 0 }, undefined, 'PaymentScreen', route.name);
-            }}
-          >
+          <Button color={COLORS.black} size="sm" onPress={handlePayButtonClick}>
             <Text color="white">{`Pay $${totalAmount || 0}`}</Text>
           </Button>
         </Block>
