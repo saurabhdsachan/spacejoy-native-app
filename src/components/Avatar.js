@@ -44,7 +44,7 @@ const Avatar = ({ uri, user }) => {
     <>
       {renderNameAndImage}
       <Portal>
-        <Modalize modalTopOffset={SIZES.height * 0.6} ref={modalizeRef}>
+        <Modalize modalTopOffset={SIZES.height * 0.4} ref={modalizeRef}>
           <ProfileCard user={user} uri={uri} />
         </Modalize>
       </Portal>
