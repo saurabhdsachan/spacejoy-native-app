@@ -16,6 +16,8 @@ const RoomItem = ({
   updateStorage,
   isEditable = true,
   lastChild,
+  setRef,
+  closeRow,
 }) => {
   const getPrice = (packageName) => {
     let packagePrice = '';
@@ -40,7 +42,7 @@ const RoomItem = ({
     });
     return (
       <Block flex={false} style={styles.rightItem}>
-        <Button onPress={() => removeSelection(item)}>
+        <Button onPress={() => removeSelection(item, 'quiz1')}>
           <Animated.Text right white style={{ opacity, transform: [{ scale }], color: COLORS.white }}>
             Delete
           </Animated.Text>
@@ -49,7 +51,7 @@ const RoomItem = ({
     );
   };
   return (
-    <Swipeable renderRightActions={rightItem}>
+    <Swipeable renderRightActions={rightItem} ref={setRef} onSwipeableOpen={() => closeRow(index)}>
       <Block row spaceBetween middle color={COLORS.white} style={[styles.radioCard, lastChild && styles.lastChild]}>
         <Block flex={5} middle>
           <Text>{item.title}</Text>

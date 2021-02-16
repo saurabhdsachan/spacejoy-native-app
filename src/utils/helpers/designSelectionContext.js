@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import sortByKey from '@utils/helpers/helpers';
+// import sortByKey from '@utils/helpers/helpers';
 import React, { useEffect, useMemo, useReducer } from 'react';
 
 const DesignSelectionContext = React.createContext();
@@ -55,23 +55,23 @@ const reducer = (prevState, action) => {
         ...prevState[quizTitle].userDesignSelections.slice(index + 1),
       ];
 
-      let j = 0;
-      const sortedArray = [...sortByKey(updatedArray, 'title')];
-      const newArray = sortedArray.map((obj, i) => {
-        j += 1;
-        const str = `${obj.title.split(' -')[0]} - ${j}`;
-        if (obj?.id !== sortedArray[i + 1]?.id) {
-          j = 0;
-        }
-        return { ...obj, title: str };
-      });
+      // let j = 0;
+      // const sortedArray = [...sortByKey(updatedArray, 'title')];
+      // const newArray = sortedArray.map((obj, i) => {
+      //   j += 1;
+      //   const str = `${obj.title.split(' -')[0]} - ${j}`;
+      //   if (obj?.id !== sortedArray[i + 1]?.id) {
+      //     j = 0;
+      //   }
+      //   return { ...obj, title: str };
+      // });
 
       if (typeof index !== 'undefined') {
         return {
           ...prevState,
           [quizTitle]: {
             ...prevState[quizTitle],
-            userDesignSelections: newArray,
+            userDesignSelections: updatedArray,
           },
         };
       }

@@ -42,7 +42,6 @@ const Quiz6 = ({ navigation, route }) => {
   const sortedArray = sortByKey(userDesignSelections, 'title');
   const j = 0;
   const flatList = useRef(null);
-  console.log('scrollX value', scrollX);
   useEffect(() => {
     const priceMap = {};
     // fetch pricing items
@@ -113,6 +112,15 @@ const Quiz6 = ({ navigation, route }) => {
   };
   const resetScrollPosition = () => {};
   const scrollXInterpolation = isModalOpen ? { scrollX } : { scrollX: null };
+  const roomItemRow = [];
+  let prevOpenedRow;
+
+  const closeRow = (index) => {
+    if (prevOpenedRow && prevOpenedRow !== roomItemRow[index]) {
+      prevOpenedRow.close();
+    }
+    prevOpenedRow = roomItemRow[index];
+  };
   return (
     <Block style={styles.container} color="white">
       {loading && (
@@ -181,6 +189,10 @@ const Quiz6 = ({ navigation, route }) => {
                       updateSelection={updateSelection}
                       pricingItems={pricingItems}
                       updateStorage={saveToStorage}
+                      closeRow={closeRow}
+                      setRef={(ref) => {
+                        roomItemRow[index] = ref;
+                      }}
                     />
                   )}
                 />
