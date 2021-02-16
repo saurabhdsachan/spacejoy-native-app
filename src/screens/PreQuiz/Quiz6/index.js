@@ -21,7 +21,6 @@ const { SIZES, COLORS } = theme;
 const { width } = Dimensions.get('window');
 const ITEM_SIZE = width * 0.8;
 const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
-
 const Quiz6 = ({ navigation, route }) => {
   const [pricingItems, setPricingItems] = useState([]);
   const [currentActive, setCurrentActive] = useState(0);
@@ -31,6 +30,7 @@ const Quiz6 = ({ navigation, route }) => {
   const [pricingMap, setPricingMap] = useState({});
   const scrollX = new Animated.Value(0);
   const [isModalOpen, setModalOpen] = useState(false);
+
   const {
     userDesignSelections,
     removeSelection,
@@ -112,15 +112,7 @@ const Quiz6 = ({ navigation, route }) => {
   };
   const resetScrollPosition = () => {};
   const scrollXInterpolation = isModalOpen ? { scrollX } : { scrollX: null };
-  const roomItemRow = [];
-  let prevOpenedRow;
 
-  const closeRow = (index) => {
-    if (prevOpenedRow && prevOpenedRow !== roomItemRow[index]) {
-      prevOpenedRow.close();
-    }
-    prevOpenedRow = roomItemRow[index];
-  };
   return (
     <Block style={styles.container} color="white">
       {loading && (
@@ -189,10 +181,6 @@ const Quiz6 = ({ navigation, route }) => {
                       updateSelection={updateSelection}
                       pricingItems={pricingItems}
                       updateStorage={saveToStorage}
-                      closeRow={closeRow}
-                      setRef={(ref) => {
-                        roomItemRow[index] = ref;
-                      }}
                     />
                   )}
                 />

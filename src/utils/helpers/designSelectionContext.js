@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import sortByKey from '@utils/helpers/helpers';
+import sortByKey from '@utils/helpers/helpers';
 import React, { useEffect, useMemo, useReducer } from 'react';
 
 const DesignSelectionContext = React.createContext();
@@ -39,6 +39,7 @@ const reducer = (prevState, action) => {
     case 'REMOVE_ITEM': {
       const { item, quizTitle } = action;
       const { id, selectionItemId = '' } = item;
+      console.log('id', id, selectionItemId);
       let index;
       const keyToSearch = selectionItemId ? 'selectionItemId' : 'id';
       const indexToSearch = selectionItemId || id;
@@ -55,23 +56,23 @@ const reducer = (prevState, action) => {
         ...prevState[quizTitle].userDesignSelections.slice(index + 1),
       ];
 
-      // let j = 0;
-      // const sortedArray = [...sortByKey(updatedArray, 'title')];
-      // const newArray = sortedArray.map((obj, i) => {
-      //   j += 1;
-      //   const str = `${obj.title.split(' -')[0]} - ${j}`;
-      //   if (obj?.id !== sortedArray[i + 1]?.id) {
-      //     j = 0;
-      //   }
-      //   return { ...obj, title: str };
-      // });
+      let j = 0;
+      const sortedArray = [...sortByKey(updatedArray, 'title')];
+      const newArray = sortedArray.map((obj, i) => {
+        j += 1;
+        const str = `${obj.title.split(' -')[0]} - ${j}`;
+        if (obj?.id !== sortedArray[i + 1]?.id) {
+          j = 0;
+        }
+        return { ...obj, title: str };
+      });
 
       if (typeof index !== 'undefined') {
         return {
           ...prevState,
           [quizTitle]: {
             ...prevState[quizTitle],
-            userDesignSelections: updatedArray,
+            userDesignSelections: newArray,
           },
         };
       }
@@ -86,10 +87,13 @@ const reducer = (prevState, action) => {
       // check if item exists with same id
       const countOfSimilarItems = userDesignSelections.filter((selItem) => selItem.id === id).length;
       const titleSuffix = `- ${countOfSimilarItems + 1}`;
+      const lastSelectionId = userDesignSelections.length
+        ? userDesignSelections[userDesignSelections.length - 1].selectionItemId
+        : 1;
       const newCartItem = {
         ...item,
         title: `${item.title} ${titleSuffix}`,
-        selectionItemId: userDesignSelections.length + defaultQuantity,
+        selectionItemId: lastSelectionId + defaultQuantity,
       };
 
       return {

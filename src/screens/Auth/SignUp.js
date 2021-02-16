@@ -13,7 +13,7 @@ import { oAuthLogin } from '@utils/logins';
 import React, { useState } from 'react';
 import { ActivityIndicator, KeyboardAvoidingView, Platform, StyleSheet, TextInput } from 'react-native';
 
-const SignUp = () => {
+const SignUp = ({ navigation }) => {
   const { signUp } = React.useContext(AuthContext);
 
   const [loginError, setLoginError] = useState(false);
@@ -31,13 +31,16 @@ const SignUp = () => {
     const { channel = '' } = userInfo;
     if (channel) {
       try {
-        const { token: userToken } = await oAuthLogin(userInfo, token, channel, authCode);
+        const { token: userToken, user } = await oAuthLogin(userInfo, token, channel, authCode);
         const localUserObject = {
           ...userData,
+          ...(!userData.email && { email: user.email }),
           token: userToken,
         };
         // sign in to local app state
         signUp(localUserObject);
+        setLoading(false);
+        navigation.navigate('Home');
       } catch (e) {
         setLoading(false);
         setLoginError(e.message);

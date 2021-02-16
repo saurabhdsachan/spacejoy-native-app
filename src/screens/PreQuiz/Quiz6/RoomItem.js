@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Dropdown from './Dropdown';
 
 const { COLORS, SIZES } = theme;
+const ANIMATION_DURATION = 150;
 
 const RoomItem = ({
   data: { item, index },
@@ -16,19 +17,27 @@ const RoomItem = ({
   updateStorage,
   isEditable = true,
   lastChild,
-  setRef,
-  closeRow,
 }) => {
+  const animated = new Animated.Value(1);
   const getPrice = (packageName) => {
     let packagePrice = '';
-    pricingItems.forEach((item) => {
-      if (item.slug.toLowerCase() === packageName) {
-        packagePrice = item?.salePrice.value;
+    pricingItems.forEach((priceItem) => {
+      if (priceItem.slug.toLowerCase() === packageName) {
+        packagePrice = priceItem?.salePrice.value;
       }
     });
     return packagePrice;
   };
-
+  const animateAndDeleteRow = () => {
+    Animated.timing(animated, {
+      toValue: 0,
+      duration: ANIMATION_DURATION,
+      useNativeDriver: true,
+    }).start(() => {
+      removeSelection(item, 'quiz1');
+      updateStorage('quiz1');
+    });
+  };
   const rightItem = (progress, dragX) => {
     const scale = progress.interpolate({
       inputRange: [0, 1],
@@ -51,8 +60,22 @@ const RoomItem = ({
     );
   };
   return (
-    <Swipeable renderRightActions={rightItem} ref={setRef} onSwipeableOpen={() => closeRow(index)}>
-      <Block row spaceBetween middle color={COLORS.white} style={[styles.radioCard, lastChild && styles.lastChild]}>
+    <Swipeable renderRightActions={rightItem}>
+      <Block
+        row
+        spaceBetween
+        middle
+        animated
+        color={COLORS.white}
+        style={[
+          styles.radioCard,
+          lastChild && styles.lastChild,
+          { opacity: animated },
+          {
+            transform: [{ scale: animated }],
+          },
+        ]}
+      >
         <Block flex={5} middle>
           <Text>{item.title}</Text>
         </Block>
@@ -78,8 +101,9 @@ const RoomItem = ({
             <Button
               raw
               onPress={() => {
-                removeSelection(item, 'quiz1');
-                updateStorage('quiz1');
+                animateAndDeleteRow();
+                // removeSelection(item, 'quiz1');
+                // updateStorage('quiz1');
               }}
             >
               <Icon name="remove-circle-outline" size={16} color={COLORS.red} />
