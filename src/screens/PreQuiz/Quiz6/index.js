@@ -169,7 +169,7 @@ const Quiz6 = ({ navigation, route }) => {
                   </Text>
                 </Block>
               </Block>
-              <Block flex={4} color="white" padding={[0, SIZES.padding]}>
+              <Block flex={4} color="white">
                 <FlatList
                   keyExtractor={(item, index) => `roomItem-${index}`}
                   data={sortedArray}

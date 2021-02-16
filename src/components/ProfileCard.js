@@ -17,7 +17,7 @@ const ProfileCard = ({ user, uri }) => {
       <Block row padding={SIZES.padding * 1.5}>
         <Block>
           <Block color={COLORS.white} center middle style={styles.profileImageWrapper}>
-            <Image source={{ uri: images.defaultAvatar }} resizeMode="cover" style={styles.profileImage} />
+            <Image source={{ uri: uri || images.defaultAvatar }} resizeMode="cover" style={styles.profileImage} />
           </Block>
         </Block>
         <Block flex={1.5}>

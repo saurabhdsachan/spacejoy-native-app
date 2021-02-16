@@ -37,107 +37,118 @@ function DrawerContent({ navigation, progress }) {
   });
 
   return (
-    <DrawerContentScrollView>
+    <DrawerContentScrollView bounces={false}>
       <Block flex={false}>
-        <Block flex={false} style={{ margin: SIZES.padding, paddingTop: SIZES.padding }}>
-          {picture ? (
-            <Block flex={false}>
-              <Animated.Image
-                source={{ uri: picture }}
-                resizeMode="cover"
-                style={{
-                  height: 100,
-                  width: 100,
-                  borderRadius: SIZES.radius,
-                  marginBottom: SIZES.padding / 2,
-                  transform: [{ translateX, scale }],
-                }}
-              />
-            </Block>
-          ) : (
-            <Block flex={false}>
-              <Animated.Image
-                source={{ uri: images.defaultAvatar }}
-                resizeMode="cover"
-                style={{
-                  height: 100,
-                  width: 100,
-                  borderRadius: SIZES.radius,
-                  marginBottom: SIZES.padding / 2,
-                  transform: [{ translateX, scale }],
-                }}
-              />
-            </Block>
-          )}
-          <Block flex={false}>
-            {name && (
-              <Text h2 mt2>
-                {name}
+        {!token ? (
+          <Block padding={SIZES.padding}>
+            <Animated.Image
+              source={images.onboarding1}
+              resizeMode="cover"
+              style={{
+                height: SIZES.height / 3,
+                width: '100%',
+                borderRadius: SIZES.radius,
+                marginTop: SIZES.height / 4,
+                marginBottom: SIZES.padding,
+                transform: [{ translateX, scale }],
+              }}
+            />
+            <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Auth', { screen: 'Login' })}>
+              <Text center white>
+                Login
               </Text>
-            )}
-            {email && (
-              <Text caption color="gray">
-                {email}
+            </Button>
+            <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Auth', { screen: 'SignUp' })}>
+              <Text center white>
+                Sign up
               </Text>
-            )}
+            </Button>
           </Block>
-        </Block>
-        {token ? null : (
-          <Block paddingHorizontal={SIZES.padding} row flex={false}>
-            <Button raw onPress={() => navigation.navigate('Auth', { screen: 'Login' })}>
-              <Text>Login</Text>
-            </Button>
-            <Block flex={false} marginHorizontal={SIZES.padding / 2}>
-              <Text center middle>
-                |
-              </Text>
+        ) : (
+          <Block flex={false}>
+            <Block flex={false} style={{ margin: SIZES.padding, paddingTop: SIZES.padding }}>
+              {picture ? (
+                <Block flex={false}>
+                  <Animated.Image
+                    source={{ uri: picture }}
+                    resizeMode="cover"
+                    style={{
+                      height: 100,
+                      width: 100,
+                      borderRadius: SIZES.radius,
+                      marginBottom: SIZES.padding / 2,
+                      transform: [{ translateX, scale }],
+                    }}
+                  />
+                </Block>
+              ) : (
+                <Block flex={false}>
+                  <Animated.Image
+                    source={{ uri: images.defaultAvatar }}
+                    resizeMode="cover"
+                    style={{
+                      height: 100,
+                      width: 100,
+                      borderRadius: SIZES.radius,
+                      marginBottom: SIZES.padding / 2,
+                      transform: [{ translateX, scale }],
+                    }}
+                  />
+                </Block>
+              )}
+              <Block flex={false}>
+                {name && (
+                  <Text h2 mt2>
+                    {name}
+                  </Text>
+                )}
+                {email && (
+                  <Text caption color="gray">
+                    {email}
+                  </Text>
+                )}
+              </Block>
             </Block>
-            <Button raw onPress={() => navigation.navigate('Auth', { screen: 'SignUp' })}>
-              <Text>Sign up</Text>
-            </Button>
+            <Block flex={false} style={{ margin: SIZES.padding }}>
+              <Block flex={false} animated style={styles.navItem}>
+                <Button raw onPress={() => navigation.navigate('Profile')}>
+                  <Text>
+                    <Icon name="person-outline" size={14} /> My Profile
+                  </Text>
+                </Button>
+              </Block>
+              <Block flex={false} animated style={styles.navItem}>
+                <Button raw onPress={() => navigation.navigate('My Designs')}>
+                  <Text>
+                    <Icon name="ios-image-outline" size={14} /> Design Orders
+                  </Text>
+                </Button>
+              </Block>
+              <Block flex={false} animated style={styles.navItem}>
+                <Button raw onPress={() => navigation.navigate('Store')}>
+                  <Text>
+                    <Icon name="basket-outline" size={14} /> Store Orders
+                  </Text>
+                </Button>
+              </Block>
+              <Block flex={false} animated style={styles.navItem}>
+                <Button raw onPress={() => navigation.navigate('Ideabook')}>
+                  <Text>
+                    <Icon name="bulb-outline" size={14} /> Ideabook
+                  </Text>
+                </Button>
+              </Block>
+              <Block flex={false} animated style={styles.navItem}>
+                <Button raw onPress={handleSignOut}>
+                  <Text>
+                    <Icon name="md-walk-outline" size={14} /> Sign Out
+                  </Text>
+                </Button>
+              </Block>
+            </Block>
           </Block>
         )}
-        <Block flex={false} style={{ margin: SIZES.padding }}>
-          <Block flex={false} animated style={styles.navItem}>
-            <Button raw onPress={() => navigation.navigate('Profile')}>
-              <Text>
-                <Icon name="person-outline" size={14} /> My Profile
-              </Text>
-            </Button>
-          </Block>
-          <Block flex={false} animated style={styles.navItem}>
-            <Button raw onPress={() => navigation.navigate('My Designs')}>
-              <Text>
-                <Icon name="ios-image-outline" size={14} /> Design Orders
-              </Text>
-            </Button>
-          </Block>
-          <Block flex={false} animated style={styles.navItem}>
-            <Button raw onPress={() => navigation.navigate('Store')}>
-              <Text>
-                <Icon name="basket-outline" size={14} /> Store Orders
-              </Text>
-            </Button>
-          </Block>
-          {token && (
-            <Block flex={false} animated style={styles.navItem}>
-              <Button raw onPress={() => navigation.navigate('Ideabook')}>
-                <Text>
-                  <Icon name="bulb-outline" size={14} /> Ideabook
-                </Text>
-              </Button>
-            </Block>
-          )}
-          {token && (
-            <Block flex={false} animated style={styles.navItem}>
-              <Button raw onPress={handleSignOut}>
-                <Text>
-                  <Icon name="md-walk-outline" size={14} /> Sign Out
-                </Text>
-              </Button>
-            </Block>
-          )}
-        </Block>
+
         <Block flex={false}>
           <Text center color={COLORS.gray}>
             version: 1.0.0

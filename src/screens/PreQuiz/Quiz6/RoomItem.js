@@ -1,7 +1,7 @@
 import { Block, Button, Text } from '@components/';
 import { theme } from '@constants/';
 import React from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Dropdown from './Dropdown';
@@ -39,24 +39,18 @@ const RoomItem = ({
       extrapolate: 'clamp',
     });
     return (
-      <View style={styles.rightItem}>
+      <Block flex={false} style={styles.rightItem}>
         <Button onPress={() => removeSelection(item)}>
           <Animated.Text right white style={{ opacity, transform: [{ scale }], color: COLORS.white }}>
             Delete
           </Animated.Text>
         </Button>
-      </View>
+      </Block>
     );
   };
   return (
     <Swipeable renderRightActions={rightItem}>
-      <Block
-        row
-        spaceBetween
-        middle
-        color={COLORS.white}
-        style={[styles.radioCard, ...(lastChild ? [styles.lastChild] : [])]}
-      >
+      <Block row spaceBetween middle color={COLORS.white} style={[styles.radioCard, lastChild && styles.lastChild]}>
         <Block flex={5} middle>
           <Text>{item.title}</Text>
         </Block>
@@ -100,7 +94,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.gray2,
     paddingVertical: SIZES.padding / 1.2,
-    // paddingHorizontal: SIZES.padding,
+    paddingHorizontal: SIZES.padding,
     overflow: 'hidden',
   },
   lastChild: {
