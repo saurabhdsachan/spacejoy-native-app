@@ -53,7 +53,7 @@ const Quiz5 = ({ navigation, route }) => {
       Alert.alert('Please select a room');
     } else {
       updateSelection(userDesignSelections[0], selectedPackage, 'quiz1');
-      saveToStorage('quiz1');
+      // saveToStorage('quiz1');
       checkAuth(navigation, { totalAmount: totalAmount || 0 }, undefined, 'PaymentScreen', route.name);
     }
   };

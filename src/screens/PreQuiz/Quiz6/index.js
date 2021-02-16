@@ -179,7 +179,7 @@ const Quiz6 = ({ navigation, route }) => {
                       removeSelection={removeSelection}
                       updateSelection={updateSelection}
                       pricingItems={pricingItems}
-                      updateStorage={saveToStorage}
+                      // updateStorage={saveToStorage}
                     />
                   )}
                 />

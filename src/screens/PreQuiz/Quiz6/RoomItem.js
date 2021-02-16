@@ -35,7 +35,6 @@ const RoomItem = ({
       useNativeDriver: true,
     }).start(() => {
       removeSelection(item, 'quiz1');
-      updateStorage('quiz1');
     });
   };
   const rightItem = (progress, dragX) => {
@@ -85,7 +84,7 @@ const RoomItem = ({
               data={pricingItems}
               onChange={(value) => {
                 updateSelection(item, value, 'quiz1');
-                updateStorage('quiz1');
+                // updateStorage('quiz1');
               }}
               value={item?.selectedPackage || item?.defaultSelection}
             />
@@ -102,8 +101,6 @@ const RoomItem = ({
               raw
               onPress={() => {
                 animateAndDeleteRow();
-                // removeSelection(item, 'quiz1');
-                // updateStorage('quiz1');
               }}
             >
               <Icon name="remove-circle-outline" size={16} color={COLORS.red} />
