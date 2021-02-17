@@ -1,26 +1,29 @@
 import { Block, Button, Text } from '@components/index';
 import { theme } from '@constants/index';
+import checkAuth from '@utils/helpers/checkAuth';
+import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Animated, Dimensions, StatusBar, StyleSheet } from 'react-native';
+import { ActivityIndicator, Alert, Animated, Dimensions, StatusBar, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { fetchPricingItems } from './fetchers';
 import PricingCard from './PricingCards';
 import PricingTabs from './PricingTabs';
 
 const { SIZES, COLORS } = theme;
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const ITEM_SIZE = width * 0.8;
-const SPACING = SIZES.base * 2;
 const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
 
-const Quiz5 = ({ navigation }) => {
+const Quiz5 = ({ navigation, route }) => {
   const [pricingItems, setPricingItems] = useState([]);
   const [currentActive, setCurrentActive] = useState(0);
   const [loading, setLoadingStatus] = useState(false);
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const flatList = useRef(null);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [selectedPackage, setSelectedPackage] = useState('');
+  const { userDesignSelections, updateSelection, saveToStorage } = React.useContext(DesignSelectionContext);
 
   useEffect(() => {
     // fetch pricing items
@@ -37,7 +40,7 @@ const Quiz5 = ({ navigation }) => {
         setLoadingStatus(false);
         setCurrentActive(1);
       })
-      .catch((e) => {
+      .catch(() => {
         // set error
         setLoadingStatus(false);
       })
@@ -45,7 +48,15 @@ const Quiz5 = ({ navigation }) => {
         setLoadingStatus(false);
       });
   }, []);
-
+  const handlePayButtonClick = () => {
+    if (userDesignSelections.length === 0) {
+      Alert.alert('Please select a room');
+    } else {
+      updateSelection(userDesignSelections[0], selectedPackage, 'quiz1');
+      // saveToStorage('quiz1');
+      checkAuth(navigation, { totalAmount: totalAmount || 0 }, undefined, 'PaymentScreen', route.name);
+    }
+  };
   useEffect(() => {
     if (flatList && flatList.current) {
       setTimeout(() => {
@@ -62,9 +73,17 @@ const Quiz5 = ({ navigation }) => {
       return { ...item, active: false };
     });
     setPricingItems(data);
+    setTotalAmount(pricingItems[currentActive]?.salePrice?.value);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentActive]);
-
+  const handleScrollEnd = (e) => {
+    const currentIndex = Math.ceil(e.nativeEvent.contentOffset.x / ITEM_SIZE);
+    setTotalAmount(pricingItems[currentIndex]?.salePrice?.value);
+    setSelectedPackage(pricingItems[currentIndex]?.slug);
+  };
+  useEffect(() => {
+    console.log('scrollX values', scrollX);
+  }, [scrollX]);
   return (
     <Block style={styles.container}>
       {loading && (
@@ -92,7 +111,7 @@ const Quiz5 = ({ navigation }) => {
           decelerationRate={0}
           bounces={false}
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], { useNativeDriver: false })}
-          //   onMomentumScrollEnd={handleScrollEnd}
+          onMomentumScrollEnd={handleScrollEnd}
           snapToInterval={ITEM_SIZE - SPACER_ITEM_WIDTH}
           renderItem={({ item, index }) => {
             return (
@@ -108,16 +127,9 @@ const Quiz5 = ({ navigation }) => {
         />
       </Block>
       <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
-        <Block center row space="between">
-          <Button ghost color={COLORS.white} size="sm" onPress={() => navigation.goBack()}>
-            <Text center>
-              <Icon name="ios-arrow-back" size={14} /> Prev
-            </Text>
-          </Button>
-          <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Quiz5')}>
-            <Text center color={COLORS.white}>
-              Next <Icon name="ios-arrow-forward" size={14} />
-            </Text>
+        <Block flex={1} middle center>
+          <Button color={COLORS.black} size="sm" onPress={handlePayButtonClick}>
+            <Text color="white">{`Pay $${totalAmount || 0}`}</Text>
           </Button>
         </Block>
       </LinearGradient>

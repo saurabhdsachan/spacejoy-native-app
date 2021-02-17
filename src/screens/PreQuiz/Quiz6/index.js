@@ -21,7 +21,6 @@ const { SIZES, COLORS } = theme;
 const { width } = Dimensions.get('window');
 const ITEM_SIZE = width * 0.8;
 const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
-
 const Quiz6 = ({ navigation, route }) => {
   const [pricingItems, setPricingItems] = useState([]);
   const [currentActive, setCurrentActive] = useState(0);
@@ -42,7 +41,6 @@ const Quiz6 = ({ navigation, route }) => {
   const sortedArray = sortByKey(userDesignSelections, 'title');
   const j = 0;
   const flatList = useRef(null);
-  console.log('scrollX value', scrollX);
   useEffect(() => {
     const priceMap = {};
     // fetch pricing items
@@ -113,6 +111,7 @@ const Quiz6 = ({ navigation, route }) => {
   };
   const resetScrollPosition = () => {};
   const scrollXInterpolation = isModalOpen ? { scrollX } : { scrollX: null };
+
   return (
     <Block style={styles.container} color="white">
       {loading && (
@@ -180,7 +179,7 @@ const Quiz6 = ({ navigation, route }) => {
                       removeSelection={removeSelection}
                       updateSelection={updateSelection}
                       pricingItems={pricingItems}
-                      updateStorage={saveToStorage}
+                      // updateStorage={saveToStorage}
                     />
                   )}
                 />
@@ -201,11 +200,11 @@ const Quiz6 = ({ navigation, route }) => {
             </>
           ) : (
             <>
-              <Block flex={false} height={300}>
-                <Text middle center mt2>
+              <Block middle style={styles.emptyScreen} center>
+                <LottieAnimations name="empty" height={150} width={150} autoPlay={true} />
+                <Text middle center mt2 mb4>
                   You have no items in your cart
                 </Text>
-                <LottieAnimations name="empty" height={100} autoPlay={true} />
               </Block>
               <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
                 <Block flex={1} middle center>
@@ -273,6 +272,10 @@ const styles = StyleSheet.create({
   btnContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  emptyScreen: {
+    height: 300,
+    paddingVertical: SIZES.padding,
   },
   cartHeader: {
     borderBottomWidth: 2,

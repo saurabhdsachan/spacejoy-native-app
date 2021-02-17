@@ -66,7 +66,6 @@ const SignUp = ({ navigation }) => {
     const { state } = authNavContext;
     if (state.redirectUrl && state.redirectUrl.length) {
       if (state.redirectRouteData) {
-        console.log('redirection data', state.redirectRouteData);
         navigation.navigate(state.redirectUrl, { ...state.redirectRouteData });
       } else {
         navigation.navigate(state.redirectUrl);

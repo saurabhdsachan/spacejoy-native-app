@@ -208,8 +208,15 @@ const PaymentScreen = ({ route, navigation }) => {
             </Text>
           </Button>
         </Block>
-        <Block flex={4} color="white" padding={[0, SIZES.padding]}>
-          <Block row paddingVertical={SIZES.padding / 2} style={styles.cartHeader} space="between" flex={0.5}>
+        <Block flex={4} color="white">
+          <Block
+            row
+            paddingVertical={SIZES.padding / 2}
+            padding={[0, SIZES.padding]}
+            style={styles.cartHeader}
+            space="between"
+            flex={0.5}
+          >
             <Block middle>
               <Text bold>
                 Room Type{' '}

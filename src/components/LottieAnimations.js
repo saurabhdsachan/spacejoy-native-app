@@ -1,3 +1,4 @@
+import { Block } from '@components/index';
 import { animations } from '@constants/index';
 import LottieView from 'lottie-react-native';
 import React, { useState } from 'react';
@@ -22,7 +23,11 @@ const defaultOptions = {
 };
 
 const LottieAnimations = ({ name, height, width, loop, autoPlay, ...props }) => {
-  return <LottieView source={getAnimation(name)} autoPlay loop {...defaultOptions} {...props} />;
+  return (
+    <Block flex={false} style={{ height, width }}>
+      <LottieView source={getAnimation(name)} autoPlay loop {...defaultOptions} {...props} />
+    </Block>
+  );
 };
 
 const LottiePlayer = (animationName, start, end, ...props) => {

@@ -1,13 +1,14 @@
 import { Block, Button, Text } from '@components/';
 import { theme } from '@constants/';
 import React from 'react';
-import { Animated, StyleSheet } from 'react-native';
+import { Animated, Dimensions, StyleSheet } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Dropdown from './Dropdown';
 
 const { COLORS, SIZES } = theme;
-
+const ANIMATION_DURATION = 250;
+const { width } = Dimensions.get('window');
 const RoomItem = ({
   data: { item, index },
   removeSelection,
@@ -17,16 +18,25 @@ const RoomItem = ({
   isEditable = true,
   lastChild,
 }) => {
+  const animated = new Animated.Value(1);
   const getPrice = (packageName) => {
     let packagePrice = '';
-    pricingItems.forEach((item) => {
-      if (item.slug.toLowerCase() === packageName) {
-        packagePrice = item?.salePrice.value;
+    pricingItems.forEach((priceItem) => {
+      if (priceItem.slug.toLowerCase() === packageName) {
+        packagePrice = priceItem?.salePrice.value;
       }
     });
     return packagePrice;
   };
-
+  const animateAndDeleteRow = () => {
+    Animated.timing(animated, {
+      toValue: 0,
+      duration: ANIMATION_DURATION,
+      useNativeDriver: true,
+    }).start(() => {
+      removeSelection(item, 'quiz1');
+    });
+  };
   const rightItem = (progress, dragX) => {
     const scale = progress.interpolate({
       inputRange: [0, 1],
@@ -40,7 +50,7 @@ const RoomItem = ({
     });
     return (
       <Block flex={false} style={styles.rightItem}>
-        <Button onPress={() => removeSelection(item)}>
+        <Button onPress={() => removeSelection(item, 'quiz1')}>
           <Animated.Text right white style={{ opacity, transform: [{ scale }], color: COLORS.white }}>
             Delete
           </Animated.Text>
@@ -50,7 +60,21 @@ const RoomItem = ({
   };
   return (
     <Swipeable renderRightActions={rightItem}>
-      <Block row spaceBetween middle color={COLORS.white} style={[styles.radioCard, lastChild && styles.lastChild]}>
+      <Block
+        row
+        spaceBetween
+        middle
+        animated
+        color={COLORS.white}
+        style={[
+          styles.radioCard,
+          lastChild && styles.lastChild,
+          { opacity: animated },
+          {
+            transform: [{ translateX: animated.interpolate({ inputRange: [0, 1], outputRange: [width, 0] }) }],
+          },
+        ]}
+      >
         <Block flex={5} middle>
           <Text>{item.title}</Text>
         </Block>
@@ -60,7 +84,7 @@ const RoomItem = ({
               data={pricingItems}
               onChange={(value) => {
                 updateSelection(item, value, 'quiz1');
-                updateStorage('quiz1');
+                // updateStorage('quiz1');
               }}
               value={item?.selectedPackage || item?.defaultSelection}
             />
@@ -76,8 +100,7 @@ const RoomItem = ({
             <Button
               raw
               onPress={() => {
-                removeSelection(item, 'quiz1');
-                updateStorage('quiz1');
+                animateAndDeleteRow();
               }}
             >
               <Icon name="remove-circle-outline" size={16} color={COLORS.red} />
