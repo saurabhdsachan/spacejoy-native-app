@@ -57,7 +57,7 @@ const DesignCard = ({ data: designDataProp, navigation, noBookmark, route }) => 
             thumbnailSource={images.pattern}
             source={{
               uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,f_auto,h_${SIZES.height * 2}/${
-                data?.cdnRender[2]
+                data?.cdnRender[0]
               }`,
             }}
             resizeMode="cover"

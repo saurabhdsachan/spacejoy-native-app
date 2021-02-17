@@ -15,7 +15,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  TextInput
+  TextInput,
 } from 'react-native';
 
 const { bg } = images;
