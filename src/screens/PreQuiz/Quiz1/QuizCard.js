@@ -1,4 +1,5 @@
-import { Block, Radio } from '@components/index';
+import Checkbox from '@components/Checkbox/Checkbox';
+import { Block } from '@components/index';
 import { theme } from '@constants/index';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React from 'react';
@@ -18,16 +19,15 @@ const QuizCard = ({ data, stylesArray, align, inline }) => {
   return (
     <Block color={blockColor} style={stylesArray} {...alignMiddle}>
       <TouchableOpacity style={styles.buttonStyles} onPress={() => select(data.id)}>
-        <Radio
-          {...isInline}
+        <Checkbox
           bold
-          button={{
-            label: title,
-            size: 18,
-            color: radioColor,
-            selected: !!quantity,
-          }}
-          onChange={() => select(data.id)}
+          {...isInline}
+          label={title}
+          value={data.id}
+          onChange={select}
+          type="square"
+          checked={!!quantity}
+          iconColor={radioColor}
         />
         {quantity > 0 && (
           <Quantity
