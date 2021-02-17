@@ -42,13 +42,13 @@ function DrawerContent({ navigation, progress }) {
         {!token ? (
           <Block padding={SIZES.padding}>
             <Animated.Image
-              source={images.onboarding1}
-              resizeMode="cover"
+              source={images.login}
+              resizeMode="contain"
               style={{
-                height: SIZES.height / 3,
+                height: SIZES.height / 4,
                 width: '100%',
                 borderRadius: SIZES.radius,
-                marginTop: SIZES.height / 4,
+                marginTop: SIZES.height / 3,
                 marginBottom: SIZES.padding,
                 transform: [{ translateX, scale }],
               }}

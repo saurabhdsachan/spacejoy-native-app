@@ -17,6 +17,7 @@ export const bg = require('../assets/images/bg.jpg');
 export const pattern = require('../assets/images/pattern.jpg');
 export const homeBg = require('../assets/images/home-bg.jpg');
 export const ideabookHeader = require('../assets/images/Ideabook.png');
+export const login = require('../assets/images/login.png');
 
 export const defaultAvatar =
   'https://images.unsplash.com/photo-1579783483458-83d02161294e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1328';
@@ -42,4 +43,5 @@ export default {
   pattern,
   homeBg,
   ideabookHeader,
+  login,
 };
