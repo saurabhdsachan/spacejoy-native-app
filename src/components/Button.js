@@ -1,76 +1,72 @@
 import { theme } from '@constants/index';
 import { elevationShadowStyle } from '@utils/styleHelper';
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 const { COLORS, SIZES } = theme;
 
-class Button extends PureComponent {
-  render() {
-    const {
-      raw,
-      light,
-      ghost,
-      size,
-      style,
-      opacity,
-      color,
-      gradient,
-      startColor,
-      endColor,
-      end,
-      start,
-      locations,
-      shadow,
-      dashed,
-      children,
-      loading,
-      onPress,
-      ...props
-    } = this.props;
+const Button = ({
+  raw,
+  light,
+  ghost,
+  size,
+  style,
+  opacity,
+  color,
+  gradient,
+  startColor,
+  endColor,
+  end,
+  start,
+  locations,
+  shadow,
+  dashed,
+  children,
+  loading,
+  onPress,
+  ...props
+}) => {
+  const buttonStyles = [
+    styles.button,
+    light && styles.light,
+    ghost && styles.ghost,
+    shadow && styles.shadow,
+    dashed && styles.dashed,
+    size && styles[size],
+    color && styles[color], // predefined styles colors for backgroundColor
+    color && !styles[color] && { backgroundColor: color }, // custom backgroundColor
+    style,
+  ];
 
-    const buttonStyles = [
-      styles.button,
-      light && styles.light,
-      ghost && styles.ghost,
-      shadow && styles.shadow,
-      dashed && styles.dashed,
-      size && styles[size],
-      color && styles[color], // predefined styles colors for backgroundColor
-      color && !styles[color] && { backgroundColor: color }, // custom backgroundColor
-      style,
-    ];
-
-    if (gradient) {
-      return (
-        <TouchableOpacity activeOpacity={opacity || 0.4} onPress={!loading ? onPress : null}>
-          <LinearGradient
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            locations={[0, 1]}
-            style={raw ? null : buttonStyles}
-            {...props}
-            colors={[COLORS.primary1, COLORS.primary2]}
-          >
-            {loading ? <ActivityIndicator /> : children}
-          </LinearGradient>
-        </TouchableOpacity>
-      );
-    }
-
+  if (gradient) {
     return (
-      <TouchableOpacity
-        style={raw ? null : buttonStyles}
-        activeOpacity={opacity || 0.4}
-        {...props}
-        onPress={!loading ? onPress : null}
-      >
-        {loading ? <ActivityIndicator /> : children}
+      <TouchableOpacity activeOpacity={opacity || 0.4} onPress={!loading ? onPress : null}>
+        <LinearGradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          locations={[0, 1]}
+          style={raw ? null : buttonStyles}
+          {...props}
+          colors={[COLORS.primary1, COLORS.primary2]}
+        >
+          {loading ? <ActivityIndicator /> : children}
+        </LinearGradient>
       </TouchableOpacity>
     );
   }
-}
+
+  return (
+    <TouchableOpacity
+      style={raw ? null : buttonStyles}
+      activeOpacity={opacity || 0.4}
+      {...props}
+      onPress={!loading ? onPress : null}
+    >
+      {loading ? <ActivityIndicator /> : children}
+    </TouchableOpacity>
+  );
+};
 
 Button.defaultProps = {
   startColor: COLORS.primary1,
@@ -83,7 +79,7 @@ Button.defaultProps = {
   size: 'md',
 };
 
-export default Button;
+export default React.memo(Button);
 
 const styles = StyleSheet.create({
   gradientHeight: {

@@ -8,7 +8,7 @@ import {
   HomeStackNavigator,
   IdeabookStackNavigator,
   MyDesignsStackNavigator,
-  NewActionStackNavigator
+  NewActionStackNavigator,
 } from './StackNavigator';
 
 const { COLORS, SIZES } = theme;
