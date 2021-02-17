@@ -42,7 +42,7 @@ const Checkbox = ({
   return (
     <Button raw onPress={onClick} style={buttonStyle}>
       <Block row={inline} center={inline}>
-        <Block center middle flex={false} style={checkboxStyles} color={bgColor}>
+        <Block center middle flex={false} style={checkboxStyles} color={checked && bgColor}>
           {checked && (
             <Icon
               style={[styles.checkIcon, { color: bgColor ? COLORS.white : iconColor }, checkIconStyle]}
