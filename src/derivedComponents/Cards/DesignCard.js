@@ -47,6 +47,8 @@ const DesignCard = ({ data: designDataProp, navigation, noBookmark, route }) => 
               bookmarkId={data?.bookmarkId}
               type="design"
               id={data?._id}
+              navigation={navigation}
+              route={route}
             />
           </Block>
         )}

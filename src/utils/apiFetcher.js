@@ -24,7 +24,6 @@ const fetcher = async ({ endPoint, method, type = 'text', body }) => {
   const apiEndpoint = `${finalAPIBaseUrl}${endPoint}`;
   return fetch(apiEndpoint, options)
     .then(async (response) => {
-      // console.log('response is ----', response);
       if (response.status) {
         try {
           if (response.status === 204) {
@@ -44,17 +43,22 @@ const fetcher = async ({ endPoint, method, type = 'text', body }) => {
             return { data: resData, statusCode: response.status };
           }
         } catch (error) {
-          throw new Error(error.message);
+          throw new Error({ url: apiEndpoint, message: error.message });
         }
       }
     })
     .catch((err) => {
-      throw new Error(err.message);
+      throw new Error({ url: apiEndpoint, message: err.message });
     });
 };
 // [a,e]
 const handle = (promise) => {
-  return promise.then((data) => [data, undefined]).catch((err) => Promise.resolve([undefined, err]));
+  return promise
+    .then((data) => [data, undefined])
+    .catch((err) => {
+      console.log(err);
+      Promise.resolve([undefined, err]);
+    });
 };
 
 export { handle, fetcher };

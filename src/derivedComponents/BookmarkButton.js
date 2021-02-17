@@ -2,6 +2,8 @@ import { Block, Button, Divider, Radio, Text } from '@components/';
 import { COLORS, images, SIZES } from '@constants/';
 import { designRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
+import checkAuth from '@utils/helpers/checkAuth';
+import { useAuthContext } from '@utils/helpers/withAuthContext';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Image, StyleSheet, TextInput } from 'react-native';
 import { Modalize } from 'react-native-modalize';
@@ -88,7 +90,7 @@ const CreateBookmarkSection = ({ onCreateBookmark, onCancel, type }) => {
   );
 };
 
-const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type, bookmarkId }) => {
+const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type, bookmarkId, modalVisible }) => {
   const [bookmarkList, setBookmarkList] = useState([]);
   const [loading, setLoading] = useState({
     loadingBookmarks: false,
@@ -98,14 +100,16 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
 
   const mounted = useRef(true);
 
-  const [fetchError, setFetchError] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
   const [selectedBookmark, setSelectedBookMark] = useState(bookmarkId);
 
   const ref = useRef(null);
 
   useEffect(() => {
-    if (selectedIdForBookmark) ref?.current?.open();
-  }, [selectedIdForBookmark]);
+    if (modalVisible) ref?.current?.open();
+  }, [modalVisible]);
+
+  const { token } = useAuthContext();
 
   useEffect(() => {
     const getBookmarks = async () => {
@@ -116,24 +120,22 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
       });
       const endPoint = designRoutes.getUserBookmarks(type);
 
-      try {
-        const [fetchedBookmarkList, error] = await handle(fetcher({ endPoint, method: 'GET' }));
-        if (error) {
-          console.log(error);
-        } else {
-          if (fetchedBookmarkList?.data?.length) {
-            if (mounted.current) setBookmarkList(fetchedBookmarkList.data);
-            else {
-              if (mounted.current) {
-                setBookmarkList([]);
-                setFetchError(true);
-              }
+      const [fetchedBookmarkList, error] = await handle(fetcher({ endPoint, method: 'GET' }));
+
+      if (!error) {
+        if (fetchedBookmarkList?.data?.length) {
+          if (mounted.current) setBookmarkList(fetchedBookmarkList.data);
+          else {
+            if (mounted.current) {
+              setBookmarkList([]);
+              setFetchError(true);
             }
           }
         }
-      } catch (e) {
-        console.error(e);
+      } else if (mounted.current) {
+        setFetchError(true);
       }
+
       if (mounted.current) {
         setLoading({
           loadingBookmarks: true,
@@ -142,11 +144,11 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
         });
       }
     };
-    getBookmarks();
+    if (token) getBookmarks();
     return () => {
       mounted.current = false;
     };
-  }, [type]);
+  }, [type, token]);
 
   const onCheck = (id) => {
     setBookmarkCreationMode(false);
@@ -314,15 +316,15 @@ const BookmarkModal = ({ selectedIdForBookmark, onClosed, onBookmarkChange, type
   );
 };
 
-const BookmarkButton = ({ id, bookmarked, onBookmarkChange, type, bookmarkId }) => {
-  const [selectedIdForBookmark, setSelectedIdForBookmark] = useState('');
-  const toggleBookmark = (designId) => {
-    setSelectedIdForBookmark(designId);
+const BookmarkButton = ({ id, bookmarked, onBookmarkChange, type, bookmarkId, navigation, route }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const toggleBookmark = () => {
+    setModalVisible(!modalVisible);
   };
 
   return (
     <>
-      <Button raw size="xs" onPress={() => toggleBookmark(id)}>
+      <Button raw size="xs" onPress={() => checkAuth(navigation, {}, toggleBookmark, 'Home', route.name)}>
         <Text center>
           <Icon name={`bookmark${bookmarked ? '' : '-outline'}`} size={20} color={COLORS.black} />
         </Text>
@@ -331,9 +333,10 @@ const BookmarkButton = ({ id, bookmarked, onBookmarkChange, type, bookmarkId }) 
         <BookmarkModal
           type={type}
           onBookmarkChange={onBookmarkChange}
-          selectedIdForBookmark={selectedIdForBookmark}
+          selectedIdForBookmark={id}
           onClosed={toggleBookmark}
           bookmarkId={bookmarkId}
+          modalVisible={modalVisible}
         />
       </Portal>
     </>

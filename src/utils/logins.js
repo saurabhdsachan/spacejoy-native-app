@@ -55,7 +55,6 @@ const login = async (email, password) => {
       throw new Error('Invalid username and password');
     }
   } catch (e) {
-    console.log('e', e);
     throw new Error(e.message);
   }
 };
