@@ -27,8 +27,8 @@ const data = [
   },
   {
     title: 'Study Room',
-    blockColor: '#F6EEC7',
-    radioColor: '#E7D682',
+    blockColor: '#FCF7DE',
+    radioColor: '#ead338',
     selected: false,
     id: 3,
     slug: 'studyRoom',
@@ -47,8 +47,8 @@ const data = [
   },
   {
     title: 'Kid`s Room',
-    blockColor: '#EBE6E4',
-    radioColor: '#D9A7A6',
+    blockColor: '#DEF3FD',
+    radioColor: '#2189bb',
     selected: false,
     id: 5,
     slug: 'kidsRoom',
@@ -57,8 +57,8 @@ const data = [
   },
   {
     title: 'Nursery',
-    blockColor: '#BEEBE9',
-    radioColor: '#79D1CD',
+    blockColor: '#DEFDE0',
+    radioColor: '#898D8A',
     image: teddy,
     selected: false,
     id: 6,

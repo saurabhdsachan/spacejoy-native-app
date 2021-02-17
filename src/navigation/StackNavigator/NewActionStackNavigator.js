@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 const QuizScreenHeaderOptions = {
   title: null,
   headerTransparent: true,
-  headerBackImage: () => <HeaderBack withBorder />,
+  headerBackImage: () => <HeaderBack />,
   headerBackTitleVisible: false,
   headerBackTitleStyle: {
     color: COLORS.black,

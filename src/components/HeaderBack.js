@@ -11,7 +11,7 @@ const HeaderBack = ({ withBorder }) => (
         <Icon name="arrow-back" size={20} style={styles.icon} />
       </Button>
     ) : (
-      <Icon name="arrow-back" size={20} style={{ marginHorizontal: 10 }} />
+      <Icon name="arrow-back" size={20} style={{ marginHorizontal: SIZES.padding }} />
     )}
   </>
 );
