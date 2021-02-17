@@ -38,13 +38,16 @@ const Login = ({ navigation }) => {
     const { channel = '' } = userInfo;
     if (channel) {
       try {
-        const { token: userToken } = await oAuthLogin(userInfo, token, channel, authCode);
+        const { token: userToken, user } = await oAuthLogin(userInfo, token, channel, authCode);
         const localUserObject = {
           ...userData,
+          ...(!userData.email && { email: user.email }),
           token: userToken,
         };
         // sign in to local app state
         signIn(localUserObject);
+        setLoading(false);
+        navigation.navigate('Home');
       } catch (e) {
         setLoading(false);
         setLoginError(e.message);

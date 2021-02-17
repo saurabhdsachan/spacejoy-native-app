@@ -136,7 +136,7 @@ const Quiz1 = ({ navigation }) => {
             color={COLORS.black}
             size="sm"
             onPress={() => {
-              saveToStorage(quizTitle);
+              // saveToStorage(quizTitle);
               navigation.navigate('Quiz2');
             }}
           >
