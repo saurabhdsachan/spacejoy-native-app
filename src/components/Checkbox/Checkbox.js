@@ -1,4 +1,4 @@
-import { theme } from '@constants/';
+import { COLORS, SIZES } from '@constants/index';
 import React, { useEffect, useMemo, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,7 +16,7 @@ const Checkbox = ({
   checkboxStyle,
   checkIconStyle,
   labelBoxStyle,
-  lableStyle,
+  labelStyle,
   bold,
 }) => {
   const onClick = () => {
@@ -24,24 +24,34 @@ const Checkbox = ({
   };
 
   const border = useMemo(() => {
-    if (type === 'circle') {
-      return { borderRadius: theme.SIZES.radius, borderColor: iconColor };
-    } else {
-      return { borderRadius: 2, borderColor: iconColor };
-    }
+    return type === 'circle'
+      ? { borderRadius: SIZES.radius, borderColor: iconColor }
+      : { borderRadius: SIZES.radius / 3, borderColor: iconColor };
   }, [type, iconColor]);
 
+  const buttonStyle = [!inline && styles.buttonStyle];
   const checkboxStyles = [styles.checkbox, border, inline && styles.inline, checkboxStyle];
-  const labelStyles = [styles.label, inline && styles.labelInline, bold && styles.labelBold, lableStyle];
+  const labelStyles = [
+    styles.label,
+    inline && styles.labelInline,
+    bold && styles.labelBold,
+    !inline && { marginTop: SIZES.base },
+    labelStyle,
+  ];
 
   return (
-    <Button raw onPress={onClick}>
-      <Block row={inline} center={inline} style={!inline && { marginTop: theme.SIZES.padding / 2 }}>
+    <Button raw onPress={onClick} style={buttonStyle}>
+      <Block row={inline} center={inline}>
         <Block center middle flex={false} style={checkboxStyles} color={bgColor}>
-          {checked && <Icon style={[styles.checkIcon, { color: iconColor }, checkIconStyle]} name="checkmark-sharp" />}
+          {checked && (
+            <Icon
+              style={[styles.checkIcon, { color: bgColor ? COLORS.white : iconColor }, checkIconStyle]}
+              name="checkmark-sharp"
+            />
+          )}
         </Block>
         <Block flex={false} style={[styles.label, labelBoxStyle]}>
-          <Text style={[labelStyles]}>{label}</Text>
+          <Text style={labelStyles}>{label}</Text>
         </Block>
       </Block>
     </Button>
@@ -89,13 +99,16 @@ const CheckboxGroup = ({ checkedValues, onChange, children }) => {
 Checkbox.Group = CheckboxGroup;
 
 const styles = StyleSheet.create({
+  buttonStyle: {
+    height: 45,
+  },
   checkbox: {
-    width: 22,
-    height: 22,
-    borderWidth: StyleSheet.hairlineWidth * 2,
+    width: 20,
+    height: 20,
+    borderWidth: 1,
   },
   checkIcon: {
-    fontSize: theme.SIZES.h3,
+    fontSize: SIZES.h3,
     fontWeight: '700',
   },
   inline: {
@@ -105,11 +118,9 @@ const styles = StyleSheet.create({
   },
   label: {
     zIndex: 1,
-    height: 20,
   },
   labelInline: {
-    marginTop: 0,
-    marginLeft: theme.SIZES.base,
+    marginLeft: SIZES.base,
   },
   labelBold: {
     fontWeight: 'bold',

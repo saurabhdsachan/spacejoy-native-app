@@ -1,10 +1,9 @@
 import Checkbox from '@components/Checkbox/Checkbox';
-import { Block } from '@components/index';
+import { Block, Button } from '@components/index';
 import { theme } from '@constants/index';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React from 'react';
-// import {TouchableOpacity} from 'react-native-gesture-handler';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import Quantity from './QuantitySelector';
 
 const { SIZES } = theme;
@@ -18,7 +17,7 @@ const QuizCard = ({ data, stylesArray, align, inline }) => {
 
   return (
     <Block color={blockColor} style={stylesArray} {...alignMiddle}>
-      <TouchableOpacity style={styles.buttonStyles} onPress={() => select(data.id)}>
+      <Button raw style={styles.buttonStyles} onPress={select}>
         <Checkbox
           bold
           {...isInline}
@@ -28,18 +27,17 @@ const QuizCard = ({ data, stylesArray, align, inline }) => {
           type="square"
           checked={!!quantity}
           iconColor={radioColor}
+          bgColor={radioColor}
         />
-        {quantity > 0 && (
-          <Quantity
-            borderColor={radioColor}
-            quantity={data.quantity || data.defaultQuantity}
-            item={data}
-            type="quiz"
-            selections={data.selections}
-          />
-        )}
+        <Quantity
+          borderColor={radioColor}
+          quantity={data.quantity || data.defaultQuantity}
+          item={data}
+          type="quiz"
+          selections={data.selections}
+        />
         {data.image && <Image source={data.image} resizeMode="cover" style={styles[data.slug]} />}
-      </TouchableOpacity>
+      </Button>
     </Block>
   );
 };
@@ -88,13 +86,6 @@ const styles = StyleSheet.create({
   },
   spaceLeft: {
     marginLeft: SIZES.padding / 2,
-  },
-  half: {
-    minHeight: 80,
-    height: 'auto',
-  },
-  full: {
-    height: 190,
   },
 });
 

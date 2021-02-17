@@ -11,7 +11,7 @@ const data = [
     selected: false,
     slug: 'livingRoom',
     id: 1,
-    defaultQuantity: 1,
+    defaultQuantity: 0,
     defaultSelection,
   },
   {
@@ -22,7 +22,7 @@ const data = [
     id: 2,
     image: lamp,
     slug: 'bedRoom',
-    defaultQuantity: 1,
+    defaultQuantity: 0,
     defaultSelection,
   },
   {
@@ -32,7 +32,7 @@ const data = [
     selected: false,
     id: 3,
     slug: 'studyRoom',
-    defaultQuantity: 1,
+    defaultQuantity: 0,
     defaultSelection,
   },
   {
@@ -42,7 +42,7 @@ const data = [
     selected: false,
     id: 4,
     slug: 'homeOffice',
-    defaultQuantity: 1,
+    defaultQuantity: 0,
     defaultSelection,
   },
   {
@@ -52,7 +52,7 @@ const data = [
     selected: false,
     id: 5,
     slug: 'kidsRoom',
-    defaultQuantity: 1,
+    defaultQuantity: 0,
     defaultSelection,
   },
   {
@@ -63,7 +63,7 @@ const data = [
     selected: false,
     id: 6,
     slug: 'nursery',
-    defaultQuantity: 1,
+    defaultQuantity: 0,
     defaultSelection,
   },
   {
@@ -73,7 +73,7 @@ const data = [
     selected: false,
     id: 7,
     slug: 'entryWay',
-    defaultQuantity: 1,
+    defaultQuantity: 0,
     defaultSelection,
   },
   {
@@ -84,7 +84,7 @@ const data = [
     selected: false,
     id: 8,
     slug: 'openLiving',
-    defaultQuantity: 1,
+    defaultQuantity: 0,
     defaultSelection,
   },
 ];

@@ -54,7 +54,6 @@ const reducer = (prevState, action) => {
         ...prevState[quizTitle].userDesignSelections.slice(0, index),
         ...prevState[quizTitle].userDesignSelections.slice(index + 1),
       ];
-      console.log(updatedArray);
       let j = 0;
       const sortedArray = [...sortByKey(updatedArray, 'title')];
       const newArray = sortedArray.map((obj, i) => {
