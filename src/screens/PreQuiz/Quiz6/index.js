@@ -199,27 +199,22 @@ const Quiz6 = ({ navigation, route }) => {
               </LinearGradient>
             </>
           ) : (
-            <>
-              <Block middle style={styles.emptyScreen} center>
-                <LottieAnimations name="empty" height={150} width={150} autoPlay={true} />
-                <Text middle center mt2 mb4>
-                  You have no items in your cart
-                </Text>
-              </Block>
-              <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
-                <Block flex={1} middle center>
-                  <Button
-                    color={COLORS.black}
-                    size="sm"
-                    onPress={() => {
-                      navigation.navigate('Quiz1');
-                    }}
-                  >
-                    <Text color="white">Go Back to selecting rooms</Text>
-                  </Button>
-                </Block>
-              </LinearGradient>
-            </>
+            <Block middle style={styles.emptyScreen} center>
+              <LottieAnimations name="empty" height={150} width={150} autoPlay={true} />
+              <Text middle center mt2 mb4 color={COLORS.gray}>
+                You have not selected any packages yet.{'\n'}
+                Please select a package
+              </Text>
+              <Button
+                color={COLORS.black}
+                size="sm"
+                onPress={() => {
+                  navigation.navigate('Quiz1');
+                }}
+              >
+                <Text color="white">Select a package</Text>
+              </Button>
+            </Block>
           )}
         </Block>
       )}
