@@ -200,11 +200,11 @@ const Quiz6 = ({ navigation, route }) => {
             </>
           ) : (
             <>
-              <Block flex={false} height={300}>
-                <Text middle center mt2>
+              <Block middle style={styles.emptyScreen} center>
+                <LottieAnimations name="empty" height={150} width={150} autoPlay={true} />
+                <Text middle center mt2 mb4>
                   You have no items in your cart
                 </Text>
-                <LottieAnimations name="empty" height={100} autoPlay={true} />
               </Block>
               <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
                 <Block flex={1} middle center>
@@ -272,6 +272,10 @@ const styles = StyleSheet.create({
   btnContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  emptyScreen: {
+    height: 300,
+    paddingVertical: SIZES.padding,
   },
   cartHeader: {
     borderBottomWidth: 2,

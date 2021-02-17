@@ -1,14 +1,14 @@
 import { Block, Button, Text } from '@components/';
 import { theme } from '@constants/';
 import React from 'react';
-import { Animated, StyleSheet } from 'react-native';
+import { Animated, Dimensions, StyleSheet } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Dropdown from './Dropdown';
 
 const { COLORS, SIZES } = theme;
-const ANIMATION_DURATION = 150;
-
+const ANIMATION_DURATION = 250;
+const { width } = Dimensions.get('window');
 const RoomItem = ({
   data: { item, index },
   removeSelection,
@@ -71,7 +71,7 @@ const RoomItem = ({
           lastChild && styles.lastChild,
           { opacity: animated },
           {
-            transform: [{ scale: animated }],
+            transform: [{ translateX: animated.interpolate({ inputRange: [0, 1], outputRange: [width, 0] }) }],
           },
         ]}
       >
