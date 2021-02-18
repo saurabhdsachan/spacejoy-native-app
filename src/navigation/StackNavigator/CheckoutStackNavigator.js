@@ -7,14 +7,16 @@ import React from 'react';
 const Stack = createStackNavigator();
 const { COLORS } = theme;
 const screenHeaderOptions = {
-  title: null,
-  headerTransparent: true,
+  title: 'Secure Checkout',
   headerBackImage: () => <HeaderBack />,
-  headerShown: false,
   cardStyle: { backgroundColor: 'transparent' },
   headerBackTitleVisible: false,
   headerBackTitleStyle: {
     color: COLORS.black,
+  },
+  headerStyle: {
+    backgroundColor: 'white',
+    shadowColor: 'transparent',
   },
 };
 

@@ -295,22 +295,14 @@ const PaymentScreen = ({ route, navigation }) => {
       onResponderGrant={dismissKeyboard}
       onStartShouldSetResponder={() => true}
     >
-      {loading && (
-        <Block center middle color={COLORS.semiTransparent} style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}>
-          <ActivityIndicator size="small" />
-        </Block>
-      )}
-
-      <Block color="white" padding={[SIZES.safe + 20, 0, 0, 0]}>
+      <Block>
         <StatusBar barStyle="dark-content" />
-        <Block flex={false} color="white" padding={[0, SIZES.padding, 0, SIZES.padding]}>
+        <Block flex={false} color={COLORS.white} padding={[0, SIZES.padding, 0, SIZES.padding]}>
           <Button ghost center style={{ borderRadius: SIZES.radius / 4 }} onPress={openCouponModal}>
-            <Text center transform="capitalize">
-              Apply Coupon
-            </Text>
+            <Text center>Apply Coupon</Text>
           </Button>
         </Block>
-        <Block flex={4} color="white">
+        <Block flex={4} color={COLORS.white}>
           <Block
             row
             paddingVertical={SIZES.padding / 2}
@@ -352,28 +344,27 @@ const PaymentScreen = ({ route, navigation }) => {
             />
           </Block>
         </Block>
-        <Block row flex={1} color="white" padding={[SIZES.padding, SIZES.padding, 0, SIZES.padding]}>
+        <Block row flex={1} color={COLORS.white} padding={[SIZES.padding, SIZES.padding, 0, SIZES.padding]}>
           <Block row>
             <Text bold>Estimated Price</Text>
           </Block>
           <Block>
-            <Text style={{ textAlign: 'right' }}>$ {totalAmount}</Text>
+            <Text right>$ {totalAmount}</Text>
           </Block>
         </Block>
-        <Block flex={2} padding={SIZES.padding} color="#f2f2f2">
-          <Text h2 mb2>
+        <Block flex={2} color={COLORS.white} padding={SIZES.padding} marginTop={SIZES.base}>
+          <Text h3 mb3>
             Card Details
           </Text>
-
           <CardTextFieldScreen onValid={trackCardParams} />
           <Button
+            color={COLORS.black}
             loading={loading}
-            gradient
             onPress={handlePayment}
             style={{ borderRadius: SIZES.radius / 4 }}
             marginVertical={SIZES.padding}
           >
-            <Text center white size={16}>
+            <Text center white>
               Pay ${totalAmount}
             </Text>
           </Button>
@@ -398,7 +389,7 @@ const PaymentScreen = ({ route, navigation }) => {
                 onChangeText={(text) => setCurrentCouponCode(text)}
               />
               <Button color="black" style={styles.applyBtn} onPress={() => validateCoupon(currentCouponCode)}>
-                <Text color="white">APPLY</Text>
+                <Text color={COLORS.white}>APPLY</Text>
               </Button>
             </Block>
 
@@ -416,14 +407,6 @@ const PaymentScreen = ({ route, navigation }) => {
             </ScrollView>
           </Block>
         </Modalize>
-
-        {/* <SuccessOverlay
-          setRef={(ref) => {
-            successOverlayRef.current = ref;
-          }}
-          navigation={navigation}
-          closeModal={closeModal}
-        /> */}
       </Block>
     </KeyboardAvoidingView>
   );
