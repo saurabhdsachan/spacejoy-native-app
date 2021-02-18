@@ -53,12 +53,20 @@ function DrawerContent({ navigation, progress }) {
                 transform: [{ translateX, scale }],
               }}
             />
-            <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Auth', { screen: 'Login' })}>
+            <Button
+              color={COLORS.black}
+              size="sm"
+              onPress={() => navigation.navigate('Auth', { screen: 'Login', flow: 'login', layout: 'screen' })}
+            >
               <Text center white>
                 Login
               </Text>
             </Button>
-            <Button color={COLORS.black} size="sm" onPress={() => navigation.navigate('Auth', { screen: 'SignUp' })}>
+            <Button
+              color={COLORS.black}
+              size="sm"
+              onPress={() => navigation.navigate('Auth', { screen: 'SignUp', flow: 'signup', layout: 'screen' })}
+            >
               <Text center white>
                 Sign up
               </Text>

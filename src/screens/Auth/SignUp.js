@@ -115,7 +115,17 @@ const SignUp = ({ navigation }) => {
             <ActivityIndicator size="small" />
           </Block>
         )}
-
+        <Block style={styles.skipHolder}>
+          <Button
+            color={COLORS.semiTransparent}
+            size="xs"
+            onPress={() => {
+              navigation.navigate('Home');
+            }}
+          >
+            <Text>SKIP</Text>
+          </Button>
+        </Block>
         <Block flex={false} padding={[SIZES.height * 0.1, SIZES.padding * 2, 0, SIZES.padding * 2]}>
           <Text title mb1>
             Signup
@@ -241,14 +251,11 @@ const SignUp = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  loading: {
+  skipHolder: {
     position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
+    top: SIZES.padding * 3,
+    right: SIZES.padding,
+    zIndex: 1,
   },
   container: {
     backgroundColor: 'white',

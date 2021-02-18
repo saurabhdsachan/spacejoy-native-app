@@ -1,7 +1,8 @@
 import { Block, Button, Text } from '@components/index';
 import { LottieAnimations } from '@components/LottieAnimations';
+import useAuthNavigation from '@components/withAuthenticationNavigation';
 import { theme } from '@constants/index';
-import checkAuth from '@utils/helpers/checkAuth';
+import { AuthNavigationContext } from '@utils/helpers/AuthNavigationContext';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import sortByKey from '@utils/helpers/helpers';
 import React, { useEffect, useRef, useState } from 'react';
@@ -22,6 +23,9 @@ const { width } = Dimensions.get('window');
 const ITEM_SIZE = width * 0.8;
 const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
 const Quiz6 = ({ navigation, route }) => {
+  const { dispatch, state } = React.useContext(AuthNavigationContext);
+  console.log(state);
+  const { authWithCallback } = useAuthNavigation();
   const [pricingItems, setPricingItems] = useState([]);
   const [currentActive, setCurrentActive] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -189,9 +193,9 @@ const Quiz6 = ({ navigation, route }) => {
                   <Button
                     color={COLORS.black}
                     size="sm"
-                    onPress={() => {
-                      checkAuth(navigation, { totalAmount }, undefined, 'PaymentScreen', route.name);
-                    }}
+                    onPress={() =>
+                      authWithCallback({ dispatch, redirectRouteData: { totalAmount }, redirectUrl: 'PaymentScreen' })
+                    }
                   >
                     <Text color="white">{`Pay $${totalAmount}`}</Text>
                   </Button>

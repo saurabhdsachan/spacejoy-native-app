@@ -10,14 +10,14 @@ const checkAuth = async (navigationObj, additionalParams, callback = () => {}, r
       callback && callback();
       navigationObj.navigate(redirectUrl, { ...additionalParams });
     } else {
-      navigationObj.navigate('ModalAuth', {
+      navigationObj.navigate('Auth', {
         screen: 'Login',
         params: { additionalParams, callback, redirectUrl, currentRoute },
       });
     }
   } catch (e) {
     // Error in fetching token
-    navigationObj.navigate('ModalAuth', {
+    navigationObj.navigate('Auth', {
       screen: 'Login',
       params: { additionalParams, callback, redirectUrl, currentRoute },
     });
