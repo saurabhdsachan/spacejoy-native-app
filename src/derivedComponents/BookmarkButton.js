@@ -1,8 +1,9 @@
 import { Block, Button, Divider, Radio, Text } from '@components/';
+import useAuthNavigation from '@components/useAuthNavigation';
 import { COLORS, images, SIZES } from '@constants/';
 import { designRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
-import checkAuth from '@utils/helpers/checkAuth';
+import { AuthNavigationContext } from '@utils/helpers/AuthNavigationContext';
 import { useAuthContext } from '@utils/helpers/withAuthContext';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Image, StyleSheet, TextInput } from 'react-native';
@@ -15,7 +16,6 @@ const CreateBookmarkSection = ({ onCreateBookmark, onCancel, type }) => {
   // ideabook creation
   const [newBookmarkName, setNewBookmarkName] = useState(null);
   const [error, setError] = useState({ error: false, errorMessage: '' });
-
   const textInputRef = useRef();
 
   const onNewBookmarkNameChange = (text) => {
@@ -321,10 +321,22 @@ const BookmarkButton = ({ id, bookmarked, onBookmarkChange, type, bookmarkId, na
   const toggleBookmark = () => {
     setModalVisible(!modalVisible);
   };
+  const { dispatch } = React.useContext(AuthNavigationContext);
+  const { authWithCallback } = useAuthNavigation();
 
   return (
     <>
-      <Button raw size="xs" onPress={() => checkAuth(navigation, {}, toggleBookmark, 'Home', route.name)}>
+      {/* <Button raw size="xs" onPress={() => checkAuth(navigation, {}, toggleBookmark, 'Home', route.name)}> */}
+      <Button
+        raw
+        size="xs"
+        onPress={() =>
+          authWithCallback({
+            dispatch,
+            callback: toggleBookmark,
+          })
+        }
+      >
         <Text center>
           <Icon name={`bookmark${bookmarked ? '' : '-outline'}`} size={20} color={COLORS.black} />
         </Text>

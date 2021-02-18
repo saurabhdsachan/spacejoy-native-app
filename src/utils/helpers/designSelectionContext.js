@@ -160,7 +160,7 @@ const useDesignSelectionContext = () => {
     hydrateLocalState();
   }, []);
   useEffect(() => {
-    const saveToStorage = async (quizTitle) => {
+    const saveToStorage = async () => {
       // save to async storage
       try {
         const userQuizResponse = await AsyncStorage.getItem('userQuizResponse');
