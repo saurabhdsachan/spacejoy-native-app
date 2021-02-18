@@ -152,8 +152,8 @@ const Login = ({ navigation, route }) => {
               </Button>
             </Block>
           </Block>
-          <Block flex={false} middle>
-            <Text color={COLORS.gray} center>
+          <Block flex={false} middle marginVertical={SIZES.padding}>
+            <Text color={COLORS.black} center>
               --- or ---
             </Text>
           </Block>
@@ -217,8 +217,8 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gray,
     borderWidth: 1,
     padding: SIZES.padding / 1.25,
-    borderRadius: SIZES.radius / 6,
-    marginBottom: SIZES.padding / 2,
+    borderRadius: SIZES.radius / 4,
+    marginBottom: SIZES.padding,
   },
   imageBg: {
     flex: 1,

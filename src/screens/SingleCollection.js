@@ -1,10 +1,10 @@
-import { Block, Button, Text } from '@components/';
+import { Block, Button, ProgressiveImage, Text } from '@components/';
 import Accordion from '@components/Accordion';
 import Loader from '@components/Loader';
-import { COLORS, SIZES } from '@constants/index';
+import { COLORS, images, SIZES } from '@constants/index';
 import { MILD } from '@constants/theme';
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import DesignCard from 'src/derivedComponents/Cards/DesignCard';
 
@@ -100,9 +100,10 @@ const SingleCollection = ({ route, navigation }) => {
         <Loader />
       ) : (
         <ScrollView scrollEventThrottle={20} onScroll={handleScroll}>
-          <Image
+          <ProgressiveImage
+            thumbnailSource={images.pattern}
             source={{
-              uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,w_600,f_auto,h_400,ar_2,c_pad/${
+              uri: `https://res.cloudinary.com/spacejoy/image/upload/fl_lossy,q_auto,w_${SIZES.width * 2},f_auto/${
                 collectionItem.cdnThumbnail || collectionData.cdnCover
               }`,
             }}

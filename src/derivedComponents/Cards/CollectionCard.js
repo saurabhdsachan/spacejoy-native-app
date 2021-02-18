@@ -25,9 +25,9 @@ const CollectionCard = ({ data, navigation }) => {
           />
         </TouchableOpacity>
       </Block>
-      <Block row spaceBetween end padding={[SIZES.padding, 0]}>
+      <Block row spaceBetween end paddingVertical={SIZES.padding}>
         <Block flex={11}>
-          <Text numberOfLines={1} body>
+          <Text h3 numberOfLines={1}>
             {collectionData.name}
           </Text>
         </Block>
@@ -39,14 +39,6 @@ const CollectionCard = ({ data, navigation }) => {
               title={collectionData.name}
             />
           </Block>
-          {/* <Block>
-            <BookmarkButton
-              id={collectionData._id}
-              bookmarked={collectionData.bookmarked}
-              onBookmarkChange={onBookmarkChange}
-              type="collection"
-            />
-          </Block> */}
         </Block>
       </Block>
     </Block>

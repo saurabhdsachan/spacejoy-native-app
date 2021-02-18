@@ -46,9 +46,10 @@ function DrawerContent({ navigation, progress }) {
               resizeMode="contain"
               style={{
                 height: SIZES.height / 4,
-                width: '100%',
+                width: '80%',
                 borderRadius: SIZES.radius,
                 marginTop: SIZES.height / 3,
+                marginLeft: '10%',
                 marginBottom: SIZES.padding,
                 transform: [{ translateX, scale }],
               }}

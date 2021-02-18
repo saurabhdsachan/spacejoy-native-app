@@ -7,7 +7,7 @@ import { AuthNavigationContext } from '@utils/helpers/AuthNavigationContext';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const LikeButton = ({ id, liked, onLikeChange, type, navigation, route }) => {
+const LikeButton = ({ id, liked, onLikeChange, type }) => {
   const { dispatch } = React.useContext(AuthNavigationContext);
   const { authWithCallback } = useAuthNavigation();
   const onLikeIconClick = async () => {
