@@ -84,7 +84,6 @@ const RoomItem = ({
               data={pricingItems}
               onChange={(value) => {
                 updateSelection(item, value, 'quiz1');
-                // updateStorage('quiz1');
               }}
               value={item?.selectedPackage || item?.defaultSelection}
             />
