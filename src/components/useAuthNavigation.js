@@ -11,6 +11,9 @@ const useAuthNavigation = () => {
       const userToken = await AsyncStorage.getItem('userToken');
       if (userToken) {
         callback();
+        if (redirectUrl) {
+          navigation.navigate(redirectUrl);
+        }
       } else {
         // take user to sign in screen
         dispatch({

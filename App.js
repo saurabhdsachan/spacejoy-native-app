@@ -1,12 +1,12 @@
 import DrawerNavigator from '@navigation/DrawerNavigator';
-import { AuthStackNavigator } from '@navigation/StackNavigator';
+import { AuthStackNavigator, CheckoutStackNavigator } from '@navigation/StackNavigator';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthNavigationContext, AuthNavState } from '@utils/helpers/AuthNavigationContext';
 import { AuthContext, useAuthContext } from '@utils/helpers/withAuthContext';
 import * as React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-view';
 
 const configureGoogleSign = () =>
   GoogleSignin.configure({
@@ -51,6 +51,7 @@ const RootStackScreen = () => {
       >
         <RootStack.Screen name="DrawerContent" component={DrawerNavigator} />
         <RootStack.Screen name="Auth" component={AuthStackNavigator} options={modalScreenOptions} mode="modal" />
+        <RootStack.Screen name="Checkout" component={CheckoutStackNavigator} />
       </RootStack.Navigator>
     </AuthNavigationContext.Provider>
   );
