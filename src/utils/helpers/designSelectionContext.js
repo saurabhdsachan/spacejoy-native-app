@@ -80,7 +80,7 @@ const reducer = (prevState, action) => {
     }
     case 'ADD_ITEM': {
       const { item, quizTitle } = action;
-      const { defaultQuantity, id } = item;
+      const { id } = item;
       const { userDesignSelections } = prevState[quizTitle];
       // check if item exists with same id
       const countOfSimilarItems = userDesignSelections.filter((selItem) => selItem.id === id).length;
@@ -91,7 +91,7 @@ const reducer = (prevState, action) => {
       const newCartItem = {
         ...item,
         title: `${item.title} ${titleSuffix}`,
-        selectionItemId: lastSelectionId + defaultQuantity,
+        selectionItemId: lastSelectionId + 1,
       };
 
       return {
