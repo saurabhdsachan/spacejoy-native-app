@@ -4,7 +4,7 @@ import useAuthNavigation from '@components/useAuthNavigation';
 import { theme } from '@constants/index';
 import { AuthNavigationContext } from '@utils/helpers/AuthNavigationContext';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
-import sortByKey from '@utils/helpers/helpers';
+import { sortByKey } from '@utils/helpers/helpers';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, Dimensions, StatusBar, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';

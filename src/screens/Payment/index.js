@@ -5,9 +5,9 @@ import { LottieAnimations } from '@components/LottieAnimations';
 import { theme } from '@constants/index';
 import { checkoutRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
-import sortByKey from '@utils/helpers/helpers';
+import { clearStorageData, sortByKey } from '@utils/helpers/helpers';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Keyboard, KeyboardAvoidingView, StatusBar, StyleSheet, TextInput } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, StatusBar, StyleSheet, TextInput } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { Modalize } from 'react-native-modalize';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -39,7 +39,7 @@ const makePayment = async (token) => {
     );
     if (paymentRes && !paymentErr) {
       const { statusCode, data } = paymentRes;
-      console.log(data);
+
       if (statusCode <= 301) {
         return data;
       } else {
@@ -233,13 +233,12 @@ const PaymentScreen = ({ route, navigation }) => {
       await makePayment(tokenId);
       setLoadingStatus(false);
       setPaymentError(null);
-
-      // navigate to success page
-      Keyboard.dismiss();
-      successOverlayRef?.current?.open();
+      await clearStorageData();
+      navigation.navigate('PaymentSuccess');
     } catch (error) {
-      // console.log('an error occurred during pyament', error.message);
-      setPaymentError('An error occurred during payment. Please try again');
+      setPaymentError('An error occurred during payment. Please try again', error.message);
+    } finally {
+      setLoadingStatus(false);
     }
   };
   const openCouponModal = async () => {
@@ -248,17 +247,14 @@ const PaymentScreen = ({ route, navigation }) => {
     try {
       const [coupons, couponsError] = await handle(fetcher({ endPoint: checkoutRoutes.getCouponsApi, method: 'GET' }));
       if (coupons && !couponsError) {
-        console.log(coupons);
         const { data: couponsData = [], statusCode } = coupons;
         if (statusCode <= 301) {
-          console.log(couponsData);
           setCouponsList(couponsData);
         } else {
           throw new Error();
         }
       }
     } catch (e) {
-      // console.log('error occurred ----', e.message);
       setCouponsFetchError(true);
     } finally {
       setCouponLoadingStatus(false);
@@ -390,17 +386,17 @@ const PaymentScreen = ({ route, navigation }) => {
           </Block>
         )}
 
-        <Block flex={2} color={COLORS.white} padding={SIZES.padding} marginTop={SIZES.base}>
+        <Block flex={2.5} color={COLORS.white} padding={SIZES.padding} marginTop={SIZES.base}>
           <Text h3 mb3>
             Card Details
           </Text>
+          {paymentError && <LoginError errorText="There was error during payment. Please try again" />}
           <CardTextFieldScreen onValid={trackCardParams} />
           <Button
             color={COLORS.black}
             loading={loading}
             onPress={handlePayment}
-            style={{ borderRadius: SIZES.radius / 4 }}
-            marginVertical={SIZES.padding}
+            style={{ borderRadius: SIZES.radius / 4, marginVertical: SIZES.padding }}
           >
             <Text center white>
               Pay ${totalAmount}

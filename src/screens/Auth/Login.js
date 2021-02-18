@@ -16,7 +16,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  TextInput,
+  TextInput
 } from 'react-native';
 
 const { bg } = images;
@@ -42,6 +42,7 @@ const Login = ({ navigation, route }) => {
     const { callback, redirectUrl, currentRoute, redirectRouteData, defaultNavigationTo } = state;
     const redirectTo = redirectUrl || currentRoute || defaultNavigationTo;
     callback();
+    navigation.goBack();
     navigation.navigate(redirectTo, { params: redirectRouteData });
     dispatch({ type: 'RESET_AUTH_FLOW_CONTEXT' });
   };

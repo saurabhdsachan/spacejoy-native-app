@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import sortByKey from '@utils/helpers/helpers';
+import { sortByKey } from '@utils/helpers/helpers';
 import React, { useEffect, useMemo, useReducer } from 'react';
 
 const DesignSelectionContext = React.createContext();
