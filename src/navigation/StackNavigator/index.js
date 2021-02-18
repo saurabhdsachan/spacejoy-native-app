@@ -1,4 +1,3 @@
-import AuthModalStackNavigator from './AuthModalStackNavigator';
 import AuthStackNavigator from './AuthStackNavigator';
 import CollectionStackNavigator from './CollectionStackNavigator';
 import HomeStackNavigator from './HomeStackNavigator';
@@ -15,5 +14,4 @@ export {
   StoreStackNavigator,
   AuthStackNavigator,
   IdeabookStackNavigator,
-  AuthModalStackNavigator,
 };

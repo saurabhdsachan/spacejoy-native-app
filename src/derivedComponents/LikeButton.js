@@ -1,12 +1,15 @@
 import { Button } from '@components/';
+import useAuthNavigation from '@components/withAuthenticationNavigation';
 import { SIZES } from '@constants/';
 import { designRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
-import checkAuth from '@utils/helpers/checkAuth';
+import { AuthNavigationContext } from '@utils/helpers/AuthNavigationContext';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const LikeButton = ({ id, liked, onLikeChange, type, navigation, route }) => {
+  const { dispatch } = React.useContext(AuthNavigationContext);
+  const { authWithCallback } = useAuthNavigation();
   const onLikeIconClick = async () => {
     const nextLikeStatus = !liked;
     const endPoint = designRoutes.getLikeApi(type, id);
@@ -26,9 +29,8 @@ const LikeButton = ({ id, liked, onLikeChange, type, navigation, route }) => {
       onLikeChange(nextLikeStatus);
     }
   };
-  // checkAuth(navigation, { totalAmount }, undefined, 'PaymentScreen', route.name);
   return (
-    <Button raw onPress={() => checkAuth(navigation, {}, onLikeIconClick, 'Home', route.name)}>
+    <Button raw onPress={() => authWithCallback({ callback: onLikeIconClick, dispatch })}>
       <Icon name={`md-heart${liked ? '' : '-outline'}`} color={liked ? 'red' : 'black'} size={SIZES.base * 2.5} />
     </Button>
   );

@@ -6,21 +6,22 @@ import { Block } from '@components/index';
 import LoginError from '@components/LoginError';
 import Text from '@components/Text';
 import { COLORS, images, SIZES } from '@constants/index';
+import { AuthNavigationContext } from '@utils/helpers/AuthNavigationContext';
 import { AuthContext } from '@utils/helpers/withAuthContext';
 import { login, oAuthLogin } from '@utils/logins';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   ImageBackground,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  TextInput,
+  TextInput
 } from 'react-native';
 
 const { bg } = images;
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation, flow }) => {
   const { signIn } = React.useContext(AuthContext);
 
   const [email, setEmailAddress] = useState('');
@@ -28,10 +29,20 @@ const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
 
+  const { state, dispatch } = React.useContext(AuthNavigationContext);
+
   const handleRedirectToSignUp = () => {
-    navigation.navigate('SignUp');
+    navigation.navigate('Auth', { screen: 'SignUp', flow: 'signup', layout: 'screen' });
   };
 
+  const handlePostSignIn = async () => {
+    const { callback, redirectUrl, currentRoute, redirectRouteData, defaultNavigationTo } = state;
+    const redirectTo = redirectUrl || currentRoute || defaultNavigationTo;
+    callback();
+    navigation.navigate(redirectTo, { params: redirectRouteData });
+    dispatch({ type: 'RESET_AUTH_FLOW_CONTEXT' });
+  };
+  useEffect(() => {}, []);
   const handleSigninSuccess = async (userData = {}, token, authCode) => {
     // perform oAuth
     const { data: userInfo = {} } = userData;
@@ -47,7 +58,7 @@ const Login = ({ navigation }) => {
         // sign in to local app state
         signIn(localUserObject);
         setLoading(false);
-        navigation.navigate('Home');
+        handlePostSignIn();
       } catch (e) {
         setLoading(false);
         setLoginError(e.message);
@@ -73,6 +84,7 @@ const Login = ({ navigation }) => {
             data: { ...user },
           };
           signIn(loginObj);
+          handlePostSignIn();
         } else {
           setLoading(false);
           setLoginError('Incorrect username and password');
@@ -91,6 +103,19 @@ const Login = ({ navigation }) => {
             <ActivityIndicator size="small" />
           </Block>
         )}
+
+        <Block style={styles.skipHolder}>
+          <Button
+            color={COLORS.semiTransparent}
+            size="xs"
+            onPress={() => {
+              navigation.navigate('Home');
+            }}
+          >
+            <Text>SKIP</Text>
+          </Button>
+        </Block>
+
         <Block flex={false} padding={[SIZES.height * 0.18, SIZES.padding * 2, 0, SIZES.padding * 2]}>
           <Text title mb1>
             Login
@@ -99,7 +124,7 @@ const Login = ({ navigation }) => {
             Welcome Back
           </Text>
           {loginError && (
-            <Block flex={0.5} bottom>
+            <Block flex={3} bottom>
               <LoginError errorText={loginError} />
             </Block>
           )}
@@ -184,6 +209,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
+  },
+  skipHolder: {
+    position: 'absolute',
+    top: SIZES.padding * 3,
+    right: SIZES.padding,
+    zIndex: 1,
   },
   textInput: {
     borderColor: COLORS.gray,
