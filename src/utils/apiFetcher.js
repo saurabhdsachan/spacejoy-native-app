@@ -4,6 +4,7 @@ const baseApiUrl = 'https://api-staging.spacejoy.com/api';
 
 const fetcher = async ({ endPoint, method, type = 'text', body }) => {
   const JWT = await AsyncStorage.getItem('userToken');
+  console.log('methods here ----', method, endPoint, body, JWT);
   const headers = {
     'Content-type': type === 'file' ? '' : 'application/json',
     ...(JWT && { Authorization: JWT }),
@@ -24,6 +25,7 @@ const fetcher = async ({ endPoint, method, type = 'text', body }) => {
   const apiEndpoint = `${finalAPIBaseUrl}${endPoint}`;
   return fetch(apiEndpoint, options)
     .then(async (response) => {
+      console.log('response is ----', response);
       if (response.status) {
         try {
           if (response.status === 204) {

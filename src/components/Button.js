@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius * 2,
     justifyContent: 'center',
     paddingHorizontal: SIZES.padding,
+    alignItems: 'center',
   },
   shadow: {
     ...elevationShadowStyle(2),
