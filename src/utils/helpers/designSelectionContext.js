@@ -173,7 +173,6 @@ const useDesignSelectionContext = () => {
         console.log('Error occurred in saving data');
       }
     };
-    console.log('object', state);
     saveToStorage();
   }, [state]);
   const designSelectionsContext = useMemo(
