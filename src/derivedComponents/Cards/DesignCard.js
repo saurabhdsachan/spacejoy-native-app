@@ -91,10 +91,10 @@ const DesignCard = ({ data: designDataProp, navigation, noBookmark, route }) => 
           </Button>
         </Block>
       </Block>
-      <Text small capitalize color={COLORS.red}>
+      <Text capitalize color={COLORS.red}>
         {data?.theme?.name}
       </Text>
-      <Text h2 left mt1 mb1>
+      <Text h2 left mb1>
         {data.name}
       </Text>
     </Block>
