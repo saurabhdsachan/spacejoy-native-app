@@ -95,10 +95,8 @@ const Quiz3 = ({ navigation }) => {
           ]}
         />
 
-        <Text h2 mb1>
-          What's the occasion?
-        </Text>
-        <Text small>We build our vision around your purpose!</Text>
+        <Text h2>What's the occasion?</Text>
+        <Text mt1>We build our vision around your purpose!</Text>
       </Block>
       <Block
         paddingHorizontal={SIZES.padding}
@@ -135,7 +133,8 @@ const styles = StyleSheet.create({
   radioCard: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: COLORS.gray2,
-    paddingVertical: SIZES.padding,
+    paddingTop: SIZES.padding,
+    paddingBottom: SIZES.padding / 1.5,
     overflow: 'hidden',
   },
   lastChild: {

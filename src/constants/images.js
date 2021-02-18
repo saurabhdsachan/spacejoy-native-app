@@ -12,10 +12,10 @@ export const sofa = require('../assets/images/sofa.png');
 export const chair = require('../assets/images/chair.png');
 export const teddy = require('../assets/images/teddy.png');
 export const quiz3Banner = require('../assets/images/quiz3.png');
+export const quiz4Banner = require('../assets/images/quiz4.png');
 export const lamp = require('../assets/images/lamp.png');
 export const bg = require('../assets/images/bg.jpg');
 export const pattern = require('../assets/images/pattern.jpg');
-export const homeBg = require('../assets/images/home-bg.jpg');
 export const ideabookHeader = require('../assets/images/Ideabook.png');
 export const login = require('../assets/images/login.png');
 
@@ -41,7 +41,7 @@ export default {
   defaultAvatar,
   bg,
   pattern,
-  homeBg,
+  quiz4Banner,
   ideabookHeader,
   login,
 };

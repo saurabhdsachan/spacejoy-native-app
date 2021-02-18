@@ -5,15 +5,14 @@ import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React from 'react';
 import { Image, StatusBar, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const { SIZES, COLORS } = theme;
 
-const { homeBg } = images;
+const { quiz4Banner } = images;
 const quizTitle = 'quiz4';
 const Quiz3 = ({ navigation }) => {
-  const { userDesignSelections, userAnswers, saveUserAnswer, saveToStorage } = React.useContext(DesignSelectionContext);
+  const { userDesignSelections, userAnswers, saveUserAnswer } = React.useContext(DesignSelectionContext);
   const savedAnswerForThisStep = userAnswers[quizTitle];
   let doesUserHaveMoreThanSingleSelection = false;
   if (userDesignSelections.length) {
@@ -28,11 +27,9 @@ const Quiz3 = ({ navigation }) => {
   return (
     <Block color={COLORS.white} padding={[SIZES.safe + 200, SIZES.padding, 0, SIZES.padding]}>
       <StatusBar barStyle="dark-content" />
-      <Image source={homeBg} style={styles.imageBg} />
+      <Image source={quiz4Banner} style={styles.imageBg} />
       <Text h2>When should your space be ready?</Text>
-      <Text small mt1>
-        A timeline will help us work towards your goal
-      </Text>
+      <Text mt1>A timeline will help us work towards your goal</Text>
       <ScrollView bounces={false}>
         {QuizData.map((item, index) => (
           <Block
@@ -59,26 +56,24 @@ const Quiz3 = ({ navigation }) => {
         ))}
       </ScrollView>
 
-      <LinearGradient colors={[COLORS.transparent, COLORS.white]} style={styles.bottomButtons}>
-        <Block center row space="between">
-          <Button ghost color={COLORS.white} size="sm" onPress={() => navigation.goBack()}>
-            <Text center>
-              <Icon name="ios-arrow-back" size={14} /> Prev
-            </Text>
-          </Button>
-          <Button
-            color={COLORS.black}
-            size="sm"
-            onPress={() => {
-              navigation.navigate(navigateTo);
-            }}
-          >
-            <Text center color={COLORS.white}>
-              Next <Icon name="ios-arrow-forward" size={14} />
-            </Text>
-          </Button>
-        </Block>
-      </LinearGradient>
+      <Block center row space="between" style={styles.bottomButtons}>
+        <Button ghost color={COLORS.white} size="sm" onPress={() => navigation.goBack()}>
+          <Text center>
+            <Icon name="ios-arrow-back" size={14} /> Prev
+          </Text>
+        </Button>
+        <Button
+          color={COLORS.black}
+          size="sm"
+          onPress={() => {
+            navigation.navigate(navigateTo);
+          }}
+        >
+          <Text center color={COLORS.white}>
+            Next <Icon name="ios-arrow-forward" size={14} />
+          </Text>
+        </Button>
+      </Block>
     </Block>
   );
 };
@@ -89,12 +84,11 @@ const styles = StyleSheet.create({
   radioCard: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: COLORS.gray2,
-    paddingVertical: SIZES.padding,
-    overflow: 'hidden',
+    paddingTop: SIZES.padding,
+    paddingBottom: SIZES.padding / 1.5,
   },
   lastChild: {
     borderBottomWidth: 0,
-    marginBottom: 150,
   },
   firstChild: {
     marginTop: SIZES.padding,
@@ -106,10 +100,10 @@ const styles = StyleSheet.create({
     padding: SIZES.padding,
   },
   imageBg: {
-    ...StyleSheet.absoluteFill,
-    resizeMode: 'cover',
-    flex: 1,
-    height: 250,
-    width: SIZES.width,
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: 'contain',
+    left: SIZES.width * 0.25,
+    height: 350,
+    width: SIZES.width * 0.5,
   },
 });
