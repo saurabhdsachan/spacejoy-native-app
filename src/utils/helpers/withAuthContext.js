@@ -51,9 +51,7 @@ const useAuthContext = () => {
         if (userToken) {
           userData = await AsyncStorage.getItem('userData');
         }
-      } catch (e) {
-        // Restoring token failed
-      }
+      } catch (e) {}
       dispatch({ type: 'RESTORE_TOKEN', token: userToken, data: userData });
     };
     bootstrapAsync();
@@ -61,14 +59,12 @@ const useAuthContext = () => {
 
   const authContext = useMemo(
     () => ({
-      signIn: async ({ data, token }) => {
-        // save user token to async storage
+      signIn: async ({ user, token }) => {
         try {
-          await AsyncStorage.setItem('userData', JSON.stringify(data));
+          await AsyncStorage.setItem('userData', JSON.stringify(user));
           await AsyncStorage.setItem('userToken', token);
-          dispatch({ type: 'SIGN_IN', token, data });
+          dispatch({ type: 'SIGN_IN', token, data: user });
         } catch (e) {
-          // failure to save async storage items
           console.log('an error occurred', e.message);
         }
       },
@@ -78,20 +74,15 @@ const useAuthContext = () => {
         try {
           await AsyncStorage.removeItem('userData');
           await AsyncStorage.removeItem('userToken');
-        } catch (e) {
-          // failure to clear async storage
-        }
+        } catch (e) {}
         dispatch({ type: 'SIGN_OUT' });
       },
-      signUp: async ({ data, token }) => {
-        // save user token to async storage
+      signUp: async ({ user, token }) => {
         try {
-          await AsyncStorage.setItem('userData', JSON.stringify(data));
+          await AsyncStorage.setItem('userData', JSON.stringify(user));
           await AsyncStorage.setItem('userToken', token);
-        } catch (e) {
-          // failure to save async storage items
-        }
-        dispatch({ type: 'SIGN_IN', token, data });
+        } catch (e) {}
+        dispatch({ type: 'SIGN_IN', token, data: user });
       },
     }),
     [state.userToken, state.userData]

@@ -82,7 +82,7 @@ const SignUp = ({ navigation }) => {
             const { name = '', email: userEmail = '', id = '', channel = 'email' } = user;
             const userData = {
               token,
-              data: {
+              user: {
                 name,
                 email: userEmail,
                 id,
@@ -134,11 +134,11 @@ const SignUp = ({ navigation }) => {
             to select a design package and send your project details to your designer
           </Text>
           {loginError && (
-            <Block flex={false} bottom marginBottom={SIZES.padding}>
+            <Block flex={false} marginBottom={SIZES.padding}>
               <LoginError errorText={loginError} />
             </Block>
           )}
-          <Block flex={false} bottom>
+          <Block flex={false}>
             <Block flex={false}>
               <TextInput
                 keyboardType="default"

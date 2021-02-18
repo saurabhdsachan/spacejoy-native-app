@@ -20,8 +20,7 @@ const oAuthLogin = async (user, token, provider, code = '') => {
     );
     const { data, statusCode } = oAuthRes;
     if (statusCode <= 301 && !oAuthErr && data) {
-      const { token: userToken, user: userInfo } = data;
-      return { token: userToken, user: userInfo };
+      return data;
     } else {
       throw new Error('Something went wrong');
     }
