@@ -193,7 +193,11 @@ const Quiz6 = ({ navigation, route }) => {
                     color={COLORS.black}
                     size="sm"
                     onPress={() =>
-                      authWithCallback({ dispatch, redirectRouteData: { totalAmount }, redirectUrl: 'PaymentScreen' })
+                      authWithCallback({
+                        dispatch,
+                        redirectUrl: 'Checkout',
+                        callback: navigation.navigate('Checkout', { screen: 'Payment' }),
+                      })
                     }
                   >
                     <Text color="white">{`Pay $${totalAmount}`}</Text>

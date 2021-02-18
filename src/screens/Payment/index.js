@@ -2,15 +2,12 @@ import CardTextFieldScreen from '@components/CardTextFieldScreen';
 import { Block, Button, Text } from '@components/index';
 import { theme } from '@constants/index';
 import { checkoutRoutes } from '@constants/routes';
-import SuccessOverlay from '@screens/SuccessOverlay';
 import { fetcher, handle } from '@utils/apiFetcher';
-import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import sortByKey from '@utils/helpers/helpers';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Keyboard, KeyboardAvoidingView, StatusBar, StyleSheet, TextInput } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { Modalize } from 'react-native-modalize';
-import { Portal } from 'react-native-portalize';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import stripe from 'tipsi-stripe';
 import { fetchPricingItems } from '../PreQuiz/Quiz5/fetchers';
@@ -64,9 +61,115 @@ const PaymentScreen = ({ route, navigation }) => {
   const [couponFetchError, setCouponsFetchError] = useState(false);
   const [pricingMap, setPricingMap] = useState({});
   const [currentCouponCode, setCurrentCouponCode] = useState('');
-  const { userDesignSelections, clearContextData, clearStorageData, pricingData } = React.useContext(
-    DesignSelectionContext
-  );
+  const pricingData = [];
+  const userDesignSelections = [
+    {
+      title: 'Home Office - 1',
+      blockColor: '#D9DCF7',
+      radioColor: '#7786B0',
+      selected: false,
+      id: 4,
+      slug: 'homeOffice',
+      defaultQuantity: 1,
+      defaultSelection: 'bliss',
+      quantity: 0,
+      selectionItemId: 5,
+      selectedPackage: 'bliss',
+    },
+    {
+      title: 'Kid`s Room - 1',
+      blockColor: '#EBE6E4',
+      radioColor: '#D9A7A6',
+      selected: false,
+      id: 5,
+      slug: 'kidsRoom',
+      defaultQuantity: 1,
+      defaultSelection: 'bliss',
+      quantity: 0,
+      selectionItemId: 6,
+      selectedPackage: 'bliss',
+    },
+    {
+      title: 'Living Room - 1',
+      blockColor: '#DEE6E1',
+      radioColor: '#8DC395',
+      image: 11,
+      selected: false,
+      slug: 'livingRoom',
+      id: 1,
+      defaultQuantity: 1,
+      defaultSelection: 'bliss',
+      quantity: 0,
+      selectionItemId: 3,
+      selectedPackage: 'bliss',
+    },
+    {
+      title: 'Nursery - 1',
+      blockColor: '#BEEBE9',
+      radioColor: '#79D1CD',
+      image: 13,
+      selected: false,
+      id: 6,
+      slug: 'nursery',
+      defaultQuantity: 1,
+      defaultSelection: 'bliss',
+      quantity: 0,
+      selectionItemId: 8,
+      selectedPackage: 'bliss',
+    },
+    {
+      title: 'Open Living - 1',
+      blockColor: '#F4DADA',
+      radioColor: '#D3B3B3',
+      image: 12,
+      selected: false,
+      id: 8,
+      slug: 'openLiving',
+      defaultQuantity: 1,
+      defaultSelection: 'bliss',
+      quantity: 0,
+      selectionItemId: 7,
+      selectedPackage: 'bliss',
+    },
+    {
+      title: 'Study Room - 1',
+      blockColor: '#F6EEC7',
+      radioColor: '#E7D682',
+      selected: false,
+      id: 3,
+      slug: 'studyRoom',
+      defaultQuantity: 1,
+      defaultSelection: 'bliss',
+      quantity: 0,
+      selectionItemId: 4,
+      selectedPackage: 'bliss',
+    },
+    {
+      title: 'Bedroom - 1',
+      blockColor: '#E5E5E5',
+      radioColor: '#979898',
+      selected: false,
+      id: 2,
+      image: 15,
+      slug: 'bedRoom',
+      defaultQuantity: 0,
+      defaultSelection: 'bliss',
+      quantity: 0,
+      selectionItemId: 4,
+    },
+    {
+      title: 'Home Office - 2',
+      blockColor: '#D9DCF7',
+      radioColor: '#7786B0',
+      selected: false,
+      id: 4,
+      slug: 'homeOffice',
+      defaultQuantity: 0,
+      defaultSelection: 'bliss',
+      quantity: 1,
+      selectionItemId: 4,
+    },
+  ];
 
   const couponModalRef = useRef(null);
   useEffect(() => {
@@ -126,13 +229,13 @@ const PaymentScreen = ({ route, navigation }) => {
       await makePayment(tokenId);
       setLoadingStatus(false);
       setPaymentError(null);
-      clearContextData();
-      clearStorageData();
+      // clearContextData();
+      // clearStorageData();
       // navigate to success page
       Keyboard.dismiss();
       successOverlayRef?.current?.open();
     } catch (error) {
-      console.log('an error occurred during pyament', error.message);
+      // console.log('an error occurred during pyament', error.message);
       setPaymentError('An error occurred during payment. Please try again');
     }
   };
@@ -152,7 +255,7 @@ const PaymentScreen = ({ route, navigation }) => {
         }
       }
     } catch (e) {
-      console.log('error occurred ----', e.message);
+      // console.log('error occurred ----', e.message);
       setCouponsFetchError(true);
     } finally {
       setCouponLoadingStatus(false);
@@ -275,52 +378,52 @@ const PaymentScreen = ({ route, navigation }) => {
             </Text>
           </Button>
         </Block>
-        <Portal>
-          <Modalize ref={couponModalRef} modalTopOffset={200}>
-            {loadingCoupons && (
-              <Block center middle color={COLORS.semiTransparent} style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}>
-                <ActivityIndicator size="small" />
-              </Block>
-            )}
-            <Block padding={SIZES.padding}>
-              <Block>
-                <Text h2>Apply Coupon</Text>
-              </Block>
-              <Block style={{ marginTop: SIZES.padding / 2 }}>
-                <TextInput
-                  keyboardType="email-address"
-                  placeholderTextColor={COLORS.gray}
-                  style={styles.textInput}
-                  placeholder="Apply Coupons"
-                  onChangeText={(text) => setCurrentCouponCode(text)}
-                />
-                <Button color="black" style={styles.applyBtn} onPress={() => validateCoupon(currentCouponCode)}>
-                  <Text color="white">APPLY</Text>
-                </Button>
-              </Block>
 
-              <ScrollView>
-                {couponsList.map((item) => {
-                  return (
-                    <CouponCard
-                      title={item.title}
-                      code={item.code}
-                      description={item.description}
-                      validateCoupon={validateCoupon}
-                    />
-                  );
-                })}
-              </ScrollView>
+        <Modalize ref={couponModalRef} modalTopOffset={200}>
+          {loadingCoupons && (
+            <Block center middle color={COLORS.semiTransparent} style={{ ...StyleSheet.absoluteFill, zIndex: 1 }}>
+              <ActivityIndicator size="small" />
             </Block>
-          </Modalize>
-        </Portal>
-        <SuccessOverlay
+          )}
+          <Block padding={SIZES.padding}>
+            <Block>
+              <Text h2>Apply Coupon</Text>
+            </Block>
+            <Block style={{ marginTop: SIZES.padding / 2 }}>
+              <TextInput
+                keyboardType="email-address"
+                placeholderTextColor={COLORS.gray}
+                style={styles.textInput}
+                placeholder="Apply Coupons"
+                onChangeText={(text) => setCurrentCouponCode(text)}
+              />
+              <Button color="black" style={styles.applyBtn} onPress={() => validateCoupon(currentCouponCode)}>
+                <Text color="white">APPLY</Text>
+              </Button>
+            </Block>
+
+            <ScrollView>
+              {couponsList.map((item) => {
+                return (
+                  <CouponCard
+                    title={item.title}
+                    code={item.code}
+                    description={item.description}
+                    validateCoupon={validateCoupon}
+                  />
+                );
+              })}
+            </ScrollView>
+          </Block>
+        </Modalize>
+
+        {/* <SuccessOverlay
           setRef={(ref) => {
             successOverlayRef.current = ref;
           }}
           navigation={navigation}
           closeModal={closeModal}
-        />
+        /> */}
       </Block>
     </KeyboardAvoidingView>
   );
