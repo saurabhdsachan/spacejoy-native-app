@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const baseApiUrl = 'https://api-staging.spacejoy.com/api';
 
 const fetcher = async ({ endPoint, method, type = 'text', body }) => {
-  console.log('method has been called', body, method);
   const JWT = await AsyncStorage.getItem('userToken');
   const headers = {
     'Content-type': type === 'file' ? '' : 'application/json',

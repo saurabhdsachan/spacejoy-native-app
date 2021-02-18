@@ -35,6 +35,7 @@ const modalScreenOptions = {
       }),
     },
   }),
+  cardOverlayEnabled: false,
 };
 
 const RootStack = createStackNavigator();
@@ -49,12 +50,7 @@ const RootStackScreen = () => {
         mode="modal"
       >
         <RootStack.Screen name="DrawerContent" component={DrawerNavigator} />
-        <RootStack.Screen
-          name="Auth"
-          component={AuthStackNavigator}
-          options={{ ...modalScreenOptions }}
-          mode="modal"
-        />
+        <RootStack.Screen name="Auth" component={AuthStackNavigator} options={modalScreenOptions} mode="modal" />
       </RootStack.Navigator>
     </AuthNavigationContext.Provider>
   );

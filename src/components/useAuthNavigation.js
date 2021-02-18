@@ -7,10 +7,8 @@ const useAuthNavigation = () => {
 
   const authWithCallback = async ({ callback = () => {}, redirectRouteData = {}, redirectUrl = '', dispatch }) => {
     const currentRoute = route.name;
-    console.log('function fired');
     try {
       const userToken = await AsyncStorage.getItem('userToken');
-      console.log(JSON.stringify(callback));
       if (userToken) {
         callback();
       } else {
@@ -19,7 +17,8 @@ const useAuthNavigation = () => {
           type: 'SET_AUTH_FLOW_CONTEXT',
           payload: { callback, currentRoute, redirectUrl, redirectRouteData },
         });
-        navigation.navigate('Auth', { screen: 'Login' });
+
+        navigation.navigate('Auth', { screen: 'Login', flow: 'login', layout: 'modal' });
       }
     } catch {
       navigation.navigate(currentRoute);

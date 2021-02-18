@@ -1,5 +1,5 @@
 import { Button } from '@components/';
-import useAuthNavigation from '@components/withAuthenticationNavigation';
+import useAuthNavigation from '@components/useAuthNavigation';
 import { SIZES } from '@constants/';
 import { designRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';

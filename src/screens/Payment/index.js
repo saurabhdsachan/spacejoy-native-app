@@ -37,7 +37,6 @@ const makePayment = async (token) => {
     const [paymentRes, paymentErr] = await handle(
       fetcher({ endPoint: checkoutRoutes.paymentRoute, body: { data: payload }, method: 'POST' })
     );
-    console.log(paymentRes, paymentErr);
     if (paymentRes && !paymentErr) {
       const { statusCode, data } = paymentRes;
       if (statusCode <= 301) {

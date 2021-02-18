@@ -81,9 +81,7 @@ const Quiz5 = ({ navigation, route }) => {
     setTotalAmount(pricingItems[currentIndex]?.salePrice?.value);
     setSelectedPackage(pricingItems[currentIndex]?.slug);
   };
-  useEffect(() => {
-    console.log('scrollX values', scrollX);
-  }, [scrollX]);
+
   return (
     <Block style={styles.container}>
       {loading && (

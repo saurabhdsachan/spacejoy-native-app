@@ -9,7 +9,7 @@ import { COLORS, images, SIZES } from '@constants/index';
 import { AuthNavigationContext } from '@utils/helpers/AuthNavigationContext';
 import { AuthContext } from '@utils/helpers/withAuthContext';
 import { login, oAuthLogin } from '@utils/logins';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
   ImageBackground,
@@ -21,7 +21,7 @@ import {
 
 const { bg } = images;
 
-const Login = ({ navigation, flow }) => {
+const Login = ({ navigation, route }) => {
   const { signIn } = React.useContext(AuthContext);
 
   const [email, setEmailAddress] = useState('');
@@ -32,7 +32,10 @@ const Login = ({ navigation, flow }) => {
   const { state, dispatch } = React.useContext(AuthNavigationContext);
 
   const handleRedirectToSignUp = () => {
-    navigation.navigate('Auth', { screen: 'SignUp', flow: 'signup', layout: 'screen' });
+    const {
+      params: { layout },
+    } = route;
+    navigation.navigate('Auth', { screen: 'SignUp', flow: 'signup', layout });
   };
 
   const handlePostSignIn = async () => {
@@ -42,21 +45,15 @@ const Login = ({ navigation, flow }) => {
     navigation.navigate(redirectTo, { params: redirectRouteData });
     dispatch({ type: 'RESET_AUTH_FLOW_CONTEXT' });
   };
-  useEffect(() => {}, []);
   const handleSigninSuccess = async (userData = {}, token, authCode) => {
     // perform oAuth
     const { data: userInfo = {} } = userData;
     const { channel = '' } = userInfo;
     if (channel) {
       try {
-        const { token: userToken, user } = await oAuthLogin(userInfo, token, channel, authCode);
-        const localUserObject = {
-          ...userData,
-          ...(!userData.email && { email: user.email }),
-          token: userToken,
-        };
+        const data = await oAuthLogin(userInfo, token, channel, authCode);
         // sign in to local app state
-        signIn(localUserObject);
+        signIn(data);
         setLoading(false);
         handlePostSignIn();
       } catch (e) {
@@ -124,11 +121,11 @@ const Login = ({ navigation, flow }) => {
             Welcome Back
           </Text>
           {loginError && (
-            <Block flex={3} bottom>
+            <Block flex={false} marginBottom={SIZES.padding}>
               <LoginError errorText={loginError} />
             </Block>
           )}
-          <Block flex={false} bottom>
+          <Block flex={false}>
             <Block flex={false}>
               <TextInput
                 keyboardType="email-address"

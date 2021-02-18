@@ -1,7 +1,7 @@
 import { HeaderBack } from '@components/';
 import { theme } from '@constants/index';
 import { createStackNavigator } from '@react-navigation/stack';
-import AuthEntryPoint from '@screens/Auth/LoginWrapper';
+import AuthEntryPoint from '@screens/Auth/AuthWrapper';
 import React from 'react';
 
 const Stack = createStackNavigator();
@@ -19,12 +19,13 @@ const screenHeaderOptions = {
 };
 
 const AuthStackNavigator = ({ route: { params } }) => (
-  <Stack.Navigator>
+  <Stack.Navigator mode="modal">
     <Stack.Screen
       component={AuthEntryPoint}
       name={params.screen}
       options={screenHeaderOptions}
       initialParams={params}
+      mode="modal"
     />
   </Stack.Navigator>
 );

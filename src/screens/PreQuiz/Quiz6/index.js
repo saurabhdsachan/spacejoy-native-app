@@ -1,6 +1,6 @@
 import { Block, Button, Text } from '@components/index';
 import { LottieAnimations } from '@components/LottieAnimations';
-import useAuthNavigation from '@components/withAuthenticationNavigation';
+import useAuthNavigation from '@components/useAuthNavigation';
 import { theme } from '@constants/index';
 import { AuthNavigationContext } from '@utils/helpers/AuthNavigationContext';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
@@ -24,7 +24,6 @@ const ITEM_SIZE = width * 0.8;
 const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
 const Quiz6 = ({ navigation, route }) => {
   const { dispatch, state } = React.useContext(AuthNavigationContext);
-  console.log(state);
   const { authWithCallback } = useAuthNavigation();
   const [pricingItems, setPricingItems] = useState([]);
   const [currentActive, setCurrentActive] = useState(0);

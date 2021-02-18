@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useReducer } from 'react';
+import React, { useMemo, useReducer } from 'react';
 
 const AuthNavigationContext = React.createContext();
 
@@ -15,7 +15,6 @@ const reducer = (prevState, action) => {
       const {
         payload: { callback, redirectUrl, currentRoute, redirectRouteData },
       } = action;
-      console.log('in here reducer ----', action.payload);
       return {
         ...prevState,
         callback,
@@ -34,9 +33,6 @@ const reducer = (prevState, action) => {
 
 const AuthNavState = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  useEffect(() => {
-    console.log('updated state is ---', state);
-  }, [state]);
   const authNavState = useMemo(
     () => ({
       state,
