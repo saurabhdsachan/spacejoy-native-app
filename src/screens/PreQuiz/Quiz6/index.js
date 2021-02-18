@@ -196,7 +196,6 @@ const Quiz6 = ({ navigation, route }) => {
                       authWithCallback({
                         dispatch,
                         redirectUrl: 'Checkout',
-                        callback: navigation.navigate('Checkout', { screen: 'Payment' }),
                       })
                     }
                   >
