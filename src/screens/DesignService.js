@@ -1,6 +1,9 @@
 import { Block, Button, Text } from '@components/index';
 import { images, theme } from '@constants/index';
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
+import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
+import React, { useEffect } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,6 +13,26 @@ const { SIZES, COLORS } = theme;
 const { living } = images;
 
 const DesignService = ({ navigation }) => {
+  const { clearContextData } = React.useContext(DesignSelectionContext);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    const checkCurrentQuizProgress = async () => {
+      const quizCompleted = await AsyncStorage.getItem('quizCompleted');
+      if (!quizCompleted) {
+        await AsyncStorage.setItem('quizCompleted', 'false');
+      } else {
+        if (quizCompleted === 'true') {
+          clearContextData();
+          await AsyncStorage.setItem('quizCompleted', 'false');
+        }
+      }
+    };
+    if (isFocused) {
+      checkCurrentQuizProgress();
+    }
+  }, [isFocused, clearContextData]);
+
   return (
     <Block color={COLORS.white}>
       <ScrollView bounces={false}>

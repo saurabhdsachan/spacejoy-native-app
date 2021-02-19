@@ -16,12 +16,13 @@ const initialState = {
   quiz4: '',
   pricingData: [],
 };
-const clearStorageData = async () => {
+const clearQuizData = async () => {
   try {
     await AsyncStorage.setItem('userQuizResponse', JSON.stringify(initialState));
+    await AsyncStorage.setItem('quizCompleted', 'true');
   } catch (e) {
     console.log('Error in clearing storage', e.message);
   }
 };
 
-export { sortByKey, clearStorageData };
+export { sortByKey, clearQuizData };

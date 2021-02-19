@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 
 const SuccessScreen = ({ navigation }) => {
   const handleRedirect = () => {
-    navigation.navigate('Home');
+    navigation.navigate('Home', { screen: 'Home' });
   };
   return (
     <Block style={styles.container} middle center color={COLORS.white}>

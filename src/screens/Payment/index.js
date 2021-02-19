@@ -5,7 +5,7 @@ import { LottieAnimations } from '@components/LottieAnimations';
 import { theme } from '@constants/index';
 import { checkoutRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
-import { clearStorageData, sortByKey } from '@utils/helpers/helpers';
+import { clearQuizData, sortByKey } from '@utils/helpers/helpers';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, KeyboardAvoidingView, StatusBar, StyleSheet, TextInput } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
@@ -233,7 +233,7 @@ const PaymentScreen = ({ route, navigation }) => {
       await makePayment(tokenId);
       setLoadingStatus(false);
       setPaymentError(null);
-      await clearStorageData();
+      await clearQuizData();
       navigation.navigate('PaymentSuccess');
     } catch (error) {
       setPaymentError('An error occurred during payment. Please try again', error.message);
