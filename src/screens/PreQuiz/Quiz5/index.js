@@ -1,6 +1,7 @@
 import { Block, Button, Text } from '@components/index';
+import useAuthNavigation from '@components/useAuthNavigation';
 import { theme } from '@constants/index';
-import checkAuth from '@utils/helpers/checkAuth';
+import { AuthNavigationContext } from '@utils/helpers/AuthNavigationContext';
 import { DesignSelectionContext } from '@utils/helpers/designSelectionContext';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Animated, Dimensions, StatusBar, StyleSheet } from 'react-native';
@@ -16,6 +17,8 @@ const ITEM_SIZE = width * 0.8;
 const SPACER_ITEM_WIDTH = (width - ITEM_SIZE) / 2;
 
 const Quiz5 = ({ navigation, route }) => {
+  const { dispatch, state } = React.useContext(AuthNavigationContext);
+  const { authWithCallback } = useAuthNavigation();
   const [pricingItems, setPricingItems] = useState([]);
   const [currentActive, setCurrentActive] = useState(0);
   const [loading, setLoadingStatus] = useState(false);
@@ -53,8 +56,10 @@ const Quiz5 = ({ navigation, route }) => {
       Alert.alert('Please select a room');
     } else {
       updateSelection(userDesignSelections[0], selectedPackage, 'quiz1');
-      // saveToStorage('quiz1');
-      checkAuth(navigation, { totalAmount: totalAmount || 0 }, undefined, 'PaymentScreen', route.name);
+      authWithCallback({
+        dispatch,
+        redirectUrl: 'Checkout',
+      });
     }
   };
   useEffect(() => {
