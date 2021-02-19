@@ -12,6 +12,10 @@ const getAnimation = (name) => {
       return animations.Empty;
     case 'paymentSuccess':
       return animations.PaymentSuccessful;
+    case 'coupon':
+      return animations.Coupon;
+    case 'coupon-validated':
+      return animations.CouponValidated;
     default:
       return animations.Like;
   }
@@ -25,7 +29,7 @@ const defaultOptions = {
 const LottieAnimations = ({ name, height, width, loop, autoPlay, ...props }) => {
   return (
     <Block flex={false} style={{ height, width }}>
-      <LottieView source={getAnimation(name)} autoPlay loop {...defaultOptions} {...props} />
+      <LottieView source={getAnimation(name)} autoPlay {...defaultOptions} loop {...props} />
     </Block>
   );
 };

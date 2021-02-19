@@ -1,13 +1,16 @@
 import CardTextFieldScreen from '@components/CardTextFieldScreen';
 import { Block, Button, Text } from '@components/index';
+import LoginError from '@components/LoginError';
+import { LottieAnimations } from '@components/LottieAnimations';
 import { theme } from '@constants/index';
 import { checkoutRoutes } from '@constants/routes';
 import { fetcher, handle } from '@utils/apiFetcher';
-import sortByKey from '@utils/helpers/helpers';
+import { clearStorageData, sortByKey } from '@utils/helpers/helpers';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Keyboard, KeyboardAvoidingView, StatusBar, StyleSheet, TextInput } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, StatusBar, StyleSheet, TextInput } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { Modalize } from 'react-native-modalize';
+import Icon from 'react-native-vector-icons/Ionicons';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import stripe from 'tipsi-stripe';
 import { fetchPricingItems } from '../PreQuiz/Quiz5/fetchers';
@@ -36,6 +39,7 @@ const makePayment = async (token) => {
     );
     if (paymentRes && !paymentErr) {
       const { statusCode, data } = paymentRes;
+
       if (statusCode <= 301) {
         return data;
       } else {
@@ -229,14 +233,12 @@ const PaymentScreen = ({ route, navigation }) => {
       await makePayment(tokenId);
       setLoadingStatus(false);
       setPaymentError(null);
-      // clearContextData();
-      // clearStorageData();
-      // navigate to success page
-      Keyboard.dismiss();
-      successOverlayRef?.current?.open();
+      await clearStorageData();
+      navigation.navigate('PaymentSuccess');
     } catch (error) {
-      // console.log('an error occurred during pyament', error.message);
-      setPaymentError('An error occurred during payment. Please try again');
+      setPaymentError('An error occurred during payment. Please try again', error.message);
+    } finally {
+      setLoadingStatus(false);
     }
   };
   const openCouponModal = async () => {
@@ -245,45 +247,58 @@ const PaymentScreen = ({ route, navigation }) => {
     try {
       const [coupons, couponsError] = await handle(fetcher({ endPoint: checkoutRoutes.getCouponsApi, method: 'GET' }));
       if (coupons && !couponsError) {
-        console.log(coupons);
         const { data: couponsData = [], statusCode } = coupons;
         if (statusCode <= 301) {
-          console.log(couponsData);
           setCouponsList(couponsData);
         } else {
           throw new Error();
         }
       }
     } catch (e) {
-      // console.log('error occurred ----', e.message);
       setCouponsFetchError(true);
     } finally {
       setCouponLoadingStatus(false);
     }
   };
-  const {
-    params: { totalAmount },
-  } = route;
+  const totalAmount = 0;
 
   const sortedArray = sortByKey(userDesignSelections, 'title');
+  const [couponValidationError, setCouponValidationError] = useState(false);
+  const [couponValidated, setCouponValidated] = useState(false);
+  const [currentlyAppliedCouponData, setCurrentlyActiveCoupon] = useState({});
   const validateCoupon = async (couponCode) => {
-    console.log(couponCode);
-    const [validationRes, validationErr] = await handle(
-      fetcher({
-        endPoint: checkoutRoutes.validateCoupon,
-        method: 'POST',
-        body: {
-          coupon: couponCode,
-          package: 'delight',
-          isGiftCard: false,
-        },
-      })
-    );
-    if (validationRes && !validationErr) {
-      const { statusCode, data } = validationRes;
-      console.log(data, statusCode);
-    } else {
-      console.log('error while validating', validationErr);
+    if (couponCode.length) {
+      setCouponLoadingStatus(true);
+      setCouponValidationError(false);
+      setCouponValidated(false);
+      try {
+        const [validationRes, validationErr] = await handle(
+          fetcher({
+            endPoint: checkoutRoutes.validateCoupon,
+            method: 'POST',
+            body: {
+              data: {
+                coupon: couponCode,
+                package: 'bliss',
+                isGiftCard: false,
+              },
+            },
+          })
+        );
+        if (validationRes && !validationErr) {
+          const { statusCode, data } = validationRes;
+          if (statusCode <= 301) {
+            setCouponValidated(true);
+            setCurrentlyActiveCoupon(data);
+          }
+        } else {
+          throw new Error();
+        }
+      } catch {
+        setCouponValidationError(true);
+      } finally {
+        setCouponLoadingStatus(false);
+      }
     }
   };
 
@@ -298,8 +313,13 @@ const PaymentScreen = ({ route, navigation }) => {
       <Block>
         <StatusBar barStyle="dark-content" />
         <Block flex={false} color={COLORS.white} padding={[0, SIZES.padding, 0, SIZES.padding]}>
-          <Button ghost center style={{ borderRadius: SIZES.radius / 4 }} onPress={openCouponModal}>
-            <Text center>Apply Coupon</Text>
+          <Button center ghost style={{ borderRadius: SIZES.radius / 4 }} onPress={openCouponModal}>
+            <Block row middle center>
+              <LottieAnimations name="coupon" height={30} width={30} loop />
+              <Block flex={false}>
+                <Text mt1>Apply Coupon</Text>
+              </Block>
+            </Block>
           </Button>
         </Block>
         <Block flex={4} color={COLORS.white}>
@@ -344,7 +364,7 @@ const PaymentScreen = ({ route, navigation }) => {
             />
           </Block>
         </Block>
-        <Block row flex={1} color={COLORS.white} padding={[SIZES.padding, SIZES.padding, 0, SIZES.padding]}>
+        <Block row flex={0.5} color={COLORS.white} padding={[SIZES.padding, SIZES.padding, 0, SIZES.padding]}>
           <Block row>
             <Text bold>Estimated Price</Text>
           </Block>
@@ -352,17 +372,31 @@ const PaymentScreen = ({ route, navigation }) => {
             <Text right>$ {totalAmount}</Text>
           </Block>
         </Block>
-        <Block flex={2} color={COLORS.white} padding={SIZES.padding} marginTop={SIZES.base}>
+        {Object.keys(currentlyAppliedCouponData).length > 0 && (
+          <Block color="rgb(241, 251, 244)" padding={SIZES.padding} flex={false}>
+            <Text bold>
+              Coupon Applied -{' '}
+              <Text transform="uppercase">
+                {currentlyAppliedCouponData?.coupon?.code} {'  '}
+              </Text>
+              <Button raw>
+                <Icon name="close-circle-outline" />
+              </Button>
+            </Text>
+          </Block>
+        )}
+
+        <Block flex={2.5} color={COLORS.white} padding={SIZES.padding} marginTop={SIZES.base}>
           <Text h3 mb3>
             Card Details
           </Text>
+          {paymentError && <LoginError errorText="There was error during payment. Please try again" />}
           <CardTextFieldScreen onValid={trackCardParams} />
           <Button
             color={COLORS.black}
             loading={loading}
             onPress={handlePayment}
-            style={{ borderRadius: SIZES.radius / 4 }}
-            marginVertical={SIZES.padding}
+            style={{ borderRadius: SIZES.radius / 4, marginVertical: SIZES.padding }}
           >
             <Text center white>
               Pay ${totalAmount}
@@ -392,6 +426,19 @@ const PaymentScreen = ({ route, navigation }) => {
                 <Text color={COLORS.white}>APPLY</Text>
               </Button>
             </Block>
+            {couponValidated && (
+              <Block row padding={SIZES.padding / 2} marginVertical={SIZES.padding} color="rgb(241, 251, 244)">
+                <Block flex={1}>
+                  <LottieAnimations name="coupon-validated" height={70} width={100} />
+                </Block>
+                <Block flex={3} middle>
+                  <Text bold color={COLORS.green}>
+                    Woohoo! Coupon Applied Successfully!
+                  </Text>
+                </Block>
+              </Block>
+            )}
+            {couponValidationError && <LoginError errorText="Uh-oh! This Coupon is unavailable at this time." />}
 
             <ScrollView>
               {couponsList.map((item) => {
@@ -401,6 +448,7 @@ const PaymentScreen = ({ route, navigation }) => {
                     code={item.code}
                     description={item.description}
                     validateCoupon={validateCoupon}
+                    key={`coupon-${item.title}`}
                   />
                 );
               })}

@@ -11,12 +11,6 @@ const DrawerNavigator = () => {
     <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
       <Drawer.Screen name="WalkThrough" component={WalkThrough} options={{ swipeEnabled: false }} />
       <Drawer.Screen name="Home" component={TabNavigator} />
-      {/* <Drawer.Screen
-        name="Auth"
-        component={AuthStackNavigator}
-        options={{ swipeEnabled: false }}
-        initialParams={{ flow: 'screen' }}
-      /> */}
     </Drawer.Navigator>
   );
 };

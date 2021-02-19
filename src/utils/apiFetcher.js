@@ -7,7 +7,7 @@ const fetcher = async ({ endPoint, method, type = 'text', body }) => {
   const headers = {
     'Content-type': type === 'file' ? '' : 'application/json',
     ...(JWT && { Authorization: JWT }),
-    // 'client-origin': 'com.spacejoy.spacejoyapp-infra',
+    'client-origin': 'com.spacejoy.spacejoyapp-infra',
   };
   const options =
     method === 'GET'

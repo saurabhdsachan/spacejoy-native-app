@@ -47,7 +47,7 @@ const RootStackScreen = () => {
         headerMode="false"
         initialRouteName="DrawerContent"
         screenOptions={screenOptions}
-        mode="modal"
+        // mode="modal"
       >
         <RootStack.Screen name="DrawerContent" component={DrawerNavigator} />
         <RootStack.Screen name="Auth" component={AuthStackNavigator} options={modalScreenOptions} mode="modal" />
