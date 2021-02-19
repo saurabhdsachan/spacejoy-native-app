@@ -8,7 +8,7 @@ import {
   HomeStackNavigator,
   IdeabookStackNavigator,
   MyDesignsStackNavigator,
-  NewActionStackNavigator,
+  NewActionStackNavigator
 } from './StackNavigator';
 
 const { COLORS, SIZES } = theme;
@@ -20,6 +20,9 @@ const TabBarLabels = {
   Collection: 'Collections',
   NewAction: 'New Project',
 };
+const tabBarListeners = ({ navigation, route }) => ({
+  tabPress: () => navigation.navigate(route.name),
+});
 
 const BottomTabNavigator = () => {
   return (
@@ -72,6 +75,7 @@ const BottomTabNavigator = () => {
           options={{
             tabBarLabel: TabBarLabels.NewAction,
           }}
+          listeners={tabBarListeners}
         />
         <Tab.Screen name="My Designs" component={MyDesignsStackNavigator} />
 
